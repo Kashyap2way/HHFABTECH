@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HHFabTech | Petroleum Tanker Manufacturer</title>
+
+    <meta name="description" content="HHFabTech specializes in the design and fabrication of petroleum tankers, diesel tankers, bulkers and vessels.">
+
+    <meta name="keywords" content="Petroleum Tanker, Diesel Tanker, Bulker, Vessel, Fabrication, HHFabTech">
+
+    <meta name="author" content="HHFabTech">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#f7f7f7;
+            color:#222;
+        }
+
+        nav{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px 8%;
+            background:#003b73;
+            color:white;
+        }
+
+        nav ul{
+            display:flex;
+            list-style:none;
+            gap:25px;
+        }
+
+        nav a{
+            text-decoration:none;
+            color:white;
+            font-weight:bold;
+        }
+
+        .hero{
+            height:85vh;
+            background:url("https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=1600&q=80") center/cover;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            color:white;
+            position:relative;
+        }
+
+        .hero::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:rgba(0,0,0,.55);
+        }
+
+        .hero-content{
+            position:relative;
+            z-index:2;
+            padding:20px;
+        }
+
+        h1{
+            font-size:3rem;
+            margin-bottom:20px;
+        }
+
+        p{
+            font-size:1.1rem;
+            line-height:1.7;
+        }
+
+        .btn{
+            display:inline-block;
+            margin-top:30px;
+            padding:15px 35px;
+            background:#ff9800;
+            color:white;
+            text-decoration:none;
+            border-radius:5px;
+            font-weight:bold;
+            transition:.3s;
+        }
+
+        .btn:hover{
+            background:#e68a00;
+        }
+
+        section{
+            padding:70px 10%;
+        }
+
+        h2{
+            color:#003b73;
+            margin-bottom:20px;
+            font-size:2rem;
+        }
+
+        .cards{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:25px;
+            margin-top:30px;
+        }
+
+        .card{
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 5px 15px rgba(0,0,0,.1);
+            transition:.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-8px);
+        }
+
+        footer{
+            background:#003b73;
+            color:white;
+            text-align:center;
+            padding:25px;
+        }
+
+        @media(max-width:768px){
+
+            nav{
+                flex-direction:column;
+                gap:15px;
+            }
+
+            nav ul{
+                flex-wrap:wrap;
+                justify-content:center;
+            }
+
+            h1{
+                font-size:2rem;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav>
+
+<h2>HHFabTech</h2>
+
+<ul>
+<li><a href="#">Home</a></li>
+<li><a href="#">About</a></li>
+<li><a href="#">Fleet</a></li>
+<li><a href="#">Gallery</a></li>
+<li><a href="#">Contact</a></li>
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>Engineering Reliable Petroleum Tankers</h1>
+
+<p>
+Specialized manufacturer of Petroleum Tankers, Diesel Tankers,
+Bulkers and Industrial Vessels.
+</p>
+
+<a class="btn" href="#">Get Quote</a>
+
+</div>
+
+</section>
+
+<section>
+
+<h2>About HHFabTech</h2>
+
+<p>
+
+HHFabTech is dedicated to manufacturing high-quality petroleum
+transport solutions with modern fabrication techniques, superior
+engineering standards and a commitment to safety, durability and
+timely delivery.
+
+</p>
+
+</section>
+
+<section>
+
+<h2>Our Products</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Petroleum Tankers</h3>
+<p>High-capacity petroleum transportation tankers.</p>
+</div>
+
+<div class="card">
+<h3>Diesel Tankers</h3>
+<p>Reliable diesel transport solutions.</p>
+</div>
+
+<div class="card">
+<h3>Bulkers</h3>
+<p>Industrial bulk transportation systems.</p>
+</div>
+
+<div class="card">
+<h3>Vessels</h3>
+<p>Custom fabricated industrial vessels.</p>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<p>© 2026 HHFabTech | All Rights Reserved</p>
+
+</footer>
+
+</body>
+</html>
