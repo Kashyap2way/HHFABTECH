@@ -1,0 +1,384 @@
+/* ===========================
+   HH FABTECH
+   Main Stylesheet
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#fff;
+    color:#333;
+    line-height:1.6;
+}
+
+img{
+    width:100%;
+    display:block;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+ul{
+    list-style:none;
+}
+
+:root{
+
+    --primary:#4A2A7A;
+    --secondary:#F5F5F5;
+    --accent:#F4B400;
+    --text:#333333;
+    --white:#ffffff;
+    --shadow:0 8px 25px rgba(0,0,0,.12);
+
+}
+
+/* ===========================
+        NAVBAR
+=========================== */
+
+header{
+
+    position:sticky;
+    top:0;
+    z-index:999;
+    background:white;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+}
+
+.navbar{
+
+    max-width:1300px;
+    margin:auto;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:15px 40px;
+
+}
+
+.logo img{
+
+    width:170px;
+
+}
+
+.navbar ul{
+
+    display:flex;
+    gap:35px;
+
+}
+
+.navbar a{
+
+    font-weight:600;
+    color:var(--primary);
+    transition:.3s;
+
+}
+
+.navbar a:hover{
+
+    color:var(--accent);
+
+}
+
+/* ===========================
+        HERO
+=========================== */
+
+.hero{
+
+    position:relative;
+    height:80vh;
+    overflow:hidden;
+
+}
+
+.slider{
+
+    display:flex;
+    width:400%;
+    height:100%;
+    animation:slider 18s infinite;
+
+}
+
+.slider img{
+
+    width:100%;
+    object-fit:cover;
+
+}
+
+.hero::before{
+
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:2;
+
+}
+
+.hero-text{
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    color:white;
+    text-align:center;
+    z-index:3;
+
+}
+
+.hero-text h1{
+
+    font-size:55px;
+    margin-bottom:20px;
+
+}
+
+.hero-text p{
+
+    font-size:22px;
+
+}
+
+/* ===========================
+      WELCOME
+=========================== */
+
+.welcome{
+
+    max-width:1200px;
+    margin:auto;
+    padding:80px 20px;
+    text-align:center;
+
+}
+
+.welcome h2{
+
+    color:var(--primary);
+    margin-bottom:20px;
+    font-size:40px;
+
+}
+
+.welcome p{
+
+    max-width:900px;
+    margin:auto;
+    font-size:18px;
+
+}
+
+/* ===========================
+      FEATURES
+=========================== */
+
+.features{
+
+    background:var(--secondary);
+
+    display:flex;
+    justify-content:center;
+    gap:40px;
+
+    padding:70px 20px;
+
+}
+
+.feature{
+
+    background:white;
+    width:350px;
+
+    padding:35px;
+
+    border-radius:12px;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+}
+
+.feature:hover{
+
+    transform:translateY(-10px);
+
+}
+
+.feature h3{
+
+    color:var(--primary);
+    margin-bottom:15px;
+
+}
+
+/* ===========================
+      PRODUCTS
+=========================== */
+
+.products{
+
+    max-width:1300px;
+
+    margin:auto;
+
+    padding:90px 20px;
+
+}
+
+.products h2{
+
+    text-align:center;
+    color:var(--primary);
+
+    margin-bottom:50px;
+
+    font-size:40px;
+
+}
+
+.product-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:35px;
+
+}
+
+.card{
+
+    background:white;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+    transition:.4s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-12px);
+
+}
+
+.card img{
+
+    height:240px;
+
+    object-fit:cover;
+
+}
+
+.card h3{
+
+    padding:20px;
+    text-align:center;
+    color:var(--primary);
+
+}
+
+/* ===========================
+        FOOTER
+=========================== */
+
+footer{
+
+    margin-top:60px;
+
+}
+
+.footer-bar{
+
+    background:var(--primary);
+
+    color:white;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    padding:35px 20px;
+
+}
+
+.footer-bar div{
+
+    text-align:center;
+
+}
+
+.copyright{
+
+    background:#31195a;
+
+    color:white;
+
+    text-align:center;
+
+    padding:15px;
+
+}
+
+/* ===========================
+      SLIDER ANIMATION
+=========================== */
+
+@keyframes slider{
+
+0%,20%{
+
+transform:translateX(0);
+
+}
+
+25%,45%{
+
+transform:translateX(-100%);
+
+}
+
+50%,70%{
+
+transform:translateX(-200%);
+
+}
+
+75%,100%{
+
+transform:translateX(-300%);
+
+}
+
+}

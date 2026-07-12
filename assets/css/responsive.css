@@ -1,0 +1,325 @@
+/* ==========================================
+   HH FABTECH
+   Responsive Styles
+========================================== */
+
+/* ===============================
+   Large Laptop
+================================ */
+
+@media (max-width:1200px){
+
+    .container{
+        width:95%;
+    }
+
+    .hero-content h1{
+        font-size:56px;
+    }
+
+}
+
+/* ===============================
+   Tablet
+================================ */
+
+@media (max-width:992px){
+
+    .navbar{
+
+        height:80px;
+        padding:0 20px;
+
+    }
+
+    .logo img{
+
+        height:65px;
+
+    }
+
+    .nav-links{
+
+        gap:25px;
+
+    }
+
+    .hero-content h1{
+
+        font-size:48px;
+
+    }
+
+    .hero-content p{
+
+        font-size:18px;
+
+    }
+
+    .features .container{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .product-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .footer-container{
+
+        grid-template-columns:1fr;
+        text-align:center;
+
+    }
+
+    .footer-about img{
+
+        margin:auto;
+        margin-bottom:20px;
+
+    }
+
+}
+
+/* ===============================
+   Mobile
+================================ */
+
+@media (max-width:768px){
+
+    header{
+
+        background:#fff;
+
+    }
+
+    .navbar{
+
+        height:75px;
+        padding:0 20px;
+
+    }
+
+    .menu-btn{
+
+        display:block;
+
+        color:#43236F;
+
+        font-weight:bold;
+
+    }
+
+    .nav-links{
+
+        position:absolute;
+
+        top:75px;
+
+        left:0;
+
+        width:100%;
+
+        background:#fff;
+
+        flex-direction:column;
+
+        align-items:center;
+
+        gap:0;
+
+        display:none;
+
+        box-shadow:0 8px 25px rgba(0,0,0,.12);
+
+    }
+
+    .nav-links.active{
+
+        display:flex;
+
+    }
+
+    .nav-links li{
+
+        width:100%;
+        text-align:center;
+        border-bottom:1px solid #eee;
+
+    }
+
+    .nav-links a{
+
+        display:block;
+        padding:18px;
+
+    }
+
+    .hero{
+
+        height:80vh;
+
+    }
+
+    .hero-content{
+
+        width:90%;
+
+    }
+
+    .hero-content h3{
+
+        font-size:16px;
+
+    }
+
+    .hero-content h1{
+
+        font-size:38px;
+
+    }
+
+    .hero-content p{
+
+        font-size:16px;
+
+    }
+
+    .btn{
+
+        padding:14px 28px;
+
+    }
+
+    .welcome{
+
+        padding:70px 0;
+
+    }
+
+    .section-title h2{
+
+        font-size:34px;
+
+    }
+
+    .features{
+
+        padding:70px 0;
+
+    }
+
+    .features .container{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .feature-card{
+
+        padding:35px 25px;
+
+    }
+
+    .products{
+
+        padding:70px 0;
+
+    }
+
+    .product-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .card img{
+
+        height:240px;
+
+    }
+
+    .cta{
+
+        padding:70px 20px;
+
+    }
+
+    .cta h2{
+
+        font-size:30px;
+
+    }
+
+    .cta p{
+
+        font-size:16px;
+
+    }
+
+    .contact-bar .container{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+/* ===============================
+   Small Mobile
+================================ */
+
+@media (max-width:480px){
+
+    .logo img{
+
+        height:55px;
+
+    }
+
+    .hero{
+
+        height:70vh;
+
+    }
+
+    .hero-content h1{
+
+        font-size:30px;
+
+    }
+
+    .hero-content p{
+
+        font-size:15px;
+
+    }
+
+    .section-title h2{
+
+        font-size:28px;
+
+    }
+
+    .card-content h3{
+
+        font-size:20px;
+
+    }
+
+    .card img{
+
+        height:220px;
+
+    }
+
+    .footer-container{
+
+        padding:50px 0;
+
+    }
+
+}

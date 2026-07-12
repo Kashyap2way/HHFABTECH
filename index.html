@@ -1,243 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HHFabTech | Petroleum Tanker Manufacturer</title>
+    <title>HH FABTECH | Tanker Manufacturer</title>
 
-    <meta name="description" content="HHFabTech specializes in the design and fabrication of petroleum tankers, diesel tankers, bulkers and vessels.">
+    <meta name="description"
+        content="HH FABTECH is a leading manufacturer of Petroleum, Chemical, SS and Water Tankers.">
 
-    <meta name="keywords" content="Petroleum Tanker, Diesel Tanker, Bulker, Vessel, Fabrication, HHFabTech">
+    <link rel="stylesheet" href="assets\css\style.css">
+    <link rel="stylesheet" href="assets\css\responsive.css">
 
-    <meta name="author" content="HHFabTech">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <style>
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
-        }
-
-        body{
-            background:#f7f7f7;
-            color:#222;
-        }
-
-        nav{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:20px 8%;
-            background:#003b73;
-            color:white;
-        }
-
-        nav ul{
-            display:flex;
-            list-style:none;
-            gap:25px;
-        }
-
-        nav a{
-            text-decoration:none;
-            color:white;
-            font-weight:bold;
-        }
-
-        .hero{
-            height:85vh;
-            background:url("https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=1600&q=80") center/cover;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            color:white;
-            position:relative;
-        }
-
-        .hero::before{
-            content:"";
-            position:absolute;
-            inset:0;
-            background:rgba(0,0,0,.55);
-        }
-
-        .hero-content{
-            position:relative;
-            z-index:2;
-            padding:20px;
-        }
-
-        h1{
-            font-size:3rem;
-            margin-bottom:20px;
-        }
-
-        p{
-            font-size:1.1rem;
-            line-height:1.7;
-        }
-
-        .btn{
-            display:inline-block;
-            margin-top:30px;
-            padding:15px 35px;
-            background:#ff9800;
-            color:white;
-            text-decoration:none;
-            border-radius:5px;
-            font-weight:bold;
-            transition:.3s;
-        }
-
-        .btn:hover{
-            background:#e68a00;
-        }
-
-        section{
-            padding:70px 10%;
-        }
-
-        h2{
-            color:#003b73;
-            margin-bottom:20px;
-            font-size:2rem;
-        }
-
-        .cards{
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-            gap:25px;
-            margin-top:30px;
-        }
-
-        .card{
-            background:white;
-            padding:30px;
-            border-radius:10px;
-            box-shadow:0 5px 15px rgba(0,0,0,.1);
-            transition:.3s;
-        }
-
-        .card:hover{
-            transform:translateY(-8px);
-        }
-
-        footer{
-            background:#003b73;
-            color:white;
-            text-align:center;
-            padding:25px;
-        }
-
-        @media(max-width:768px){
-
-            nav{
-                flex-direction:column;
-                gap:15px;
-            }
-
-            nav ul{
-                flex-wrap:wrap;
-                justify-content:center;
-            }
-
-            h1{
-                font-size:2rem;
-            }
-
-        }
-
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
 </head>
 
 <body>
 
-<nav>
+    <!-- ================= NAVBAR ================= -->
 
-<h2>HHFabTech</h2>
+    <header>
 
-<ul>
-<li><a href="#">Home</a></li>
-<li><a href="#">About</a></li>
-<li><a href="#">Fleet</a></li>
-<li><a href="#">Gallery</a></li>
-<li><a href="#">Contact</a></li>
-</ul>
+        <nav class="navbar">
 
-</nav>
+            <div class="logo">
 
-<section class="hero">
+                <img src="assets\images\logo.png" alt="HH FABTECH Logo">
 
-<div class="hero-content">
+            </div>
 
-<h1>Engineering Reliable Petroleum Tankers</h1>
+            <ul>
 
-<p>
-Specialized manufacturer of Petroleum Tankers, Diesel Tankers,
-Bulkers and Industrial Vessels.
-</p>
+                <li><a href="index.html">Home</a></li>
 
-<a class="btn" href="#">Get Quote</a>
+                <li><a href="about.html">About Us</a></li>
 
-</div>
+                <li><a href="products.html">Products</a></li>
 
-</section>
+                <li><a href="contact.html">Contact Us</a></li>
 
-<section>
+            </ul>
 
-<h2>About HHFabTech</h2>
+        </nav>
 
-<p>
+    </header>
 
-HHFabTech is dedicated to manufacturing high-quality petroleum
-transport solutions with modern fabrication techniques, superior
-engineering standards and a commitment to safety, durability and
-timely delivery.
+    <!-- ================= HERO ================= -->
 
-</p>
+    <section class="hero">
 
-</section>
+        <div class="slider">
 
-<section>
+            <img src="assets\images\hero\hero1.png">
 
-<h2>Our Products</h2>
+            <img src="assets\images\hero\hero2.png">
 
-<div class="cards">
+            <img src="assets\images\hero\hero3.png">
 
-<div class="card">
-<h3>Petroleum Tankers</h3>
-<p>High-capacity petroleum transportation tankers.</p>
-</div>
+            <img src="assets\images\hero\hero4.png">
 
-<div class="card">
-<h3>Diesel Tankers</h3>
-<p>Reliable diesel transport solutions.</p>
-</div>
+        </div>
 
-<div class="card">
-<h3>Bulkers</h3>
-<p>Industrial bulk transportation systems.</p>
-</div>
+        <div class="hero-text">
 
-<div class="card">
-<h3>Vessels</h3>
-<p>Custom fabricated industrial vessels.</p>
-</div>
+            <h1>WELCOME TO HH FABTECH</h1>
 
-</div>
+            <p>
 
-</section>
+                Engineering Excellence in Petroleum, Chemical,
+                SS and Water Tankers.
 
-<footer>
+            </p>
 
-<p>© 2026 HHFabTech | All Rights Reserved</p>
+        </div>
 
-</footer>
+    </section>
+
+    <!-- ================= WELCOME ================= -->
+
+    <section class="welcome">
+
+        <h2>Welcome to HH FABTECH</h2>
+
+        <p>
+
+            HH FABTECH is committed to delivering world-class tanker manufacturing
+            solutions with superior engineering, precision fabrication and
+            uncompromising quality.
+
+        </p>
+
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+
+    <section class="features">
+
+        <div class="feature">
+
+            <h3>Quality Assurance</h3>
+
+            <p>
+
+                Every tanker undergoes strict quality inspection
+                before delivery.
+
+            </p>
+
+        </div>
+
+        <div class="feature">
+
+            <h3>24×7 Customer Support</h3>
+
+            <p>
+
+                Our support team is always available
+                to assist our customers.
+
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ================= PRODUCTS ================= -->
+
+    <section class="products">
+
+        <h2>Our Product Range</h2>
+
+        <div class="product-grid">
+
+            <div class="card">
+
+                <img src="C:\Users\sc\VSCODE\HHFABTECH\HHFABTECH\assets\images\products\petroleum.png">
+
+                <h3>Petroleum / Diesel Tanker</h3>
+
+            </div>
+
+            <div class="card">
+
+                <img src="C:\Users\sc\VSCODE\HHFABTECH\HHFABTECH\assets\images\products\chemical.jpg">
+
+                <h3>Chemical Tanker</h3>
+
+            </div>
+
+            <div class="card">
+
+                <img src="C:\Users\sc\VSCODE\HHFABTECH\HHFABTECH\assets\images\products\SS.jpg">
+
+                <h3>SS Tanker</h3>
+
+            </div>
+
+            <div class="card">
+
+                <img src="C:\Users\sc\VSCODE\HHFABTECH\HHFABTECH\assets\images\products\bowser.jpg">
+
+                <h3>Bowser</h3>
+
+            </div>
+
+            <div class="card">
+
+                <img src="C:\Users\sc\VSCODE\HHFABTECH\HHFABTECH\assets\images\products\Storage.jpg">
+
+                <h3>Vertical / Capsule Storage Tank</h3>
+
+            </div>
+
+            <div class="card">
+
+                <img src="C:\Users\sc\VSCODE\HHFABTECH\HHFABTECH\assets\images\products\water.png">
+
+                <h3>Water Tanker</h3>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-bar">
+
+            <div>
+
+                <strong>Location</strong><br>
+
+                Ahmedabad, Gujarat
+
+            </div>
+
+            <div>
+
+                <strong>Email</strong><br>
+
+                hhfabtech@gmail.com
+
+            </div>
+
+            <div>
+
+                <strong>Phone</strong><br>
+
+                +91 99986 90388
+
+            </div>
+
+        </div>
+
+        <div class="copyright">
+
+            © 2026 HH FABTECH. All Rights Reserved.
+
+        </div>
+
+    </footer>
+
+    <script src="assets\js\main.js"></script>
 
 </body>
+
 </html>
