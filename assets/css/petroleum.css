@@ -29,9 +29,19 @@ PETROLEUM TANKER PAGE
 
 .product-image img{
 
-    width:100%;
-    display:block;
-    transition:.45s ease;
+width:100%;
+
+border-radius:18px;
+
+transition:.35s;
+
+box-shadow:0 20px 45px rgba(0,0,0,.15);
+
+}
+
+#tankerImage{
+
+transition:opacity .35s ease;
 
 }
 
@@ -128,24 +138,44 @@ box-shadow:0 15px 35px rgba(67,35,111,.35);
 
 .spec-table{
 
-    width:100%;
-    border-collapse:collapse;
-    margin-top:40px;
-    font-size:15px;
+border-collapse:separate;
+
+border-spacing:0 18px;
 
 }
 
+.spec-table tr{
+
+background:white;
+
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+transition:.3s;
+
+}
+
+.spec-table tr:hover{
+
+transform:scale(1.01);
+
+box-shadow:0 18px 40px rgba(67,35,111,.18);
+
+}
+
+
 .spec-table th{
 
-    background:#43236F;
-    color:#fff;
-    padding:18px;
+padding:22px;
+
+background:#43236F;
+
+color:white;
 
 }
 
 .spec-table td{
 
-    padding:18px;
+    padding:22px;
     border:1px solid #ddd;
 
 }
