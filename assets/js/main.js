@@ -5,66 +5,78 @@
 const menuBtn = document.querySelector(".menu-btn");
 const navLinks = document.querySelector(".nav-links");
 
-menuBtn.addEventListener("click", () => {
+if (menuBtn && navLinks) {
 
-    navLinks.classList.toggle("active");
+    menuBtn.addEventListener("click", () => {
 
-});
+        navLinks.classList.toggle("active");
+
+    });
+
+}
+
 
 // ===============================
 // Hero Slider
 // ===============================
 
-let slides = document.querySelectorAll(".slide");
+const slides = document.querySelectorAll(".slide");
 
-let currentSlide = 0;
+if (slides.length > 0) {
 
-function showSlide(index){
+    let currentSlide = 0;
 
-    slides.forEach((slide)=>{
+    function showSlide(index) {
 
-        slide.classList.remove("active");
+        slides.forEach(slide => {
 
-    });
+            slide.classList.remove("active");
 
-    slides[index].classList.add("active");
+        });
 
-}
-
-setInterval(()=>{
-
-    slides[currentSlide].classList.remove("active");
-
-    currentSlide++;
-
-    if(currentSlide>=slides.length){
-
-        currentSlide=0;
+        slides[index].classList.add("active");
 
     }
 
-    slides[currentSlide].classList.add("active");
+    showSlide(0);
 
-},5000);
+    setInterval(() => {
 
+        slides[currentSlide].classList.remove("active");
+
+        currentSlide++;
+
+        if (currentSlide >= slides.length) {
+
+            currentSlide = 0;
+
+        }
+
+        slides[currentSlide].classList.add("active");
+
+    }, 5000);
+
+}
 // ===============================
 // Sticky Navbar Shadow
 // ===============================
 
-window.addEventListener("scroll",()=>{
+const header = document.querySelector("header");
 
-    const header=document.querySelector("header");
+if (header) {
 
-    if(window.scrollY>30){
+    window.addEventListener("scroll", () => {
 
-        header.style.boxShadow="0 10px 25px rgba(0,0,0,.12)";
+        if (window.scrollY > 30) {
 
-    }
+            header.style.boxShadow = "0 10px 25px rgba(0,0,0,.12)";
 
-    else{
+        } else {
 
-        header.style.boxShadow="0 5px 15px rgba(0,0,0,.08)";
+            header.style.boxShadow = "0 5px 15px rgba(0,0,0,.08)";
 
-    }
+        }
 
-});
+    });
+
+}
