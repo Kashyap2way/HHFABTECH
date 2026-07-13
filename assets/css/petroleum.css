@@ -1,0 +1,310 @@
+/*=========================================
+PETROLEUM TANKER PAGE
+=========================================*/
+
+.petroleum-showcase{
+
+    padding:90px 0;
+    background:#fff;
+
+}
+
+.product-view{
+
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:60px;
+    align-items:center;
+
+}
+
+.product-image{
+
+    background:#fafafa;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,.10);
+
+}
+
+.product-image img{
+
+    width:100%;
+    display:block;
+    transition:.45s ease;
+
+}
+
+.product-image:hover img{
+
+    transform:scale(1.04);
+
+}
+
+.product-details h2{
+
+    font-size:42px;
+    color:#43236F;
+    margin-bottom:20px;
+
+}
+
+.product-details p{
+
+    color:#666;
+    line-height:1.9;
+    margin-bottom:35px;
+
+}
+
+.product-details h3{
+
+    margin-bottom:18px;
+    color:#43236F;
+
+}
+
+/*================ COMPANY BUTTONS ================*/
+
+.company-selector{
+
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+
+}
+
+.company-selector button{
+
+    padding:14px 26px;
+
+    border:2px solid #43236F;
+
+    background:white;
+
+    color:#43236F;
+
+    border-radius:35px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.35s;
+
+}
+
+.company-selector button:hover{
+
+    background:#43236F;
+
+    color:#fff;
+
+    transform:translateY(-4px);
+
+}
+
+.company-selector button.active{
+
+    background:#F4B400;
+
+    color:#222;
+
+    border-color:#F4B400;
+
+}
+
+/*================ TABLE ================*/
+
+.spec-table{
+
+    width:100%;
+    border-collapse:collapse;
+    margin-top:40px;
+    font-size:15px;
+
+}
+
+.spec-table th{
+
+    background:#43236F;
+    color:#fff;
+    padding:18px;
+
+}
+
+.spec-table td{
+
+    padding:18px;
+    border:1px solid #ddd;
+
+}
+
+.spec-table tr:nth-child(even){
+
+    background:#f8f8f8;
+
+}
+
+.spec-table tr:hover{
+
+    background:#fff6dd;
+
+}
+
+/*================ ACCORDION ================*/
+
+.specifications{
+
+    padding:100px 0;
+
+}
+
+.accordion{
+
+    max-width:1000px;
+    margin:auto;
+
+}
+
+.accordion-item{
+
+    margin-bottom:20px;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.accordion-header{
+
+    width:100%;
+    padding:24px;
+
+    background:#43236F;
+
+    color:white;
+
+    border:none;
+
+    cursor:pointer;
+
+    text-align:left;
+
+    font-size:20px;
+
+    font-weight:600;
+
+}
+
+.accordion-content{
+
+    display:none;
+
+    padding:35px;
+
+    background:white;
+
+}
+
+.accordion-content h3{
+
+    color:#43236F;
+    margin-top:25px;
+    margin-bottom:12px;
+
+}
+
+.accordion-content p{
+
+    color:#555;
+    line-height:1.8;
+
+}
+
+.accordion-content ul{
+
+    margin-left:25px;
+    margin-top:10px;
+
+}
+
+.accordion-content li{
+
+    margin-bottom:10px;
+    color:#555;
+    list-style:disc;
+
+}
+
+/*================ FADE EFFECT ================*/
+
+.fade{
+
+    animation:fadeImage .45s;
+
+}
+
+@keyframes fadeImage{
+
+    from{
+
+        opacity:.3;
+        transform:scale(.97);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:scale(1);
+
+    }
+
+}
+
+/*================ MOBILE ================*/
+
+@media(max-width:992px){
+
+.product-view{
+
+grid-template-columns:1fr;
+
+}
+
+.product-details{
+
+text-align:center;
+
+}
+
+.company-selector{
+
+justify-content:center;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.product-details h2{
+
+font-size:34px;
+
+}
+
+.company-selector button{
+
+width:46%;
+
+}
+
+.accordion-header{
+
+font-size:17px;
+
+}
+
+}
