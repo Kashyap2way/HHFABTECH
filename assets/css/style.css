@@ -710,3 +710,16 @@ font-size:34px;
 }
 
 }
+.product-link{
+
+    text-decoration:none;
+    color:inherit;
+    display:block;
+
+}
+
+.product-link .card{
+
+    cursor:pointer;
+
+}
