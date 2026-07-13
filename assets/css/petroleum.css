@@ -135,7 +135,6 @@ box-shadow:0 15px 35px rgba(67,35,111,.35);
 }
 
 /*================ TABLE ================*/
-
 .spec-table{
 
     width:100%;
@@ -184,7 +183,56 @@ box-shadow:0 15px 35px rgba(67,35,111,.35);
 
     padding:20px;
 
+}.spec-table{
+
+    width:100%;
+
+    border-collapse:separate;
+
+    border-spacing:0 15px;
+
 }
+
+.spec-table thead tr{
+
+    background:#43236F;
+
+}
+
+.spec-table th{
+
+    color:#fff;
+
+    padding:18px;
+
+    font-size:16px;
+
+}
+
+.spec-table tbody tr{
+
+    background:white;
+
+    transition:.35s;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.spec-table tbody tr:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 15px 35px rgba(67,35,111,.18);
+
+}
+
+.spec-table td{
+
+    padding:20px;
+
+}
+
 
 .spec-table tr:nth-child(even){
 
