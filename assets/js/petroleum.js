@@ -6,25 +6,27 @@ const tankerImage = document.getElementById("tankerImage");
 
 const buttons = document.querySelectorAll(".company-selector button");
 
-function changeImage(company){
+function changeImage(company, button){
 
-    tankerImage.classList.remove("fade");
+    const tankerImage = document.getElementById("tankerImage");
 
-    setTimeout(()=>{
+    tankerImage.style.opacity="0";
 
-        tankerImage.src="assets/images/petroleum/"+company+".jpg";
+    setTimeout(function(){
 
-        tankerImage.classList.add("fade");
+        tankerImage.src="assets/images/petroleum/"+company+".png";
 
-    },120);
+        tankerImage.style.opacity="1";
 
-    buttons.forEach(btn=>{
+    },250);
+
+    document.querySelectorAll(".company-btn").forEach(function(btn){
 
         btn.classList.remove("active");
 
     });
 
-    event.target.classList.add("active");
+    button.classList.add("active");
 
 }
 
