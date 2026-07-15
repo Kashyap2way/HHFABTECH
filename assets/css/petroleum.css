@@ -135,114 +135,121 @@ box-shadow:0 15px 35px rgba(67,35,111,.35);
 }
 
 /*================ TABLE ================*/
-.spec-table{
+/*=========================
+CONFIGURATION TABLE
+=========================*/
 
-    width:100%;
+.tank-config{
 
-    border-collapse:separate;
+padding:90px 0;
 
-    border-spacing:0 15px;
-
-}
-
-.spec-table thead tr{
-
-    background:#43236F;
+background:#f8f9fc;
 
 }
 
-.spec-table th{
+.config-table{
 
-    color:#fff;
+max-width:1200px;
 
-    padding:18px;
-
-    font-size:16px;
+margin:auto;
 
 }
 
-.spec-table tbody tr{
+.config-header{
 
-    background:white;
+display:grid;
 
-    transition:.35s;
+grid-template-columns:180px 220px 1fr;
 
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
+background:#43236F;
 
-}
+color:#fff;
 
-.spec-table tbody tr:hover{
+padding:22px 30px;
 
-    transform:translateY(-5px);
+border-radius:18px;
 
-    box-shadow:0 15px 35px rgba(67,35,111,.18);
+font-weight:600;
 
-}
+font-size:18px;
 
-.spec-table td{
-
-    padding:20px;
-
-}.spec-table{
-
-    width:100%;
-
-    border-collapse:separate;
-
-    border-spacing:0 15px;
+margin-bottom:18px;
 
 }
 
-.spec-table thead tr{
+.config-row{
 
-    background:#43236F;
+display:grid;
 
-}
+grid-template-columns:180px 220px 1fr;
 
-.spec-table th{
+padding:28px 30px;
 
-    color:#fff;
+margin-bottom:18px;
 
-    padding:18px;
+background:#fff;
 
-    font-size:16px;
+border-radius:18px;
 
-}
+box-shadow:0 10px 25px rgba(0,0,0,.08);
 
-.spec-table tbody tr{
+transition:.35s;
 
-    background:white;
-
-    transition:.35s;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
+align-items:center;
 
 }
 
-.spec-table tbody tr:hover{
+.config-row:hover{
 
-    transform:translateY(-5px);
+transform:translateY(-6px);
 
-    box-shadow:0 15px 35px rgba(67,35,111,.18);
-
-}
-
-.spec-table td{
-
-    padding:20px;
+box-shadow:0 20px 40px rgba(67,35,111,.18);
 
 }
 
+.config-row div{
 
-.spec-table tr:nth-child(even){
+line-height:1.8;
 
-    background:#f8f8f8;
+font-size:17px;
 
 }
 
-.spec-table tr:hover{
+.tank-badge{
 
-    background:#fff6dd;
+display:inline-block;
+
+padding:10px 18px;
+
+margin:4px;
+
+background:#43236F;
+
+color:#fff;
+
+border-radius:30px;
+
+font-weight:600;
+
+box-shadow:0 8px 18px rgba(67,35,111,.25);
+
+}
+
+@media(max-width:900px){
+
+.config-header{
+
+display:none;
+
+}
+
+.config-row{
+
+grid-template-columns:1fr;
+
+gap:15px;
+
+}
 
 }
 
