@@ -60,12 +60,16 @@ header{
     justify-content:space-between;
     align-items:center;
     height:90px;
+
+    padding-right: 100px;
 }
 
 .logo img{
 
     height:75px;
     left: 250px;
+
+    padding-left: 100px;
 }
 
 .nav-links{
