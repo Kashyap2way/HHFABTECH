@@ -353,3 +353,108 @@ font-size:17px;
     font-weight:600;
     font-size:14px;
 }
+
+/*====================================
+GENERAL SPECIFICATION TABLE
+====================================*/
+
+.spec-comparison{
+
+    padding:100px 0;
+    background:#f8f9fc;
+
+}
+
+.comparison-table{
+
+    margin-top:50px;
+    overflow-x:auto;
+
+}
+
+.comparison-table table{
+
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 18px 45px rgba(0,0,0,.08);
+
+}
+
+.comparison-table thead{
+
+    background:#43236F;
+
+}
+
+.comparison-table th{
+
+    color:#fff;
+    padding:22px;
+    text-align:left;
+    font-size:18px;
+    font-weight:600;
+
+}
+
+.comparison-table td{
+
+    padding:25px;
+    vertical-align:top;
+    border-bottom:1px solid #ececec;
+    line-height:1.8;
+    color:#555;
+
+}
+
+.comparison-table tbody tr{
+
+    transition:.35s;
+
+}
+
+.comparison-table tbody tr:hover{
+
+    background:#faf7ff;
+
+}
+
+.comparison-table td:first-child{
+
+    width:18%;
+    background:#fafafa;
+    color:#43236F;
+    font-weight:700;
+
+}
+
+.comparison-table ul{
+
+    margin:0;
+    padding-left:18px;
+
+}
+
+.comparison-table li{
+
+    margin-bottom:8px;
+
+}
+
+.comparison-table strong{
+
+    color:#43236F;
+
+}
+
+@media(max-width:992px){
+
+.comparison-table table{
+
+    min-width:900px;
+
+}
+
+}
