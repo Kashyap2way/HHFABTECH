@@ -136,91 +136,7 @@ box-shadow:0 15px 35px rgba(67,35,111,.35);
 
 /*================ TABLE ================*/
 /*=========================*/
-.configurations{
 
-    padding:90px 0;
-
-    background:#fafafa;
-
-}
-
-.tank-table{
-
-    width:100%;
-
-    border-collapse:separate;
-
-    border-spacing:0 18px;
-
-}
-
-.tank-table th{
-
-    background:#43236F;
-
-    color:#fff;
-
-    padding:18px;
-
-    font-size:18px;
-
-}
-
-.tank-table td{
-
-    background:#fff;
-
-    padding:25px;
-
-    vertical-align:top;
-
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
-
-}
-
-.tank-table tr:hover td{
-
-    transform:translateY(-3px);
-
-    transition:.3s;
-
-}
-
-.compartments{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:10px;
-
-}
-
-.compartments span{
-
-    background:#F4F2FF;
-
-    color:#43236F;
-
-    padding:10px 18px;
-
-    border-radius:30px;
-
-    font-weight:600;
-
-}
-
-.or{
-
-    width:100%;
-
-    font-weight:bold;
-
-    color:#999;
-
-    margin:10px 0;
-
-}
 
 /*================ ACCORDION ================*/
 
@@ -381,144 +297,59 @@ font-size:17px;
 
 /*================ PREMIUM CONFIGURATION TABLE ================*/
 
-.tank-grid{
-
-    max-width:1200px;
-
-    margin:50px auto;
-
+.tank-config{
+    padding:90px 0;
+    background:#f8f9fc;
 }
 
-.tank-header{
-
-    display:grid;
-
-    grid-template-columns:180px 220px 1fr;
-
-    background:#43236F;
-
-    color:#fff;
-
-    font-weight:600;
-
-    border-radius:15px;
-
-    padding:18px 25px;
-
+.tank-config h2{
+    text-align:center;
+    font-size:46px;
+    color:#43236F;
+    margin-bottom:50px;
 }
 
-.tank-row{
-
-    display:grid;
-
-    grid-template-columns:180px 220px 1fr;
-
-    align-items:center;
-
-    margin-top:18px;
-
-    background:#fff;
-
-    border-radius:18px;
-
-    padding:22px;
-
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-
-    transition:.35s;
-
-}
-
-.tank-row:hover{
-
-    transform:translateY(-6px);
-
-    box-shadow:0 20px 40px rgba(67,35,111,.18);
-
-}
-
-.gvw{
-
-    font-size:22px;
-
+.section-tag{
+    display:block;
+    text-align:center;
+    color:#ff9900;
+    letter-spacing:3px;
     font-weight:700;
-
-    color:#43236F;
-
+    margin-bottom:10px;
 }
 
-.capacity{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:10px;
-
-}
-
-.capacity span{
-
-    background:#FFF4D6;
-
-    padding:10px 18px;
-
-    border-radius:30px;
-
-    font-weight:600;
-
-}
-
-.compartments{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:10px;
-
-}
-
-.compartments span{
-
-    background:#F2EEFF;
-
-    color:#43236F;
-
-    padding:10px 16px;
-
-    border-radius:30px;
-
-    font-weight:600;
-
-}
-
-.or{
-
+.tank-table{
     width:100%;
-
-    margin:8px 0;
-
-    color:#999;
-
-    font-weight:bold;
-
+    border-collapse:separate;
+    border-spacing:0 20px;
 }
 
-@media(max-width:900px){
-
-.tank-header{
-
-display:none;
-
+.tank-table th{
+    background:#43236F;
+    color:#fff;
+    padding:20px;
+    font-size:18px;
 }
 
-.tank-row{
-
-grid-template-columns:1fr;
-
-gap:18px;
-
+.tank-table td{
+    background:#fff;
+    padding:25px;
+    vertical-align:top;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
+.tank-table tr:hover td{
+    transform:translateY(-5px);
+    transition:.3s;
+}
+
+.tank-badge{
+    display:inline-block;
+    padding:10px 18px;
+    margin:5px;
+    border-radius:30px;
+    background:#43236F;
+    color:white;
+    font-weight:600;
+    font-size:14px;
 }
