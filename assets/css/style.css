@@ -809,3 +809,48 @@ font-size:34px;
     transform:translateY(-3px);
 
 }
+
+.footer-location{
+
+    display:inline-block;
+  
+
+    border-radius:12px;
+
+   
+
+    color:#ffffff;
+
+    text-decoration:none;
+
+    line-height:1.7;
+
+    transition:all .35s ease;
+
+}
+
+.footer-location:visited{
+
+    color:#ffffff;
+
+}
+
+.footer-location:hover{
+
+    color:#ffffff;
+
+    background:rgba(255,255,255,.15);
+
+    border-color:#ffffff;
+
+    box-shadow:0 12px 25px rgba(255,255,255,.15);
+
+    transform:translateY(-3px);
+
+}
+
+.footer-location:active{
+
+    color:#ffffff;
+
+}
