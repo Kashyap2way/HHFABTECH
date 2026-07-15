@@ -304,60 +304,59 @@ header{
     padding:110px 0;
     background:#ffffff;
 }
-
 .product-grid{
 
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:35px;
-    margin-top:50px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:35px;
+
+}
+
+.product-link{
+
+display:block;
+text-decoration:none;
+color:inherit;
+
+}
+
+.product-link .card{
+
+height:100%;
+cursor:pointer;
+
 }
 
 .card{
 
-    background:#fff;
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 12px 30px rgba(0,0,0,.08);
-    transition:.35s;
+background:#fff;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 12px 30px rgba(0,0,0,.08);
+transition:.35s;
+
 }
 
 .card:hover{
 
-    transform:translateY(-12px);
-    box-shadow:0 20px 45px rgba(67,35,111,.18);
+transform:translateY(-10px);
+box-shadow:0 20px 45px rgba(67,35,111,.20);
+
 }
 
 .card img{
 
-    width:100%;
-    height:260px;
-    object-fit:cover;
-    transition:.4s;
-}
+width:100%;
+height:260px;
+object-fit:cover;
+display:block;
 
-.card:hover img{
-
-    transform:scale(1.08);
 }
 
 .card-content{
 
-    padding:28px;
-}
+padding:28px;
 
-.card-content h3{
-
-    color:#43236F;
-    font-size:22px;
-    margin-bottom:15px;
-}
-
-.card-content p{
-
-    color:#666;
-    font-size:15px;
-    line-height:1.8;
 }
 
 /*================ CTA =================*/
