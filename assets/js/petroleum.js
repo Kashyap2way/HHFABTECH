@@ -75,47 +75,51 @@ accordion.forEach(item=>{
 PESO ACCESSORIES LOGO SLIDER
 ==================================================*/
 
-document.addEventListener("DOMContentLoaded",function(){
+const logos=[
 
-    const track=document.querySelector(".logo-track");
+"assets/images/petroleum/peso accesories logo/logo1.png",
 
-    if(!track) return;
+"assets/images/petroleum/peso accesories logo/logo2.png",
 
-    const slides=track.querySelectorAll(".logo-slide");
+"assets/images/petroleum/peso accesories logo/logo3.jpg",
 
-    let current=0;
+"assets/images/petroleum/peso accesories logo/logo4.png",
 
-    function updateSlider(){
+"assets/images/petroleum/peso accesories logo/logo5.png"
 
-        slides.forEach(slide=>{
+];
 
-            slide.classList.remove("active","left","right");
+let current=0;
 
-        });
+const left=document.getElementById("leftLogo");
+const center=document.getElementById("centerLogo");
+const right=document.getElementById("rightLogo");
 
-        const left=(current-1+slides.length)%slides.length;
-        const right=(current+1)%slides.length;
+function updateLogos(){
 
-        slides[left].classList.add("left");
-        slides[current].classList.add("active");
-        slides[right].classList.add("right");
+    if(!left) return;
+
+    let l=(current-1+logos.length)%logos.length;
+    let r=(current+1)%logos.length;
+
+    left.src=logos[l];
+    center.src=logos[current];
+    right.src=logos[r];
+
+}
+
+updateLogos();
+
+setInterval(function(){
+
+    current++;
+
+    if(current>=logos.length){
+
+        current=0;
 
     }
 
-    updateSlider();
+    updateLogos();
 
-    setInterval(function(){
-
-        current++;
-
-        if(current>=slides.length){
-
-            current=0;
-
-        }
-
-        updateSlider();
-
-    },2500);
-
-});
+},2500);
