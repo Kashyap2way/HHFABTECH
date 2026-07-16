@@ -458,3 +458,76 @@ GENERAL SPECIFICATION TABLE
 }
 
 }
+
+/*=========================
+ACCESSORY PARTNERS
+=========================*/
+
+.partners{
+
+    padding:90px 0;
+    background:#fafafa;
+
+}
+
+.logo-slider{
+
+    width:100%;
+    overflow:hidden;
+    margin-top:50px;
+
+}
+
+.logo-track{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:60px;
+
+}
+
+.logo-track img{
+
+    width:220px;
+    height:140px;
+
+    object-fit:contain;
+
+    background:#fff;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+    transition:.7s;
+
+}
+
+/* Left & Right */
+
+.logo-track img{
+
+    transform:scale(.82);
+
+    filter:blur(3px);
+
+    opacity:.35;
+
+}
+
+/* Middle */
+
+.logo-track img.active{
+
+    transform:scale(1.08);
+
+    filter:blur(0);
+
+    opacity:1;
+
+    box-shadow:0 25px 55px rgba(67,35,111,.22);
+
+}
