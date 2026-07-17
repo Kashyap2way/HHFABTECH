@@ -1,0 +1,330 @@
+/*==================================================
+CHEMICAL TANKER PAGE
+==================================================*/
+
+.petroleum-showcase{
+
+    padding:90px 0;
+    background:#fff;
+
+}
+
+.product-view{
+
+    display:grid;
+    grid-template-columns:1.45fr 1fr;
+    gap:70px;
+    align-items:center;
+
+}
+
+.product-image{
+
+    background:#fafafa;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 18px 45px rgba(0,0,0,.10);
+
+}
+
+.product-image img{
+
+    width:100%;
+    display:block;
+    transition:.45s;
+
+}
+
+.product-image:hover img{
+
+    transform:scale(1.04);
+
+}
+
+.product-details h2{
+
+    color:#43236F;
+    font-size:44px;
+    margin-bottom:20px;
+
+}
+
+.product-details p{
+
+    color:#666;
+    line-height:1.9;
+    margin-bottom:30px;
+
+}
+
+/*=================================
+FEATURE LIST
+=================================*/
+
+.feature-list{
+
+    list-style:none;
+    padding:0;
+    margin:0 0 35px;
+
+}
+
+.feature-list li{
+
+    padding:12px 0;
+    font-size:16px;
+    color:#444;
+    border-bottom:1px solid #ececec;
+
+}
+
+/*=================================
+CAPACITY
+=================================*/
+
+.capacity-section{
+
+    padding:80px 0;
+    background:#fafafa;
+
+}
+
+.capacity-buttons{
+
+    display:flex;
+    justify-content:center;
+    gap:35px;
+    flex-wrap:wrap;
+
+}
+
+.capacity-card{
+
+    padding:18px 55px;
+    border-radius:50px;
+
+    background:white;
+
+    font-size:20px;
+    font-weight:600;
+
+    color:#43236F;
+
+    cursor:default;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+}
+
+.capacity-card:hover{
+
+    transform:translateY(-8px);
+
+    background:#43236F;
+
+    color:white;
+
+    box-shadow:0 18px 40px rgba(67,35,111,.25);
+
+}
+
+/*=================================
+APPLICATIONS
+=================================*/
+
+.applications{
+
+    padding:90px 0;
+
+}
+
+.application-grid{
+
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:25px;
+    margin-top:60px;
+
+}
+
+.application-card{
+
+    background:white;
+
+    padding:35px 20px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+}
+
+.application-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 22px 45px rgba(67,35,111,.18);
+
+}
+
+.application-card img{
+
+    width:70px;
+    height:70px;
+    object-fit:contain;
+    margin-bottom:20px;
+
+}
+
+.application-card h3{
+
+    color:#43236F;
+    margin-bottom:10px;
+    font-size:20px;
+
+}
+
+.application-card p{
+
+    color:#666;
+    font-size:14px;
+    line-height:1.6;
+
+}
+
+/*=================================
+SECTION TITLE
+=================================*/
+
+.section-title{
+
+    text-align:center;
+    margin-bottom:55px;
+
+}
+
+.section-title h5{
+
+    color:#f7a400;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+
+}
+
+.section-title h2{
+
+    color:#43236F;
+    font-size:48px;
+
+}
+
+/*=================================
+BUTTON
+=================================*/
+
+.btn{
+
+    display:inline-block;
+
+    padding:16px 42px;
+
+    border-radius:40px;
+
+    background:#43236F;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.35s;
+
+}
+
+.btn:hover{
+
+    background:#f7a400;
+
+    transform:translateY(-5px);
+
+}
+
+/*=================================
+RESPONSIVE
+=================================*/
+
+@media(max-width:1200px){
+
+.application-grid{
+
+grid-template-columns:repeat(3,1fr);
+
+}
+
+}
+
+@media(max-width:992px){
+
+.product-view{
+
+grid-template-columns:1fr;
+
+}
+
+.product-details{
+
+text-align:center;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.application-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.product-details h2{
+
+font-size:34px;
+
+}
+
+.section-title h2{
+
+font-size:36px;
+
+}
+
+.capacity-card{
+
+width:100%;
+
+max-width:280px;
+
+text-align:center;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.application-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
