@@ -16,7 +16,7 @@ function changeImage(company, button){
 
     setTimeout(function(){
 
-        tankerImage.src = "assets/images/petroleum/" + company + ".png";
+        tankerImage.src = "assets/images/petroleum/" + company + ".webp";
         tankerImage.style.opacity = "1";
 
     },250);
