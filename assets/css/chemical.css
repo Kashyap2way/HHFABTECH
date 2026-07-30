@@ -46,6 +46,7 @@ CHEMICAL TANKER PAGE
     color:#43236F;
     font-size:44px;
     margin-bottom:20px;
+    text-align: center;
 
 }
 
@@ -54,6 +55,18 @@ CHEMICAL TANKER PAGE
     color:#666;
     line-height:1.9;
     margin-bottom:30px;
+    text-align: center;
+
+}
+.product-details h3{
+
+    text-align: center;
+
+}
+
+.product-details li{
+
+    text-align: center;
 
 }
 
@@ -246,6 +259,8 @@ BUTTON
     font-weight:600;
 
     transition:.35s;
+
+    
 
 }
 

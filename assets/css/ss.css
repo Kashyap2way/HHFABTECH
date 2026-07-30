@@ -1,0 +1,370 @@
+/*=========================================
+SS TANKER PAGE
+=========================================*/
+
+.petroleum-showcase{
+
+    padding:90px 0;
+    background:#fff;
+
+}
+
+.product-view{
+
+    display:grid;
+    grid-template-columns:1.45fr 1fr;
+    gap:70px;
+    align-items:center;
+
+}
+
+.product-image{
+
+    background:#fafafa;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 18px 45px rgba(0,0,0,.10);
+
+}
+
+.product-image img{
+
+    width:100%;
+    display:block;
+    transition:.45s;
+
+}
+
+.product-image:hover img{
+
+    transform:scale(1.04);
+
+}
+
+.product-details h2{
+
+    color:#43236F;
+    font-size:44px;
+    margin-bottom:20px;
+
+}
+
+.product-details p{
+
+    color:#666;
+    line-height:1.9;
+    margin-bottom:35px;
+
+}
+
+/*================ FEATURES =================*/
+
+.feature-list{
+
+    list-style:none;
+    padding:0;
+    margin:0;
+
+}
+
+.feature-list li{
+
+    margin-bottom:15px;
+
+    padding:14px 18px;
+
+    background:#fafafa;
+
+    border-left:5px solid #43236F;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.feature-list li:hover{
+
+    transform:translateX(8px);
+
+    background:#f4effc;
+
+}
+
+/*================ MATERIAL BUTTONS =================*/
+
+.capacity-section{
+
+    padding:90px 0;
+
+    background:#fafafa;
+
+}
+
+.capacity-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:35px;
+
+    flex-wrap:wrap;
+
+}
+
+.capacity-card{
+
+    padding:18px 55px;
+
+    border-radius:50px;
+
+    background:white;
+
+    color:#43236F;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    cursor:default;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+}
+
+.capacity-card:hover{
+
+    background:#43236F;
+
+    color:#fff;
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 45px rgba(67,35,111,.28);
+
+}
+
+/*================ COMPARISON =================*/
+
+.comparison-section{
+
+    padding:100px 0;
+
+    background:white;
+
+}
+
+.comparison-table{
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.10);
+
+}
+
+.compare-header,
+
+.compare-row{
+
+    display:grid;
+
+    grid-template-columns:1.2fr 1fr 1fr;
+
+}
+
+.compare-header{
+
+    background:#43236F;
+
+    color:white;
+
+    font-weight:700;
+
+}
+
+.compare-cell{
+
+    padding:28px;
+
+    border-right:1px solid rgba(0,0,0,.08);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    line-height:1.8;
+
+}
+
+.compare-row:nth-child(even){
+
+    background:#fafafa;
+
+}
+
+.compare-row:hover{
+
+    background:#fff9ea;
+
+    transition:.3s;
+
+}
+
+.feature{
+
+    background:#f4f4f4;
+
+    font-weight:700;
+
+    color:#43236F;
+
+}
+
+.feature-head{
+
+    background:#35195b;
+
+}
+
+.ss304{
+
+    background:#4f2d82;
+
+}
+
+.ss316{
+
+    background:#f7a400;
+
+    color:#222;
+
+}
+
+.premium{
+
+    background:#fff8e8;
+
+}
+
+/*================ TITLES =================*/
+
+.section-title{
+
+    text-align:center;
+
+    margin-bottom:55px;
+
+}
+
+.section-title h2{
+
+    font-size:44px;
+
+    color:#43236F;
+
+}
+
+/*================ BUTTON =================*/
+
+.btn{
+
+    display:inline-block;
+
+    padding:16px 42px;
+
+    background:#43236F;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:40px;
+
+    transition:.35s;
+
+}
+
+.btn:hover{
+
+    background:#f7a400;
+
+    color:#222;
+
+    transform:translateY(-4px);
+
+}
+
+/*================ RESPONSIVE =================*/
+
+@media(max-width:992px){
+
+.product-view{
+
+grid-template-columns:1fr;
+
+}
+
+.product-details{
+
+text-align:center;
+
+}
+
+.compare-header,
+
+.compare-row{
+
+grid-template-columns:1fr;
+
+}
+
+.compare-cell{
+
+border-bottom:1px solid #ddd;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.product-details h2{
+
+font-size:34px;
+
+}
+
+.capacity-card{
+
+width:100%;
+
+max-width:280px;
+
+text-align:center;
+
+}
+
+.section-title h2{
+
+font-size:34px;
+
+}
+
+.feature-list li{
+
+font-size:15px;
+
+}
+
+}
