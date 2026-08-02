@@ -1,0 +1,31 @@
+[
+
+    {
+        "designation": "Production Supervisor",
+        "department": "Production",
+        "salary": "₹20,000-25,000",
+        "experience": "2 - 5 Years",
+        "qualification": "Diploma Mechanical/ 10 Pass/ 12th Pass",
+        "location": "Sanathal, Ahmedabad, Gujarat",
+        "type": "Full Time",
+        "vacancies": "1",
+        "posted": "01 Aug 2026",
+        "lastDate": "01 Dec 2026",
+        "status": "Open"
+    },
+
+    {
+        "designation": "Quality Inspector",
+        "department": "Quality Control",
+        "salary": "₹15,000-20,000",
+        "experience": "1 - 2 Years",
+        "qualification": "ITI / Diploma Mechanical/ 12th Pass",
+        "location": "Sanathal, Ahmedabad, Gujarat",
+        "type": "Full Time",
+        "vacancies": "1",
+        "posted": "01 Aug 2026",
+        "lastDate": "01 Dec 2026",
+        "status": "Open"
+    }
+
+]

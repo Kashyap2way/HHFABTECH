@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Career | HH FABTECH</title>
+
+<meta name="description"
+content="Join HH FABTECH and build your career in tanker manufacturing. Explore open positions in Mechanical, Design, Production and Quality departments.">
+
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/css/career.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<!--================ HEADER =================-->
+
+<header>
+
+<nav class="navbar">
+
+<div class="logo">
+
+<a href="index.html">
+
+<img src="assets/images/logo.png" alt="HH FABTECH">
+
+</a>
+
+</div>
+
+<ul class="nav-links">
+
+<li><a href="index.html">Home</a></li>
+
+<li><a href="about.html">About Us</a></li>
+
+<li><a href="products.html">Products</a></li>
+
+<li><a class="active" href="career.html">Career</a></li>
+
+<li><a href="contact.html">Contact Us</a></li>
+
+</ul>
+
+<div class="menu-btn">☰</div>
+
+</nav>
+
+</header>
+
+<!--================ HERO =================-->
+
+<section class="career-hero">
+
+<div class="container">
+
+<h1>Build Your Career With HH FABTECH</h1>
+
+<p>
+
+Join one of Gujarat's growing tanker manufacturers
+and become part of a team that values quality,
+innovation and engineering excellence.
+
+</p>
+
+<a href="#jobs" class="btn">
+
+Explore Open Positions
+
+</a>
+
+</div>
+
+</section>
+
+<!--================ WHY JOIN US =================-->
+
+<section class="why-work">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+
+Why Join HH FABTECH?
+
+</h2>
+
+<p>
+
+Grow with a company committed to engineering excellence.
+
+</p>
+
+</div>
+
+<div class="career-grid">
+
+<div class="career-card">
+
+<div class="career-icon">🏭</div>
+
+<h3>Modern Manufacturing</h3>
+
+<p>
+
+Work on state-of-the-art fabrication,
+welding and tanker manufacturing projects.
+
+</p>
+
+</div>
+
+<div class="career-card">
+
+<div class="career-icon">📈</div>
+
+<h3>Career Growth</h3>
+
+<p>
+
+Continuous learning and opportunities
+to take leadership responsibilities.
+
+</p>
+
+</div>
+
+<div class="career-card">
+
+<div class="career-icon">🤝</div>
+
+<h3>Supportive Team</h3>
+
+<p>
+
+Collaborative environment where
+every employee contributes.
+
+</p>
+
+</div>
+
+<div class="career-card">
+
+<div class="career-icon">💰</div>
+
+<h3>Competitive Salary</h3>
+
+<p>
+
+Performance-based growth with
+attractive compensation.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!--================ OPEN POSITIONS =================-->
+
+<section class="jobs-section" id="jobs">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+
+Current Open Positions
+
+</h2>
+
+<p>
+
+Below positions are updated automatically from
+our recruitment database.
+
+</p>
+
+</div>
+
+<!-- JavaScript will generate cards here -->
+
+<div id="jobContainer">
+
+</div>
+
+<!-- Display if no jobs -->
+
+<div id="noJobs" class="no-jobs" style="display:none;">
+
+<h3>
+
+Currently No Open Positions
+
+</h3>
+
+<p>
+
+We are always looking for talented people.
+
+</p>
+
+<p>
+
+Email your resume at
+
+<strong>
+
+hhfabtech@gmail.com
+
+</strong>
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!--================ APPLICATION FORM =================-->
+
+<section class="career-form-section" id="apply">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+
+Apply Now
+
+</h2>
+
+<p>
+
+Interested candidates can submit their application below.
+
+</p>
+
+</div>
+
+<form name="career"
+method="POST"
+data-netlify="true"
+enctype="multipart/form-data"
+class="career-form">
+
+<input type="hidden" name="form-name" value="career">
+
+<!-- Auto Filled Job Title -->
+
+<input
+type="hidden"
+id="jobTitle"
+name="job_position">
+
+<div class="form-grid">
+
+<div class="input-box">
+
+<label>Full Name *</label>
+
+<input
+type="text"
+name="name"
+required>
+
+</div>
+
+<div class="input-box">
+
+<label>Email Address *</label>
+
+<input
+type="email"
+name="email"
+required>
+
+</div>
+
+<div class="input-box">
+
+<label>Phone Number *</label>
+
+<input
+type="tel"
+name="phone"
+required>
+
+</div>
+
+<div class="input-box">
+
+<label>Qualification *</label>
+
+<input
+type="text"
+name="qualification"
+required>
+
+</div>
+
+<div class="input-box">
+
+<label>Experience</label>
+
+<input
+type="text"
+name="experience"
+placeholder="Example : 2 Years">
+
+</div>
+
+<div class="input-box">
+
+<label>Current Company</label>
+
+<input
+type="text"
+name="company">
+
+</div>
+
+<div class="input-box">
+
+<label>Expected Salary</label>
+
+<input
+type="text"
+name="salary">
+
+</div>
+
+<div class="input-box">
+
+<label>Notice Period</label>
+
+<input
+type="text"
+name="notice_period">
+
+</div>
+
+</div>
+
+<div class="input-box">
+
+<label>Cover Letter / Message</label>
+
+<textarea
+name="message"
+rows="6"
+placeholder="Tell us about yourself..."></textarea>
+
+</div>
+
+<!-- Resume Upload -->
+
+<div class="resume-upload">
+
+<label class="upload-box">
+
+<input
+type="file"
+name="resume"
+accept=".pdf,.doc,.docx">
+
+<div class="upload-content">
+
+<div class="upload-icon">
+
+📄
+
+</div>
+
+<h3>
+
+Upload Resume
+
+</h3>
+
+<p>
+
+Drag & Drop your Resume here
+
+or
+
+Click to Browse
+
+</p>
+
+<span>
+
+Supported Formats :
+PDF, DOC, DOCX
+
+</span>
+
+</div>
+
+</label>
+
+</div>
+
+<div class="submit-area">
+
+<button
+type="submit"
+class="btn">
+
+Submit Application
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</section>
+
+<!--================ CTA =================-->
+
+<section class="cta">
+
+<div class="container">
+
+<h2>
+
+Didn't Find a Suitable Position?
+
+</h2>
+
+<p>
+
+We are always looking for talented engineers,
+designers and production professionals.
+
+Feel free to send your resume.
+
+</p>
+
+<a
+href="mailto:hhfabtech@gmail.com"
+class="btn">
+
+Send Resume
+
+</a>
+
+</div>
+
+</section>
+
+<!--================ FOOTER =================-->
+    <footer>
+
+        <div class="footer-container">
+
+            <div class="footer-about">
+
+                <img src="assets/images/logo.png" alt="HH FABTECH">
+
+                <p>
+
+                    HH FABTECH is committed to manufacturing
+                    world-class Petroleum, Chemical, SS and Water
+                    Tankers with superior engineering quality.
+
+                </p>
+
+            </div>
+
+            <div class="footer-links">
+
+                <h3>Quick Links</h3>
+
+                <ul>
+
+                    <li><a href="index.html">Home</a></li>
+
+                    <li><a href="about.html">About Us</a></li>
+
+                    <li><a href="products.html">Products</a></li>
+
+                    <li><a href="career.html">Careers</a></li>
+
+                    <li><a href="contact.html">Contact Us</a></li>
+
+                </ul>
+
+            </div>
+
+            <div class="footer-contact">
+
+                <h3>Contact</h3>
+
+                <p>
+                    <a href="https://maps.app.goo.gl/byFU6Hq3dxLh6ciT8"
+                    target="_blank"
+                    class="footer-location">
+
+                        FINAL PLOT NO. 18/2 TP NO. 403/A,<br>
+                        SURVEY NO.329B/1 PAIKY 2-2387<br>
+                        NEAR SANATHAL CIRCLE ROAD, FATEWADI CANAL,<br>
+                        SANATHAL, SANAND, AHMEDABAD, GUJARAT - 382210
+
+                    </a>
+                </p>
+
+                <p>hhfabtech@gmail.com</p>
+
+ <p>Devarsh Patel: +91 98791 11233</p>
+                    <p>Kashyap Mistry: +91 99986 90388</p>
+
+            </div>
+
+        </div>
+
+        <div class="copyright">
+
+            © 2026 HH FABTECH. All Rights Reserved.
+
+        </div>
+
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
+
