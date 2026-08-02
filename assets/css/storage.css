@@ -1,0 +1,386 @@
+/*==================================================
+STORAGE TANK PAGE
+==================================================*/
+
+.storage-showcase{
+
+    padding:90px 0;
+    background:#fff;
+
+}
+
+.product-view{
+
+    display:grid;
+    grid-template-columns:1.45fr 1fr;
+    gap:70px;
+    align-items:center;
+
+}
+
+.product-image{
+
+    background:#fafafa;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 18px 45px rgba(0,0,0,.10);
+
+}
+
+.product-image img{
+
+    width:100%;
+    display:block;
+    transition:.45s;
+
+}
+
+.product-image:hover img{
+
+    transform:scale(1.04);
+
+}
+
+.product-details h2{
+
+    font-size:44px;
+    color:#43236F;
+    margin-bottom:20px;
+
+}
+
+.product-details p{
+
+    color:#666;
+    line-height:1.9;
+    margin-bottom:35px;
+
+}
+
+/*================ FEATURES =================*/
+
+.feature-list{
+
+    list-style:none;
+    padding:0;
+
+}
+
+.feature-list li{
+
+    background:#fafafa;
+    margin-bottom:15px;
+    padding:14px 18px;
+    border-left:5px solid #43236F;
+    border-radius:10px;
+    transition:.35s;
+
+}
+
+.feature-list li:hover{
+
+    background:#f4effc;
+    transform:translateX(8px);
+
+}
+
+/*================ TITLES =================*/
+
+.section-title{
+
+    text-align:center;
+    margin-bottom:60px;
+
+}
+
+.section-title h2{
+
+    font-size:44px;
+    color:#43236F;
+
+}
+
+.section-title p{
+
+    color:#666;
+    margin-top:12px;
+
+}
+
+/*================ CAPACITY =================*/
+
+.capacity-section{
+
+    padding:90px 0;
+    background:#fafafa;
+
+}
+
+.capacity-buttons{
+
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:25px;
+
+}
+
+.capacity-card{
+
+    padding:18px 40px;
+    border-radius:50px;
+    background:white;
+    color:#43236F;
+    font-weight:600;
+    font-size:18px;
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+    transition:.35s;
+    cursor:default;
+
+}
+
+.capacity-card:hover{
+
+    background:#43236F;
+    color:#fff;
+    transform:translateY(-8px);
+    box-shadow:0 20px 45px rgba(67,35,111,.28);
+
+}
+
+/*================ COMPARISON =================*/
+
+.comparison-section{
+
+    padding:100px 0;
+
+}
+
+.comparison-table{
+
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 20px 45px rgba(0,0,0,.10);
+
+}
+
+.compare-header,
+.compare-row{
+
+    display:grid;
+    grid-template-columns:1.1fr 1fr 1fr;
+
+}
+
+.compare-header{
+
+    background:#43236F;
+    color:white;
+    font-weight:700;
+
+}
+
+.compare-cell{
+
+    padding:26px;
+    text-align:center;
+    border-right:1px solid rgba(255,255,255,.08);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    line-height:1.8;
+
+}
+
+.feature-head{
+
+    background:#35195b;
+
+}
+
+.vertical{
+
+    background:#4b2778;
+
+}
+
+.capsule{
+
+    background:#f7a400;
+    color:#222;
+
+}
+
+.compare-row:nth-child(even){
+
+    background:#fafafa;
+
+}
+
+.compare-row:hover{
+
+    background:#fff7e7;
+    transition:.3s;
+
+}
+
+.feature{
+
+    font-weight:700;
+    color:#43236F;
+
+}
+
+.premium{
+
+    background:#fffdf5;
+
+}
+
+/*================ GRID =================*/
+
+.applications{
+
+    padding:90px 0;
+    background:#fff;
+
+}
+
+.application-grid{
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+
+}
+
+.application-card{
+
+    background:#fff;
+    border-radius:18px;
+    padding:28px;
+    text-align:center;
+    border:1px solid #eee;
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+    transition:.35s;
+
+}
+
+.application-card:hover{
+
+    background:#43236F;
+    color:white;
+    transform:translateY(-10px);
+    box-shadow:0 20px 45px rgba(67,35,111,.25);
+
+}
+
+.application-card h3{
+
+    font-size:18px;
+    margin:0;
+
+}
+
+/*================ BUTTON =================*/
+
+.btn{
+
+    display:inline-block;
+    padding:16px 42px;
+    background:#43236F;
+    color:#fff;
+    border-radius:40px;
+    text-decoration:none;
+    transition:.35s;
+
+}
+
+.btn:hover{
+
+    background:#f7a400;
+    color:#222;
+    transform:translateY(-5px);
+
+}
+
+/*================ RESPONSIVE =================*/
+
+@media(max-width:1200px){
+
+.application-grid{
+
+grid-template-columns:repeat(3,1fr);
+
+}
+
+}
+
+@media(max-width:992px){
+
+.product-view{
+
+grid-template-columns:1fr;
+
+}
+
+.product-details{
+
+text-align:center;
+
+}
+
+.compare-header,
+.compare-row{
+
+grid-template-columns:1fr;
+
+}
+
+.compare-cell{
+
+border-bottom:1px solid #ddd;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.application-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.section-title h2{
+
+font-size:34px;
+
+}
+
+.product-details h2{
+
+font-size:34px;
+
+}
+
+.capacity-card{
+
+width:100%;
+max-width:280px;
+text-align:center;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.application-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
