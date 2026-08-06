@@ -1,0 +1,274 @@
+/*=========================================
+WATER TANKER PAGE
+=========================================*/
+
+.water-showcase{
+
+padding:90px 0;
+background:#fff;
+
+}
+
+.product-view{
+
+display:grid;
+grid-template-columns:1.3fr 1fr;
+gap:60px;
+align-items:center;
+
+}
+
+.product-image{
+
+border-radius:22px;
+overflow:hidden;
+box-shadow:0 20px 45px rgba(0,0,0,.12);
+
+}
+
+.product-image img{
+
+width:100%;
+display:block;
+transition:.4s;
+
+}
+
+.product-image:hover img{
+
+transform:scale(1.04);
+
+}
+
+.product-details h2{
+
+font-size:42px;
+color:#43236F;
+margin-bottom:20px;
+
+}
+
+.product-details p{
+
+line-height:1.9;
+color:#666;
+margin-bottom:25px;
+
+}
+
+.feature-list{
+
+list-style:none;
+padding:0;
+
+}
+
+.feature-list li{
+
+padding:10px 0;
+font-size:16px;
+color:#444;
+
+}
+
+/*================ CAPACITY =================*/
+.section-title{
+    grid-column:1 / -1;
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.capacity-section{
+
+padding:80px 0;
+background:#fafafa;
+
+}
+
+.capacity-buttons{
+
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:20px;
+
+}
+
+.capacity-card{
+
+padding:16px 38px;
+border-radius:40px;
+background:#fff;
+font-weight:600;
+color:#43236F;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.35s;
+cursor:default;
+
+}
+
+.capacity-card:hover{
+
+background:#43236F;
+color:#fff;
+transform:translateY(-6px);
+box-shadow:0 20px 35px rgba(67,35,111,.22);
+
+}
+
+/*================ TABLE =================*/
+
+.comparison-section{
+
+padding:90px 0;
+
+}
+
+.comparison-table{
+
+max-width:1100px;
+margin:auto;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 20px 45px rgba(0,0,0,.10);
+
+}
+
+.compare-header,
+.compare-row{
+
+display:grid;
+grid-template-columns:1.2fr 1fr 1fr;
+
+}
+
+.compare-header{
+
+background:#43236F;
+color:#fff;
+font-weight:600;
+
+}
+
+.compare-cell{
+
+padding:20px;
+border-bottom:1px solid #eee;
+
+}
+
+.compare-row:nth-child(even){
+
+background:#fafafa;
+
+}
+
+.compare-row:hover{
+
+background:#fff8eb;
+
+}
+
+.feature{
+
+font-weight:600;
+color:#43236F;
+
+}
+
+/*================ APPLICATION =================*/
+
+.applications{
+
+padding:90px 0;
+background:#fff;
+
+}
+
+.application-grid{
+
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:25px;
+
+}
+
+.application-card{
+
+padding:35px 25px;
+text-align:center;
+background:#fff;
+border-radius:18px;
+box-shadow:0 12px 30px rgba(0,0,0,.08);
+transition:.35s;
+
+}
+
+.application-card:hover{
+
+transform:translateY(-8px);
+box-shadow:0 20px 45px rgba(67,35,111,.18);
+
+}
+
+.app-icon{
+
+font-size:48px;
+margin-bottom:18px;
+
+}
+
+.application-card h3{
+
+font-size:18px;
+color:#43236F;
+
+}
+
+/*================ RESPONSIVE =================*/
+
+@media(max-width:992px){
+
+.product-view{
+
+grid-template-columns:1fr;
+
+}
+
+.application-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.product-details{
+
+text-align:center;
+
+}
+
+.compare-header,
+.compare-row{
+
+grid-template-columns:1fr;
+
+}
+
+.application-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.capacity-card{
+
+width:46%;
+text-align:center;
+
+}
+
+}
