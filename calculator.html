@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tank Volume Calculator | HH FABTECH</title>
+<meta name="description" content="Calculate tank volume in cubic metres, litres and US gallons using Circle, Oval or HH FABTECH Spell tanker profiles.">
+<meta name="author" content="HH FABTECH">
+
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+/* =========================================================
+   HH FABTECH — PREMIUM TANK VOLUME CALCULATOR
+   Self-contained page styles. Existing site CSS remains intact.
+   ========================================================= */
+
+:root {
+    --tc-ink: #111827;
+    --tc-muted: #667085;
+    --tc-line: #e5e7eb;
+    --tc-panel: #ffffff;
+    --tc-soft: #f6f8fb;
+    --tc-accent: #b8860b;
+    --tc-accent-dark: #8b6508;
+    --tc-dark: #101318;
+    --tc-water: #2784c6;
+    --tc-water-dark: #17649b;
+}
+
+body.calculator-page {
+    background:
+        radial-gradient(circle at 50% -10%, rgba(184,134,11,.08), transparent 34%),
+        #f7f8fa;
+}
+
+/* ---------- Hero ---------- */
+.tc-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 82px 20px 66px;
+    background:
+        linear-gradient(135deg, #111318 0%, #171a20 55%, #0d0f13 100%);
+    color: #fff;
+}
+
+.tc-hero::before,
+.tc-hero::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.tc-hero::before {
+    width: 430px;
+    height: 430px;
+    right: -150px;
+    top: -220px;
+}
+
+.tc-hero::after {
+    width: 650px;
+    height: 650px;
+    left: -390px;
+    bottom: -500px;
+}
+
+.tc-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1160px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.tc-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 14px;
+    color: #d7b65d;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+}
+
+.tc-eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+}
+
+.tc-hero h1 {
+    margin: 0;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -.035em;
+}
+
+.tc-hero p {
+    max-width: 690px;
+    margin: 18px auto 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* ---------- Main calculator ---------- */
+.tc-main {
+    max-width: 1160px;
+    margin: -32px auto 80px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.tc-shell {
+    background: rgba(255,255,255,.96);
+    border: 1px solid rgba(17,24,39,.08);
+    border-radius: 24px;
+    box-shadow: 0 24px 70px rgba(16,24,40,.12);
+    overflow: hidden;
+}
+
+/* ---------- Shape selector ---------- */
+.tc-shape-section {
+    padding: 30px;
+    border-bottom: 1px solid var(--tc-line);
+}
+
+.tc-section-head {
+    margin-bottom: 22px;
+}
+
+.tc-section-kicker {
+    margin: 0 0 5px;
+    color: var(--tc-accent-dark);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+.tc-section-head h2 {
+    margin: 0;
+    color: var(--tc-ink);
+    font-size: 24px;
+    line-height: 1.25;
+}
+
+.tc-section-head p {
+    margin: 7px 0 0;
+    color: var(--tc-muted);
+    font-size: 13px;
+}
+
+.tc-shape-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.tc-shape-card {
+    position: relative;
+    min-height: 210px;
+    padding: 22px;
+    border: 1px solid var(--tc-line);
+    border-radius: 18px;
+    background: linear-gradient(180deg, #fff, #fafbfc);
+    cursor: pointer;
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.tc-shape-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(184,134,11,.55);
+    box-shadow: 0 14px 35px rgba(16,24,40,.09);
+}
+
+.tc-shape-card.active {
+    border-color: var(--tc-accent);
+    box-shadow: 0 0 0 3px rgba(184,134,11,.10), 0 16px 40px rgba(16,24,40,.10);
+}
+
+.tc-shape-check {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #111827;
+    color: #fff;
+    font-size: 12px;
+    opacity: 0;
+    transform: scale(.7);
+    transition: .2s ease;
+}
+
+.tc-shape-card.active .tc-shape-check {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.tc-shape-svg {
+    height: 95px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 8px;
+}
+
+.tc-shape-svg svg {
+    width: 150px;
+    height: 88px;
+    overflow: visible;
+}
+
+.tc-shape-card h3 {
+    margin: 0;
+    color: var(--tc-ink);
+    font-size: 16px;
+}
+
+.tc-shape-card p {
+    margin: 5px 0 0;
+    color: var(--tc-muted);
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+/* ---------- Calculator workspace ---------- */
+.tc-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(330px, .92fr);
+    min-height: 560px;
+}
+
+.tc-visual-panel {
+    position: relative;
+    padding: 34px;
+    background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,.98), rgba(246,248,251,.94)),
+        #f6f8fb;
+    border-right: 1px solid var(--tc-line);
+}
+
+.tc-visual-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.tc-visual-title {
+    margin: 0;
+    color: var(--tc-ink);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.tc-visual-subtitle {
+    margin: 4px 0 0;
+    color: var(--tc-muted);
+    font-size: 11px;
+}
+
+.tc-profile-badge {
+    padding: 7px 10px;
+    border: 1px solid #e6e8ec;
+    border-radius: 999px;
+    background: rgba(255,255,255,.75);
+    color: #475467;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.tc-canvas {
+    position: relative;
+    min-height: 390px;
+    display: grid;
+    place-items: center;
+}
+
+#tankSvg {
+    width: min(100%, 620px);
+    height: auto;
+    overflow: visible;
+}
+
+.tc-empty-state {
+    display: none;
+}
+
+/* SVG styling */
+.tank-outline {
+    fill: url(#metalGradient);
+    stroke: #7d8792;
+    stroke-width: 2;
+}
+
+.tank-inner {
+    fill: rgba(255,255,255,.15);
+    stroke: rgba(40,49,60,.25);
+    stroke-width: 1;
+}
+
+.tank-liquid {
+    fill: url(#waterGradient);
+    opacity: .9;
+}
+
+.tank-liquid-wave {
+    fill: rgba(255,255,255,.15);
+}
+
+.dim-line {
+    stroke: #7c8794;
+    stroke-width: 1.25;
+    stroke-dasharray: 5 5;
+}
+
+.dim-arrow {
+    stroke: #667085;
+    stroke-width: 1.3;
+}
+
+.dim-text {
+    fill: #475467;
+    font-family: Poppins, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.tc-visual-note {
+    margin: 0;
+    color: #98a2b3;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+/* ---------- Inputs ---------- */
+.tc-input-panel {
+    padding: 34px;
+    background: #fff;
+}
+
+.tc-input-title {
+    margin: 0;
+    color: var(--tc-ink);
+    font-size: 20px;
+}
+
+.tc-input-description {
+    margin: 7px 0 24px;
+    color: var(--tc-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.tc-field {
+    margin-bottom: 18px;
+}
+
+.tc-field label {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 7px;
+    color: #344054;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.tc-field-label-meta {
+    color: #98a2b3;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.tc-input-group {
+    display: grid;
+    grid-template-columns: 1fr 94px;
+    gap: 8px;
+}
+
+.tc-input-group input,
+.tc-input-group select {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #dfe3e8;
+    border-radius: 11px;
+    background: #fff;
+    color: #111827;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+    box-sizing: border-box;
+}
+
+.tc-input-group input {
+    padding: 0 14px;
+}
+
+.tc-input-group select {
+    padding: 0 10px;
+}
+
+.tc-input-group input:focus,
+.tc-input-group select:focus {
+    border-color: var(--tc-accent);
+    box-shadow: 0 0 0 3px rgba(184,134,11,.10);
+}
+
+.tc-results {
+    margin-top: 27px;
+    padding: 20px;
+    border-radius: 17px;
+    background: #111318;
+    color: #fff;
+    box-shadow: 0 12px 30px rgba(16,24,40,.13);
+}
+
+.tc-result-label {
+    color: rgba(255,255,255,.55);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+.tc-primary-result {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.tc-primary-result strong {
+    font-size: clamp(34px, 5vw, 48px);
+    line-height: 1;
+    letter-spacing: -.04em;
+}
+
+.tc-primary-result span {
+    color: #d7b65d;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.tc-result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 17px;
+}
+
+.tc-result-item {
+    padding: 11px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 11px;
+    background: rgba(255,255,255,.045);
+}
+
+.tc-result-item span {
+    display: block;
+    color: rgba(255,255,255,.46);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.tc-result-item strong {
+    display: block;
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+.tc-status {
+    margin: 12px 0 0;
+    color: rgba(255,255,255,.48);
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+.tc-info {
+    margin-top: 18px;
+    padding: 13px 14px;
+    border: 1px solid #e8eaee;
+    border-radius: 12px;
+    background: #fafbfc;
+    color: #667085;
+    font-size: 10px;
+    line-height: 1.65;
+}
+
+.tc-info strong {
+    color: #344054;
+}
+
+
+/* ---------- Fill controls ---------- */
+.tc-fill-card {
+    margin-top: 22px;
+    padding: 17px;
+    border: 1px solid #e7e9ed;
+    border-radius: 16px;
+    background: #fafbfc;
+}
+
+.tc-fill-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 15px;
+}
+
+.tc-fill-kicker {
+    margin: 0 0 3px;
+    color: var(--tc-accent-dark);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+.tc-fill-head h3 {
+    margin: 0;
+    color: #344054;
+    font-size: 14px;
+}
+
+.tc-fill-switch {
+    display: inline-flex;
+    padding: 3px;
+    border: 1px solid #e0e3e7;
+    border-radius: 999px;
+    background: #fff;
+}
+
+.tc-fill-mode {
+    border: 0;
+    border-radius: 999px;
+    padding: 7px 10px;
+    background: transparent;
+    color: #667085;
+    font: 600 10px Poppins, sans-serif;
+    cursor: pointer;
+}
+
+.tc-fill-mode.active {
+    background: #111318;
+    color: #fff;
+}
+
+.tc-fill-field label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    color: #344054;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.tc-check-row {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    align-items: start;
+    column-gap: 8px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.tc-check-row input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tc-check-box {
+    width: 19px;
+    height: 19px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #cbd0d7;
+    border-radius: 6px;
+    background: #fff;
+    color: transparent;
+    font-size: 10px;
+    transition: .2s ease;
+}
+
+.tc-check-row input:checked + .tc-check-box {
+    border-color: #111318;
+    background: #111318;
+    color: #fff;
+}
+
+.tc-check-row strong {
+    display: block;
+    color: #344054;
+    font-size: 11px;
+}
+
+.tc-check-row small {
+    display: block;
+    margin-top: 3px;
+    color: #98a2b3;
+    font-size: 9px;
+    line-height: 1.45;
+}
+
+.tc-emboss-note {
+    display: flex;
+    gap: 7px;
+    margin-top: 12px;
+    color: #98a2b3;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+.tc-emboss-note i {
+    margin-top: 2px;
+    color: #b8860b;
+}
+
+/* ---------- Footer tooltip ---------- */
+.calculator-nav-item {
+    position: relative;
+}
+
+.calculator-nav-link {
+    position: relative;
+}
+
+.calculator-nav-tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 13px);
+    width: max-content;
+    max-width: 230px;
+    padding: 10px 13px;
+    border-radius: 10px;
+    background: #111318;
+    color: #fff;
+    box-shadow: 0 10px 25px rgba(0,0,0,.18);
+    font-size: 11px;
+    line-height: 1.45;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 7px);
+    transition:
+        opacity .2s ease .75s,
+        transform .2s ease .75s,
+        visibility 0s linear .95s;
+    z-index: 20;
+}
+
+.calculator-nav-tooltip::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 10px;
+    height: 10px;
+    background: #111318;
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.calculator-nav-item:hover .calculator-nav-tooltip,
+.calculator-nav-item:focus-within .calculator-nav-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition:
+        opacity .2s ease .75s,
+        transform .2s ease .75s,
+        visibility 0s linear 0s;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    .tc-workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .tc-visual-panel {
+        border-right: 0;
+        border-bottom: 1px solid var(--tc-line);
+    }
+
+    .tc-shape-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tc-shape-card {
+        min-height: 170px;
+    }
+
+    .tc-shape-svg {
+        height: 70px;
+    }
+
+    .tc-canvas {
+        min-height: 320px;
+    }
+}
+
+@media (max-width: 600px) {
+    .tc-hero {
+        padding: 62px 16px 52px;
+    }
+
+    .tc-main {
+        padding: 0 12px;
+        margin-top: -22px;
+    }
+
+    .tc-shape-section,
+    .tc-visual-panel,
+    .tc-input-panel {
+        padding: 22px;
+    }
+
+    .tc-result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tc-input-group {
+        grid-template-columns: 1fr 84px;
+    }
+
+    .calculator-nav-tooltip {
+        left: 0;
+        transform: translate(0, 7px);
+    }
+
+    .calculator-nav-tooltip::after {
+        left: 24px;
+    }
+
+    .calculator-nav-item:hover .calculator-nav-tooltip,
+    .calculator-nav-item:focus-within .calculator-nav-tooltip {
+        transform: translate(0, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tc-shape-card,
+    .tc-shape-check,
+    .calculator-nav-tooltip {
+        transition: none !important;
+    }
+}
+</style>
+</head>
+
+<body class="calculator-page">
+
+<!-- WhatsApp -->
+<a href="https://wa.me/919879111233?text=Hello%20HH%20FABTECH,%20I%20would%20like%20to%20know%20more%20about%20your%20tankers."
+   class="whatsapp-float"
+   target="_blank"
+   rel="noopener"
+   aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span>Chat With Us</span>
+</a>
+
+<!-- Header -->
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/logo.png" alt="HH FABTECH">
+            </a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a class="active" href="calculator.html">Calculator</a></li>
+            <li><a href="career.html">Careers</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+
+        <div class="menu-btn">☰</div>
+    </nav>
+</header>
+
+<!-- Hero -->
+<section class="tc-hero">
+    <div class="tc-hero-inner">
+        <div class="tc-eyebrow">Engineering Tool</div>
+        <h1>Tank Volume Calculator</h1>
+        <p>
+            Calculate the approximate geometric capacity of your tank
+            using Circle, Oval or HH FABTECH Spell profiles.
+        </p>
+    </div>
+</section>
+
+<main class="tc-main">
+    <div class="tc-shell">
+
+        <!-- Shape selector -->
+        <section class="tc-shape-section">
+            <div class="tc-section-head">
+                <p class="tc-section-kicker">01 / Select Profile</p>
+                <h2>Choose your tank shape</h2>
+                <p>The calculation model changes automatically with the selected cross-section.</p>
+            </div>
+
+            <div class="tc-shape-grid" role="radiogroup" aria-label="Tank shape">
+                <button class="tc-shape-card active" type="button" data-shape="spell" aria-pressed="true">
+                    <span class="tc-shape-check"><i class="fa-solid fa-check"></i></span>
+                    <div class="tc-shape-svg">
+                        <svg viewBox="0 0 180 100" aria-hidden="true">
+                            <path d="M48 20 C39 20 32 28 29 37 C27 44 27 56 29 63 C32 72 39 80 48 80 L132 80 C141 80 148 72 151 63 C153 56 153 44 151 37 C148 28 141 20 132 20 Z"
+                                  fill="none" stroke="#667085" stroke-width="2.5"/>
+                            <path d="M49 29 L131 29 M49 71 L131 71" stroke="#d7b65d" stroke-width="1.4" stroke-dasharray="4 4"/>
+                        </svg>
+                    </div>
+                    <h3>Spell Cylinder</h3>
+                    <p>Truck-optimized rounded rectangular profile using the HH FABTECH superellipse model.</p>
+                </button>
+
+                <button class="tc-shape-card" type="button" data-shape="circle" aria-pressed="false">
+                    <span class="tc-shape-check"><i class="fa-solid fa-check"></i></span>
+                    <div class="tc-shape-svg">
+                        <svg viewBox="0 0 180 100" aria-hidden="true">
+                            <circle cx="90" cy="50" r="35" fill="none" stroke="#667085" stroke-width="2.5"/>
+                            <path d="M55 50 H125 M90 15 V85" stroke="#d7b65d" stroke-width="1.4" stroke-dasharray="4 4"/>
+                        </svg>
+                    </div>
+                    <h3>Circle Cylinder</h3>
+                    <p>Standard cylindrical tank profile with a circular cross-section.</p>
+                </button>
+
+                <button class="tc-shape-card" type="button" data-shape="oval" aria-pressed="false">
+                    <span class="tc-shape-check"><i class="fa-solid fa-check"></i></span>
+                    <div class="tc-shape-svg">
+                        <svg viewBox="0 0 180 100" aria-hidden="true">
+                            <ellipse cx="90" cy="50" rx="58" ry="34" fill="none" stroke="#667085" stroke-width="2.5"/>
+                            <path d="M32 50 H148 M90 16 V84" stroke="#d7b65d" stroke-width="1.4" stroke-dasharray="4 4"/>
+                        </svg>
+                    </div>
+                    <h3>Oval Cylinder</h3>
+                    <p>Elliptical cross-section for tanks where width and height are independently defined.</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- Workspace -->
+        <section class="tc-workspace">
+
+            <!-- Visual -->
+            <div class="tc-visual-panel">
+                <div class="tc-visual-top">
+                    <div>
+                        <p class="tc-visual-title">2D Profile Preview</p>
+                        <p class="tc-visual-subtitle">Live geometry based on your dimensions</p>
+                    </div>
+                    <div class="tc-profile-badge" id="profileBadge">Spell / n = 3.20</div>
+                </div>
+
+                <div class="tc-canvas">
+                    <svg id="tankSvg" viewBox="0 0 700 430" role="img" aria-label="Tank profile visualization">
+                        <defs>
+                            <linearGradient id="metalGradient" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#eef1f4"/>
+                                <stop offset="38%" stop-color="#cbd1d7"/>
+                                <stop offset="55%" stop-color="#f7f8f9"/>
+                                <stop offset="100%" stop-color="#aeb6bf"/>
+                            </linearGradient>
+
+                            <linearGradient id="waterGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#5caee0"/>
+                                <stop offset="100%" stop-color="#17649b"/>
+                            </linearGradient>
+
+                            <clipPath id="tankClip">
+                                <path id="tankClipPath" d=""></path>
+                            </clipPath>
+                        </defs>
+
+                        <g id="tankGraphic"></g>
+
+                        <g id="dimensions"></g>
+                    </svg>
+                </div>
+
+                <p class="tc-visual-note">
+                    Visualization is a proportional engineering illustration. It is not a fabrication drawing.
+                </p>
+            </div>
+
+            <!-- Inputs -->
+            <div class="tc-input-panel">
+                <p class="tc-section-kicker">02 / Enter Dimensions</p>
+                <h2 class="tc-input-title" id="inputTitle">Spell Cylinder</h2>
+                <p class="tc-input-description" id="inputDescription">
+                    Enter the overall tank width, height and straight shell length.
+                    The Spell profile uses a superellipse exponent of 3.20.
+                </p>
+
+                <div class="tc-field">
+                    <label for="lengthInput">
+                        <span>Length</span>
+                        <span class="tc-field-label-meta">L</span>
+                    </label>
+                    <div class="tc-input-group">
+                        <input id="lengthInput" type="number" min="0" step="0.01" value="6110" inputmode="decimal">
+                        <select id="lengthUnit" aria-label="Length unit">
+                            <option value="mm" selected>mm</option>
+                            <option value="m">m</option>
+                            <option value="ft">ft</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="tc-field">
+                    <label for="widthInput">
+                        <span id="widthLabel">Width</span>
+                        <span class="tc-field-label-meta" id="widthSymbol">W</span>
+                    </label>
+                    <div class="tc-input-group">
+                        <input id="widthInput" type="number" min="0" step="0.01" value="2400" inputmode="decimal">
+                        <select id="widthUnit" aria-label="Width unit">
+                            <option value="mm" selected>mm</option>
+                            <option value="m">m</option>
+                            <option value="ft">ft</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="tc-field" id="heightField">
+                    <label for="heightInput">
+                        <span>Height</span>
+                        <span class="tc-field-label-meta">H</span>
+                    </label>
+                    <div class="tc-input-group">
+                        <input id="heightInput" type="number" min="0" step="0.01" value="1830" inputmode="decimal">
+                        <select id="heightUnit" aria-label="Height unit">
+                            <option value="mm" selected>mm</option>
+                            <option value="m">m</option>
+                            <option value="ft">ft</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="tc-fill-card">
+                    <div class="tc-fill-head">
+                        <div>
+                            <p class="tc-fill-kicker">03 / Fill Calculation</p>
+                            <h3>Calculate filled volume</h3>
+                        </div>
+                        <div class="tc-fill-switch" role="group" aria-label="Fill input mode">
+                            <button type="button" class="tc-fill-mode active" data-fill-mode="depth">Fill Depth</button>
+                            <button type="button" class="tc-fill-mode" data-fill-mode="volume">Fill Volume</button>
+                        </div>
+                    </div>
+
+                    <div class="tc-fill-input-row" id="fillDepthRow">
+                        <div class="tc-fill-field">
+                            <label for="fillDepthInput">
+                                <span>Fill Depth</span>
+                                <span class="tc-field-label-meta">F</span>
+                            </label>
+                            <div class="tc-input-group">
+                                <input id="fillDepthInput" type="number" min="0" step="0.01" value="915" inputmode="decimal">
+                                <select id="fillDepthUnit" aria-label="Fill depth unit">
+                                    <option value="mm" selected>mm</option>
+                                    <option value="m">m</option>
+                                    <option value="ft">ft</option>
+                                    <option value="percent">%</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tc-fill-input-row" id="fillVolumeRow" style="display:none;">
+                        <div class="tc-fill-field">
+                            <label for="fillVolumeInput">
+                                <span>Fill Volume</span>
+                                <span class="tc-field-label-meta">Vf</span>
+                            </label>
+                            <div class="tc-input-group">
+                                <input id="fillVolumeInput" type="number" min="0" step="0.01" value="12000" inputmode="decimal">
+                                <select id="fillVolumeUnit" aria-label="Fill volume unit">
+                                    <option value="litres" selected>Litres</option>
+                                    <option value="m3">m³</option>
+                                    <option value="gallons">US gal</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <label class="tc-check-row">
+                        <input id="embossedCheck" type="checkbox" checked>
+                        <span class="tc-check-box"><i class="fa-solid fa-check"></i></span>
+                        <span>
+                            <strong>Consider 150 mm embossed dish ends</strong>
+                            <small>Includes estimated internal volume from both front and rear dish ends.</small>
+                        </span>
+                    </label>
+
+                    <div class="tc-emboss-note">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Dish-end volume is treated as an engineering estimate. Actual dish-head volume depends on crown radius, knuckle radius and head profile; 150 mm here means the assumed internal dish depth.
+                    </div>
+                </div>
+
+                <div class="tc-results" aria-live="polite">
+                    <div class="tc-result-label">Calculated Filled Volume</div>
+
+                    <div class="tc-primary-result">
+                        <strong id="litresResult">0</strong>
+                        <span>litres</span>
+                    </div>
+
+                    <div class="tc-result-grid">
+                        <div class="tc-result-item">
+                            <span>m³</span>
+                            <strong id="m3Result">0.00</strong>
+                        </div>
+                        <div class="tc-result-item">
+                            <span>KL</span>
+                            <strong id="klResult">0.00</strong>
+                        </div>
+                        <div class="tc-result-item">
+                            <span>US gallons</span>
+                            <strong id="gallonResult">0</strong>
+                        </div>
+                    </div>
+
+                    <p class="tc-status" id="statusText">
+                        Enter valid dimensions to calculate capacity.
+                    </p>
+                </div>
+
+                <div class="tc-info">
+                    <strong>Calculation note:</strong>
+                    The fill-depth approach follows standard geometric tank-volume methods, including circular-segment calculations for horizontal cylindrical fills. Source: CalculatorSoup Tank Volume Calculator. Results represent approximate geometric shell volume from the entered dimensions. Dish ends, shell thickness, fittings, baffles, ullage and
+                    manufacturing tolerances are not included in this first version.
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-container">
+
+        <div class="footer-about">
+            <img src="assets/images/logo.png" alt="HH FABTECH">
+            <p>
+                HH FABTECH is a trusted manufacturer of Petroleum,
+                Chemical, SS and Water Tankers committed to quality,
+                innovation and customer satisfaction.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Products</a></li>
+
+                <li class="calculator-nav-item">
+                    <a class="calculator-nav-link" href="calculator.html" aria-describedby="calculatorTooltip">
+                        Calculator
+                    </a>
+                    <span class="calculator-nav-tooltip" id="calculatorTooltip" role="tooltip">
+                        Try our new tank volume calculator
+                    </span>
+                </li>
+
+                <li><a href="career.html">Careers</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h3>Contact</h3>
+            <p>
+                <a href="https://maps.app.goo.gl/byFU6Hq3dxLh6ciT8"
+                   target="_blank"
+                   rel="noopener"
+                   class="footer-location">
+                    FINAL PLOT NO. 18/2 TP NO. 403/A,<br>
+                    SURVEY NO.329B/1 PAIKY 2-2387<br>
+                    NEAR SANATHAL CIRCLE ROAD, FATEWADI CANAL,<br>
+                    SANATHAL, SANAND, AHMEDABAD, GUJARAT - 382210
+                </a>
+            </p>
+            <p>hhfabtech@gmail.com</p>
+            <p>Devarsh Patel: +91 98791 11233</p>
+            <p>Kashyap Mistry: +91 99986 90388</p>
+        </div>
+    </div>
+
+    <div class="copyright">
+        © 2026 HH FABTECH. All Rights Reserved.
+    </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+
+<script>
+(function () {
+    "use strict";
+
+    const shapes = document.querySelectorAll(".tc-shape-card");
+
+    const lengthInput = document.getElementById("lengthInput");
+    const widthInput = document.getElementById("widthInput");
+    const heightInput = document.getElementById("heightInput");
+
+    const lengthUnit = document.getElementById("lengthUnit");
+    const widthUnit = document.getElementById("widthUnit");
+    const heightUnit = document.getElementById("heightUnit");
+
+    const heightField = document.getElementById("heightField");
+    const widthLabel = document.getElementById("widthLabel");
+    const widthSymbol = document.getElementById("widthSymbol");
+
+    const inputTitle = document.getElementById("inputTitle");
+    const inputDescription = document.getElementById("inputDescription");
+    const profileBadge = document.getElementById("profileBadge");
+
+    const litresResult = document.getElementById("litresResult");
+    const m3Result = document.getElementById("m3Result");
+    const klResult = document.getElementById("klResult");
+    const gallonResult = document.getElementById("gallonResult");
+    const statusText = document.getElementById("statusText");
+
+    const tankGraphic = document.getElementById("tankGraphic");
+    const dimensions = document.getElementById("dimensions");
+    const tankClipPath = document.getElementById("tankClipPath");
+
+    let currentShape = "spell";
+
+    /*
+     * HH FABTECH Spell profile:
+     * Superellipse exponent derived from the supplied 2400 x 1830
+     * overall profile and 1930 x 1475 reference dimensions.
+     *
+     * n = 3.20 is kept as the current reference constant.
+     */
+    const SPELL_N = 3.20;
+
+    const UNIT_TO_METRE = {
+        mm: 0.001,
+        m: 1,
+        ft: 0.3048
+    };
+
+    // Lanczos approximation for Gamma function.
+    // Used only for the superellipse area calculation.
+    function gamma(z) {
+        const coefficients = [
+            676.5203681218851,
+            -1259.1392167224028,
+            771.32342877765313,
+            -176.61502916214059,
+            12.507343278686905,
+            -0.13857109526572012,
+            9.9843695780195716e-6,
+            1.5056327351493116e-7
+        ];
+
+        if (z < 0.5) {
+            return Math.PI / (Math.sin(Math.PI * z) * gamma(1 - z));
+        }
+
+        z -= 1;
+        let x = 0.99999999999980993;
+
+        for (let i = 0; i < coefficients.length; i++) {
+            x += coefficients[i] / (z + i + 1);
+        }
+
+        const t = z + coefficients.length - 0.5;
+        return Math.sqrt(2 * Math.PI) * Math.pow(t, z + 0.5) * Math.exp(-t) * x;
+    }
+
+    function toMetres(value, unit) {
+        return value * UNIT_TO_METRE[unit];
+    }
+
+    function formatNumber(value, decimals) {
+        return new Intl.NumberFormat("en-IN", {
+            minimumFractionDigits: decimals,
+            maximumFractionDigits: decimals
+        }).format(value);
+    }
+
+    function circleArea(diameter) {
+        return Math.PI * Math.pow(diameter / 2, 2);
+    }
+
+    function ovalArea(width, height) {
+        return Math.PI * (width / 2) * (height / 2);
+    }
+
+    function superellipseArea(width, height, exponent) {
+        const a = width / 2;
+        const b = height / 2;
+
+        const factor =
+            Math.pow(gamma(1 + 1 / exponent), 2) /
+            gamma(1 + 2 / exponent);
+
+        return 4 * a * b * factor;
+    }
+
+    function buildSuperellipsePath(cx, cy, rx, ry, n, samples) {
+        const points = [];
+
+        for (let i = 0; i <= samples; i++) {
+            const t = (Math.PI * 2 * i) / samples;
+            const cos = Math.cos(t);
+            const sin = Math.sin(t);
+
+            const x = cx + rx * Math.sign(cos) * Math.pow(Math.abs(cos), 2 / n);
+            const y = cy + ry * Math.sign(sin) * Math.pow(Math.abs(sin), 2 / n);
+
+            points.push([x, y]);
+        }
+
+        return points.map((p, i) =>
+            (i === 0 ? "M " : "L ") + p[0].toFixed(2) + " " + p[1].toFixed(2)
+        ).join(" ") + " Z";
+    }
+
+    function svgEl(tag, attrs) {
+        const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+        Object.keys(attrs).forEach(key => el.setAttribute(key, attrs[key]));
+        return el;
+    }
+
+    function renderTank(width, height, fillRatio) {
+        tankGraphic.innerHTML = "";
+        dimensions.innerHTML = "";
+
+        const cx = 350;
+        const cy = 215;
+        const maxW = 470;
+        const maxH = 285;
+
+        const aspect = width / height;
+        let drawW = maxW;
+        let drawH = drawW / aspect;
+
+        if (drawH > maxH) {
+            drawH = maxH;
+            drawW = drawH * aspect;
+        }
+
+        const left = cx - drawW / 2;
+        const right = cx + drawW / 2;
+        const top = cy - drawH / 2;
+        const bottom = cy + drawH / 2;
+
+        let outlinePath = "";
+
+        if (currentShape === "circle") {
+            const r = Math.min(drawW, drawH) / 2;
+            outlinePath =
+                `M ${cx} ${cy-r} ` +
+                `A ${r} ${r} 0 1 1 ${cx} ${cy+r} ` +
+                `A ${r} ${r} 0 1 1 ${cx} ${cy-r} Z`;
+        } else if (currentShape === "oval") {
+            const rx = drawW / 2;
+            const ry = drawH / 2;
+            outlinePath =
+                `M ${cx-rx} ${cy} ` +
+                `A ${rx} ${ry} 0 1 0 ${cx+rx} ${cy} ` +
+                `A ${rx} ${ry} 0 1 0 ${cx-rx} ${cy} Z`;
+        } else {
+            outlinePath = buildSuperellipsePath(
+                cx, cy, drawW / 2, drawH / 2, SPELL_N, 160
+            );
+        }
+
+        tankClipPath.setAttribute("d", outlinePath);
+
+        const outline = svgEl("path", {
+            d: outlinePath,
+            class: "tank-outline"
+        });
+
+        tankGraphic.appendChild(outline);
+
+        // Liquid level. It is intentionally clipped to the tank profile.
+        const liquidHeight = drawH * fillRatio;
+        const liquidY = bottom - liquidHeight;
+
+        const liquid = svgEl("rect", {
+            x: left - 20,
+            y: liquidY,
+            width: drawW + 40,
+            height: liquidHeight + 20,
+            class: "tank-liquid",
+            "clip-path": "url(#tankClip)"
+        });
+
+        tankGraphic.appendChild(liquid);
+
+        // Subtle liquid surface.
+        if (fillRatio > 0.01) {
+            const wave = svgEl("path", {
+                d: `M ${left-10} ${liquidY}
+                    C ${left+80} ${liquidY-7}, ${left+150} ${liquidY+7}, ${left+235} ${liquidY}
+                    S ${right-80} ${liquidY-7}, ${right+10} ${liquidY}`,
+                class: "tank-liquid-wave",
+                "clip-path": "url(#tankClip)"
+            });
+            tankGraphic.appendChild(wave);
+        }
+
+        // Inner outline for a technical drawing feel.
+        const inner = svgEl("path", {
+            d: outlinePath,
+            class: "tank-inner",
+            transform: `translate(0 0) scale(.96)`,
+            "transform-origin": `${cx}px ${cy}px`
+        });
+
+        tankGraphic.appendChild(inner);
+
+        // Dimension: width.
+        const yDim = bottom + 54;
+
+        dimensions.appendChild(svgEl("line", {
+            x1: left, y1: bottom + 7, x2: left, y2: yDim - 10, class: "dim-line"
+        }));
+
+        dimensions.appendChild(svgEl("line", {
+            x1: right, y1: bottom + 7, x2: right, y2: yDim - 10, class: "dim-line"
+        }));
+
+        dimensions.appendChild(svgEl("line", {
+            x1: left, y1: yDim, x2: right, y2: yDim, class: "dim-arrow"
+        }));
+
+        dimensions.appendChild(svgEl("text", {
+            x: cx, y: yDim + 18, "text-anchor": "middle", class: "dim-text"
+        })).textContent = currentShape === "circle" ? "D" : "W";
+
+        // Dimension: height / diameter.
+        const xDim = right + 58;
+
+        dimensions.appendChild(svgEl("line", {
+            x1: right + 7, y1: top, x2: xDim - 10, y2: top, class: "dim-line"
+        }));
+
+        dimensions.appendChild(svgEl("line", {
+            x1: right + 7, y1: bottom, x2: xDim - 10, y2: bottom, class: "dim-line"
+        }));
+
+        dimensions.appendChild(svgEl("line", {
+            x1: xDim, y1: top, x2: xDim, y2: bottom, class: "dim-arrow"
+        }));
+
+        dimensions.appendChild(svgEl("text", {
+            x: xDim + 18, y: cy + 4, "text-anchor": "middle", class: "dim-text",
+            transform: `rotate(90 ${xDim+18} ${cy+4})`
+        })).textContent = currentShape === "circle" ? "D" : "H";
+
+        // Length label below the profile.
+        dimensions.appendChild(svgEl("text", {
+            x: cx, y: 395, "text-anchor": "middle", class: "dim-text"
+        })).textContent = "L  •  Tank length";
+
+        // Fill percentage.
+        dimensions.appendChild(svgEl("text", {
+            x: cx, y: 35, "text-anchor": "middle", class: "dim-text"
+        })).textContent = `${Math.round(fillRatio * 100)}% profile fill`;
+    }
+
+    const fillDepthInput = document.getElementById("fillDepthInput");
+    const fillDepthUnit = document.getElementById("fillDepthUnit");
+    const fillVolumeInput = document.getElementById("fillVolumeInput");
+    const fillVolumeUnit = document.getElementById("fillVolumeUnit");
+    const fillDepthRow = document.getElementById("fillDepthRow");
+    const fillVolumeRow = document.getElementById("fillVolumeRow");
+    const embossedCheck = document.getElementById("embossedCheck");
+    const fillModes = document.querySelectorAll(".tc-fill-mode");
+
+    let fillMode = "depth";
+
+    const DISH_DEPTH_M = 0.150;
+
+    function getInputs() {
+        const L = Number(lengthInput.value);
+        const W = Number(widthInput.value);
+        const H = Number(heightInput.value);
+
+        return {
+            length: toMetres(L, lengthUnit.value),
+            width: toMetres(W, widthUnit.value),
+            height: toMetres(H, heightUnit.value)
+        };
+    }
+
+    /*
+     * The 150 mm embossed-head allowance is intentionally modeled as
+     * a shallow dish-head estimate:
+     *
+     *     one head ≈ 1/2 × projected cross-section area × dish depth
+     *     two heads ≈ projected area × dish depth
+     *
+     * This is NOT a fabrication-head formula. Exact head volume requires
+     * crown/knuckle geometry. The checkbox therefore describes an estimate.
+     */
+    function dishEndVolume(area, include) {
+        if (!include) return 0;
+        return area * DISH_DEPTH_M;
+    }
+
+    function crossSectionArea(width, height) {
+        if (currentShape === "circle") {
+            return circleArea(width);
+        }
+
+        if (currentShape === "oval") {
+            return ovalArea(width, height);
+        }
+
+        return superellipseArea(width, height, SPELL_N);
+    }
+
+    // Simpson integration of the cross-sectional area below fill height.
+    // This supports accurate fill-depth calculations for the Spell
+    // superellipse as well as the oval and circle profiles.
+    function fillAreaByDepth(width, height, fillDepth) {
+        const H = currentShape === "circle" ? width : height;
+        const W = width;
+
+        let f = Math.max(0, Math.min(fillDepth, H));
+
+        if (currentShape === "circle") {
+            const r = W / 2;
+            const m = r - f;
+            const theta = 2 * Math.acos(Math.max(-1, Math.min(1, m / r)));
+
+            if (f <= r) {
+                return 0.5 * r * r * (theta - Math.sin(theta));
+            }
+
+            const emptyDepth = H - f;
+            const em = r - emptyDepth;
+            const etheta = 2 * Math.acos(Math.max(-1, Math.min(1, em / r)));
+            const emptyArea = 0.5 * r * r * (etheta - Math.sin(etheta));
+
+            return Math.PI * r * r - emptyArea;
+        }
+
+        // Numerical integration is robust for both the ellipse and
+        // the superellipse. The boundary half-width at y is:
+        //
+        // x = a * (1 - |y/b|^n)^(1/n)
+        //
+        // and the horizontal slice width is 2x.
+        const n = currentShape === "oval" ? 2 : SPELL_N;
+        const a = W / 2;
+        const b = H / 2;
+        const y0 = -b;
+        const y1 = -b + f;
+        const N = 500; // even Simpson interval count
+        const step = (y1 - y0) / N;
+
+        function widthAt(y) {
+            const q = Math.abs(y / b);
+            return 2 * a * Math.pow(Math.max(0, 1 - Math.pow(q, n)), 1 / n);
+        }
+
+        let sum = widthAt(y0) + widthAt(y1);
+
+        for (let i = 1; i < N; i++) {
+            const y = y0 + i * step;
+            sum += (i % 2 === 0 ? 2 : 4) * widthAt(y);
+        }
+
+        return (step / 3) * sum;
+    }
+
+    function depthFromFillVolume(width, height, straightLength, targetVolume) {
+        const totalCrossArea = crossSectionArea(width, height);
+        const maxStraight = totalCrossArea * straightLength;
+        const clamped = Math.max(0, Math.min(targetVolume, maxStraight));
+
+        let lo = 0;
+        let hi = currentShape === "circle" ? width : height;
+
+        for (let i = 0; i < 55; i++) {
+            const mid = (lo + hi) / 2;
+            const area = fillAreaByDepth(width, height, mid);
+            const volume = area * straightLength;
+
+            if (volume < clamped) lo = mid;
+            else hi = mid;
+        }
+
+        return (lo + hi) / 2;
+    }
+
+    function fillVolumeFromDepth(width, height, straightLength, depth) {
+        return fillAreaByDepth(width, height, depth) * straightLength;
+    }
+
+    function volumeToMetres(value, unit) {
+        if (unit === "litres") return value / 1000;
+        if (unit === "m3") return value;
+        if (unit === "gallons") return value / 264.1720523581484;
+        return 0;
+    }
+
+    function getFillVolumeInput() {
+        const value = Number(fillVolumeInput.value);
+        if (!Number.isFinite(value) || value < 0) return 0;
+        return volumeToMetres(value, fillVolumeUnit.value);
+    }
+
+    function calculate() {
+        const { length, width, height } = getInputs();
+
+        const profileHeight = currentShape === "circle" ? width : height;
+
+        if (!Number.isFinite(length) || length <= 0 ||
+            !Number.isFinite(width) || width <= 0 ||
+            !Number.isFinite(profileHeight) || profileHeight <= 0) {
+
+            litresResult.textContent = "0";
+            m3Result.textContent = "0.00";
+            klResult.textContent = "0.00";
+            gallonResult.textContent = "0";
+            statusText.textContent = "Enter valid positive dimensions to calculate capacity.";
+            renderTank(
+                Math.max(width || 2.4, .1),
+                Math.max(profileHeight || 1.8, .1),
+                0
+            );
+            return;
+        }
+
+        const area = crossSectionArea(width, profileHeight);
+        const straightVolume = area * length;
+        const dishVolume = dishEndVolume(area, embossedCheck.checked);
+        const totalVolume = straightVolume + dishVolume;
+
+        let straightFillVolume = 0;
+        let fillDepthM = 0;
+
+        if (fillMode === "depth") {
+            let rawDepth;
+
+            if (fillDepthUnit.value === "percent") {
+                rawDepth = profileHeight * Math.max(0, Math.min(100, Number(fillDepthInput.value) || 0)) / 100;
+            } else {
+                rawDepth = toMetres(Number(fillDepthInput.value) || 0, fillDepthUnit.value);
+            }
+
+            fillDepthM = Math.max(0, Math.min(profileHeight, rawDepth));
+            straightFillVolume = fillVolumeFromDepth(width, profileHeight, length, fillDepthM);
+        } else {
+            const requested = getFillVolumeInput();
+
+            // Fill-volume mode is based on the complete tank capacity.
+            // Dish-head volume is included when the checkbox is active.
+            const targetTotalFill = Math.max(0, Math.min(requested, totalVolume));
+
+            if (targetTotalFill <= dishVolume) {
+                /*
+                 * At this level, the exact fill distribution inside the
+                 * dished heads cannot be determined from "150 mm depth"
+                 * alone because crown/knuckle radii are not specified.
+                 *
+                 * We therefore map the target proportionally to the
+                 * straight shell profile for a stable UI estimate.
+                 */
+                straightFillVolume = targetTotalFill * (straightVolume / Math.max(totalVolume, 1e-12));
+            } else {
+                straightFillVolume = Math.min(
+                    straightVolume,
+                    targetTotalFill - Math.min(dishVolume, targetTotalFill)
+                );
+            }
+
+            fillDepthM = depthFromFillVolume(
+                width,
+                profileHeight,
+                length,
+                straightFillVolume
+            );
+        }
+
+        /*
+         * For depth mode, add the two dish-end volumes only when the tank
+         * is effectively full. For intermediate fill depths, head geometry
+         * would require exact crown/knuckle dimensions. We expose the
+         * calculated filled shell volume and a head allowance only at/near
+         * full capacity rather than falsely pretending the 150 mm head is
+         * fully filled at every liquid depth.
+         */
+        const isFull = fillDepthM >= profileHeight * 0.999999;
+        let filledVolume;
+
+        if (fillMode === "volume") {
+            filledVolume = Math.min(
+                totalVolume,
+                getFillVolumeInput()
+            );
+        } else {
+            filledVolume = straightFillVolume + (isFull ? dishVolume : 0);
+        }
+
+        filledVolume = Math.max(0, Math.min(totalVolume, filledVolume));
+
+        const litres = totalVolume * 1000;
+        const kl = totalVolume;
+        const usGallons = litres * 0.2641720523581484;
+
+        const filledLitres = filledVolume * 1000;
+        const filledM3 = filledVolume;
+        const filledGallons = filledLitres * 0.2641720523581484;
+
+        litresResult.textContent = formatNumber(filledLitres, 0);
+        m3Result.textContent = formatNumber(filledM3, 3);
+        klResult.textContent = formatNumber(filledM3, 3);
+        gallonResult.textContent = formatNumber(filledGallons, 0);
+
+        const fillPercent = totalVolume > 0 ? (filledVolume / totalVolume) * 100 : 0;
+
+        statusText.textContent =
+            `Tank capacity: ${formatNumber(litres, 0)} L (${formatNumber(kl, 3)} KL) • ` +
+            `Fill: ${formatNumber(fillPercent, 1)}% • ` +
+            `Embossed heads: ${embossedCheck.checked ? "included" : "excluded"}.`;
+
+        renderTank(width, profileHeight, Math.min(1, Math.max(0, fillDepthM / profileHeight)));
+
+        // Keep the volume-mode input synchronized when depth is used.
+        if (fillMode === "depth") {
+            fillVolumeInput.value = filledLitres.toFixed(0);
+        }
+    }
+
+    function selectShape(shape) {
+        currentShape = shape;
+
+        shapes.forEach(card => {
+            const active = card.dataset.shape === shape;
+            card.classList.toggle("active", active);
+            card.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+
+        if (shape === "circle") {
+            inputTitle.textContent = "Circle Cylinder";
+            inputDescription.textContent =
+                "Enter the cylindrical length and diameter.";
+            widthLabel.textContent = "Diameter";
+            widthSymbol.textContent = "D";
+            heightField.style.display = "none";
+            profileBadge.textContent = "Circle / n = 2.00";
+        } else if (shape === "oval") {
+            inputTitle.textContent = "Oval Cylinder";
+            inputDescription.textContent =
+                "Enter the length, overall width and overall height of the elliptical profile.";
+            widthLabel.textContent = "Width";
+            widthSymbol.textContent = "W";
+            heightField.style.display = "";
+            profileBadge.textContent = "Oval / ellipse";
+        } else {
+            inputTitle.textContent = "Spell Cylinder";
+            inputDescription.textContent =
+                "Enter the overall width, height and straight shell length. The Spell profile uses a superellipse exponent of 3.20.";
+            widthLabel.textContent = "Width";
+            widthSymbol.textContent = "W";
+            heightField.style.display = "";
+            profileBadge.textContent = "Spell / n = 3.20";
+        }
+
+        calculate();
+    }
+
+    shapes.forEach(card => {
+        card.addEventListener("click", () => selectShape(card.dataset.shape));
+    });
+
+    [lengthInput, widthInput, heightInput, lengthUnit, widthUnit, heightUnit,
+     fillDepthInput, fillDepthUnit, fillVolumeInput, fillVolumeUnit, embossedCheck]
+        .forEach(el => {
+            el.addEventListener("input", calculate);
+            el.addEventListener("change", calculate);
+        });
+
+    fillModes.forEach(modeButton => {
+        modeButton.addEventListener("click", () => {
+            fillMode = modeButton.dataset.fillMode;
+
+            fillModes.forEach(btn => {
+                btn.classList.toggle("active", btn === modeButton);
+            });
+
+            fillDepthRow.style.display = fillMode === "depth" ? "" : "none";
+            fillVolumeRow.style.display = fillMode === "volume" ? "" : "none";
+
+            calculate();
+        });
+    });
+
+    // Initial state.
+    selectShape("spell");
+})();
+</script>
+
+</body>
+</html>

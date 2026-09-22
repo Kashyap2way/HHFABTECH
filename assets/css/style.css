@@ -981,3 +981,74 @@ bottom:20px;
 }
 
 }
+
+/* ================================
+   CALCULATOR FOOTER HOVER PROMO
+   ================================ */
+
+.calculator-nav-item {
+    position: relative;
+}
+
+.calculator-nav-tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 13px);
+
+    width: max-content;
+    max-width: 230px;
+
+    padding: 10px 13px;
+
+    border-radius: 10px;
+
+    background: #111318;
+    color: #fff;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.18);
+
+    font-size: 11px;
+    line-height: 1.45;
+
+    pointer-events: none;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translate(-50%, 7px);
+
+    transition:
+        opacity .2s ease .75s,
+        transform .2s ease .75s,
+        visibility 0s linear .95s;
+
+    z-index: 100;
+}
+
+.calculator-nav-tooltip::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: -5px;
+
+    width: 10px;
+    height: 10px;
+
+    background: #111318;
+
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.calculator-nav-item:hover .calculator-nav-tooltip {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translate(-50%, 0);
+
+    transition:
+        opacity .2s ease .75s,
+        transform .2s ease .75s,
+        visibility 0s linear 0s;
+}
