@@ -1197,11 +1197,22 @@ const T=(v,d=2)=>fmt(v,d).replace(/,/g,'{,}');
 function tex(el,s,block=true){if(!el)return;if(window.katex){try{window.katex.render(s,el,{displayMode:block,throwOnError:false});return;}catch(e){}}el.innerHTML='<span class="tc-raw"></span>';el.firstChild.textContent=s;}
 function gate(id,on){const g=$(id);g.classList.toggle('off',!on);g.setAttribute('aria-disabled',String(!on));g.querySelectorAll('input,select').forEach(x=>x.disabled=!on);}
 function arcLen(c,h){if(c<=0||h<=0)return c;const r=(c*c+4*h*h)/(8*h);return r*2*Math.acos(Math.max(-1,Math.min(1,(r-h)/r)));}
-function perimeterApprox(W,H,D){
- if(shape==='circle')return Math.PI*D;
- if(shape==='oval'){const a=W/2,b=H/2;return Math.PI*(3*(a+b)-Math.sqrt((3*a+b)*(a+3*b)));}
- const p=spellParams(W,H);if(!p.valid)return NaN;
- return 2*arcLen(toMm('rwidth','rwidthUnit'),p.h1)+2*arcLen(toMm('rheight','rheightUnit'),p.h2);
+function perimeterApprox(W, H, D) {
+    if (shape === 'circle') return Math.PI * D;
+
+    if (shape === 'oval') {
+        const a = W / 2, b = H / 2;
+        return Math.PI * (
+            3 * (a + b) -
+            Math.sqrt((3 * a + b) * (a + 3 * b))
+        );
+    }
+
+    const p = spellParams(W, H);
+    if (!p.valid) return NaN;
+
+    return 2 * arcLen(toMm('rwidth', 'rwidthUnit'), p.h1)
+         + 2 * arcLen(toMm('rheight', 'rheightUnit'), p.h2);
 }
 function spellHalf(y,H,Rw,Rh,h1,h2){
  if(y<0||y>H)return 0;
