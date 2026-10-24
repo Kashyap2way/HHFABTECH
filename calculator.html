@@ -1334,7 +1334,7 @@ function updateCircumference(P,W,H,D,L){
  if(!ok){$('cornerMarks').textContent='Enter valid dimensions to calculate sheet length and corner marks.';return;}
  if(shape!=='spell'){$('cornerMarks').textContent='Circle and oval profiles have no four spell-corner marking lines. Use the perimeter and sheet-length estimate above.';return;}
  const sheet=P+Math.PI*t+allow,Rh=toMm('rheight','rheightUnit');
- const marks=[.25*sheet-Rh,.25*sheet+Rh,.75*sheet-Rh,.75*sheet+Rh].map(x=>Math.max(0,Math.min(sheet,x)));
+ const marks=[.25*sheet-(Rh/2),.25*sheet+(Rh/2),.75*sheet-(Rh/2),.75*sheet+(Rh/2)].map(x=>Math.max(0,Math.min(sheet,x)));
  $('cornerMarks').textContent=`From one sheet edge (estimated developed length ${fmt(sheet,1)} mm): 1st corner zone ${fmt(marks[0],1)}–${fmt(marks[1],1)} mm; 2nd corner zone ${fmt(marks[2],1)}–${fmt(marks[3],1)} mm. Base marks are at 25% (${fmt(sheet*.25,1)} mm) and 75% (${fmt(sheet*.75,1)} mm), with ± Rheight (${fmt(Rh,1)} mm) offsets. Verify the shop's actual developed-length convention before cutting.`;
 }
 function calculate(){
