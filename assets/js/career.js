@@ -159,6 +159,12 @@ fetch("assets/data/jobs.json")
 
     });
 
+    /*==========================
+    JOB POSTING STRUCTURED DATA (SEO / Google Jobs)
+    ==========================*/
+
+    injectJobPostingSchema(activeJobs);
+
 })
 
 .catch(error=>{
@@ -168,3 +174,123 @@ fetch("assets/data/jobs.json")
     noJobs.style.display="block";
 
 });
+
+/*==================================================
+BUILD JobPosting JSON-LD FOR EACH OPEN ROLE
+Converts "01 Aug 2026" style dates to ISO (YYYY-MM-DD)
+and parses "₹20,000-25,000" salary ranges.
+==================================================*/
+
+function injectJobPostingSchema(jobs){
+
+    const toISO = str => {
+
+        const d = new Date(str);
+
+        if(isNaN(d)) return undefined;
+
+        // Build the date from local components to avoid UTC timezone drift
+
+        const pad = n => String(n).padStart(2,"0");
+
+        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+
+    };
+
+    const parseSalary = str => {
+
+        if(!str) return null;
+
+        const nums = str.replace(/,/g,"").match(/\d+/g);
+
+        if(!nums || !nums.length) return null;
+
+        const value = nums.length >= 2
+
+            ? { "@type":"QuantitativeValue", "minValue":Number(nums[0]), "maxValue":Number(nums[1]), "unitText":"MONTH" }
+
+            : { "@type":"QuantitativeValue", "value":Number(nums[0]), "unitText":"MONTH" };
+
+        return {
+
+            "@type":"MonetaryAmount",
+
+            "currency":"INR",
+
+            "value":value
+
+        };
+
+    };
+
+    jobs.forEach(job => {
+
+        const posting = {
+
+            "@context":"https://schema.org",
+
+            "@type":"JobPosting",
+
+            "title":job.designation,
+
+            "description":`${job.designation} at HH FABTECH in the ${job.department} department. Experience: ${job.experience}. Qualification: ${job.qualification}.`,
+
+            "datePosted":toISO(job.posted),
+
+            "validThrough":toISO(job.lastDate),
+
+            "employmentType":(job.type||"").toUpperCase().includes("FULL") ? "FULL_TIME" : "OTHER",
+
+            "hiringOrganization":{
+
+                "@type":"Organization",
+
+                "name":"HH FABTECH",
+
+                "sameAs":"https://hhfabtech.com/",
+
+                "logo":"https://hhfabtech.com/assets/images/logo.png"
+
+            },
+
+            "jobLocation":{
+
+                "@type":"Place",
+
+                "address":{
+
+                    "@type":"PostalAddress",
+
+                    "streetAddress":"Near Sanathal Circle Road, Sanathal, Sanand",
+
+                    "addressLocality":"Ahmedabad",
+
+                    "addressRegion":"Gujarat",
+
+                    "postalCode":"382210",
+
+                    "addressCountry":"IN"
+
+                }
+
+            }
+
+        };
+
+        const salary = parseSalary(job.salary);
+
+        if(salary) posting.baseSalary = salary;
+
+        if(job.vacancies) posting.totalJobOpenings = Number(job.vacancies) || undefined;
+
+        const script = document.createElement("script");
+
+        script.type = "application/ld+json";
+
+        script.textContent = JSON.stringify(posting);
+
+        document.head.appendChild(script);
+
+    });
+
+}
