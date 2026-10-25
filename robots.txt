@@ -1,5 +1,26 @@
-User-agent: *
+# robots.txt for https://hhfabtech.com/
 
+User-agent: *
+Allow: /
+Disallow: /404.html
+
+# AI / LLM crawlers (explicitly welcomed)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
 Allow: /
 
 Sitemap: https://hhfabtech.com/sitemap.xml
