@@ -1,0 +1,33 @@
+# HH FABTECH
+
+> HH FABTECH is a manufacturer of petroleum, diesel, chemical, stainless steel and water tankers, fuel bowsers and industrial storage tanks, based in Ahmedabad, Gujarat, India. The company builds custom-engineered, quality-tested tankers for industries across India, with fabrication expertise dating back to 1967.
+
+## Core pages
+
+- [Home](https://hhfabtech.com/): Company overview, product range and why to choose HH FABTECH.
+- [About Us](https://hhfabtech.com/about.html): Company history since 1967, manufacturing capability and values.
+- [Products](https://hhfabtech.com/products.html): Full product range index with links to each product.
+- [Contact Us](https://hhfabtech.com/contact.html): Factory address in Ahmedabad, phone, email and inquiry form.
+
+## Products
+
+- [Petroleum / Diesel Tanker](https://hhfabtech.com/petroleum-tanker.html): Fuel tankers for IOCL, HPCL, Jio-bp, Nayara and Essar, 12 KL to 40 KL, top and bottom loading, custom compartments.
+- [Chemical Tanker](https://hhfabtech.com/chemical-tanker.html): Corrosion-resistant tankers for acids (HCL, H2SO4, HNO3) and hazardous liquids, 10 to 20 ton.
+- [SS Tanker](https://hhfabtech.com/ss-tanker.html): Food-grade SS304 and SS316 stainless steel tankers for milk, edible oil, pharma and chemicals.
+- [Fuel Bowser](https://hhfabtech.com/fuel-bowser.html): Mobile diesel dispensing units, 500 L to 5000 L, with pump, meter and nozzle options.
+- [Storage Tank](https://hhfabtech.com/storage-tank.html): Vertical and capsule storage tanks, 5 KL to 40 KL, for petroleum, water, chemicals and industrial liquids.
+- [Water Tanker](https://hhfabtech.com/water-tanker.html): Water tankers for municipal, construction, industrial and agriculture use, 5 KL to 20 KL, MS and SS.
+
+## Tools
+
+- [Tank Volume Calculator](https://hhfabtech.com/calculator.html): Calculate tank volume in cubic metres, litres and US gallons for circle, oval and tanker profiles.
+
+## Company
+
+- [Careers](https://hhfabtech.com/career.html): Open positions in Mechanical, Design, Production and Quality departments.
+
+## Contact
+
+- Address: Final Plot No. 18/2 TP No. 403/A, Survey No.329B/1 Paiky 2-2387, Near Sanathal Circle Road, Fatewadi Canal, Sanathal, Sanand, Ahmedabad, Gujarat 382210, India
+- Email: hhfabtech@gmail.com
+- Phone: +91 98791 11233 (Devarsh Patel), +91 99986 90388 (Kashyap Mistry)
