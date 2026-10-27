@@ -73,14 +73,19 @@ content="Premium Fuel Bowsers for diesel transportation and on-site refueling, a
 
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7B4LV4Z6FE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-7B4LV4Z6FE');
-    </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7B4LV4Z6FE');
+    /* Google Analytics gtag.js is loaded after the page finishes loading so it doesn't slow down the first paint */
+    window.addEventListener('load', function () {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-7B4LV4Z6FE';
+      document.head.appendChild(s);
+    });
+  </script>
 </head>
 
 <body>
@@ -128,6 +133,8 @@ content="Premium Fuel Bowsers for diesel transportation and on-site refueling, a
 </nav>
 
 </header>
+
+    <main id="main">
 
 <!--================ BANNER =================-->
 
@@ -811,6 +818,8 @@ Request Quotation
 
 
     <!-- ================= FOOTER ================= -->
+
+    </main>
 
     <footer>
 

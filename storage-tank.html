@@ -73,14 +73,19 @@ content="Vertical and Capsule Storage Tanks for Petroleum, Water, Chemicals and 
 
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7B4LV4Z6FE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-7B4LV4Z6FE');
-    </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7B4LV4Z6FE');
+    /* Google Analytics gtag.js is loaded after the page finishes loading so it doesn't slow down the first paint */
+    window.addEventListener('load', function () {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-7B4LV4Z6FE';
+      document.head.appendChild(s);
+    });
+  </script>
 </head>
 
 <body>
@@ -127,6 +132,8 @@ content="Vertical and Capsule Storage Tanks for Petroleum, Water, Chemicals and 
 
     </header>
 
+    <main id="main">
+
 <!--================ PAGE BANNER ================-->
 
 <section class="page-banner">
@@ -156,7 +163,7 @@ for Industrial Applications.
 
 <div class="product-image">
 
-<img width="1376" height="768" src="assets/images/products/storage.webp"
+<img width="1376" height="768" src="assets/images/products/storage.webp" srcset="assets/images/products/storage-788.webp 788w, assets/images/products/storage.webp 1376w" sizes="(max-width:768px) 100vw, 400px"
 alt="Storage Tank">
 
 </div>
@@ -689,7 +696,9 @@ Contact Us
 </section>
 
 <!--================ FOOTER =================-->
-  <footer>
+  </main>
+
+    <footer>
 
         <div class="footer-container">
 

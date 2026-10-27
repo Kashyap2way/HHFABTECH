@@ -445,7 +445,10 @@ padding:28px;
     box-shadow:0 8px 25px rgba(0,0,0,.08);
 }
 
+.contact-item h3,
 .contact-item h4{
+
+    font-size:1em;
 
     color:#43236F;
     margin-bottom:12px;
@@ -1080,3 +1083,6 @@ bottom:20px;
         transform .2s ease .75s,
         visibility 0s linear 0s;
 }
+
+/* Mobile: show only the first hero image (the other three are never downloaded) */
+@media(max-width:768px){.slide:not(:first-child){display:none}.slide:nth-child(1){animation:none;opacity:1}}

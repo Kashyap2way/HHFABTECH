@@ -47,14 +47,19 @@
 
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7B4LV4Z6FE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-7B4LV4Z6FE');
-    </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7B4LV4Z6FE');
+    /* Google Analytics gtag.js is loaded after the page finishes loading so it doesn't slow down the first paint */
+    window.addEventListener('load', function () {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-7B4LV4Z6FE';
+      document.head.appendChild(s);
+    });
+  </script>
 </head>
 
 <body>
@@ -103,6 +108,8 @@
 
     </header>
 
+    <main id="main">
+
     <!-- ================= PAGE BANNER ================= -->
 
     <section class="page-banner">
@@ -135,7 +142,7 @@
 
                 <div class="card">
 
-                    <img width="1658" height="640" src="assets/images/products/petroleum.webp" alt="Petroleum Tanker" loading="lazy" decoding="async">
+                    <img width="1658" height="640" src="assets/images/products/petroleum.webp" srcset="assets/images/products/petroleum-1140.webp 1140w, assets/images/products/petroleum.webp 1658w" sizes="(max-width:768px) 100vw, 400px" alt="Petroleum Tanker" loading="lazy" decoding="async">
 
                     <div class="card-content">
 
@@ -165,7 +172,7 @@
 
                 <div class="card">
 
-                    <img width="1393" height="752" src="assets/images/products/chemical.webp" alt="Chemical Tanker" loading="lazy" decoding="async">
+                    <img width="1393" height="752" src="assets/images/products/chemical.webp" srcset="assets/images/products/chemical-815.webp 815w, assets/images/products/chemical.webp 1393w" sizes="(max-width:768px) 100vw, 400px" alt="Chemical Tanker" loading="lazy" decoding="async">
 
                     <div class="card-content">
 
@@ -193,7 +200,7 @@
 
                 <div class="card">
 
-                    <img width="1264" height="843" src="assets/images/products/SS.webp" alt="SS Tanker" loading="lazy" decoding="async">
+                    <img width="1264" height="843" src="assets/images/products/SS.webp" srcset="assets/images/products/SS-660.webp 660w, assets/images/products/SS.webp 1264w" sizes="(max-width:768px) 100vw, 400px" alt="SS Tanker" loading="lazy" decoding="async">
 
                     <div class="card-content">
 
@@ -249,7 +256,7 @@
 
                 <div class="card">
 
-                    <img width="1376" height="768" src="assets/images/products/storage.webp" alt="Storage Tank" loading="lazy" decoding="async">
+                    <img width="1376" height="768" src="assets/images/products/storage.webp" srcset="assets/images/products/storage-788.webp 788w, assets/images/products/storage.webp 1376w" sizes="(max-width:768px) 100vw, 400px" alt="Storage Tank" loading="lazy" decoding="async">
 
                     <div class="card-content">
 
@@ -277,7 +284,7 @@
 
                 <div class="card">
 
-                    <img width="750" height="600" src="assets/images/products/water.webp" alt="Water Tanker" loading="lazy" decoding="async">
+                    <img width="750" height="600" src="assets/images/products/water.webp" srcset="assets/images/products/water-550.webp 550w, assets/images/products/water.webp 750w" sizes="(max-width:768px) 100vw, 400px" alt="Water Tanker" loading="lazy" decoding="async">
 
                     <div class="card-content">
 
@@ -398,6 +405,8 @@
     </section>
 
     <!-- ================= FOOTER ================= -->
+
+    </main>
 
     <footer>
 

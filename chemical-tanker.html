@@ -72,14 +72,19 @@ content="Corrosion-resistant Chemical Tankers for safe transportation of acids a
 
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7B4LV4Z6FE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-7B4LV4Z6FE');
-    </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7B4LV4Z6FE');
+    /* Google Analytics gtag.js is loaded after the page finishes loading so it doesn't slow down the first paint */
+    window.addEventListener('load', function () {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-7B4LV4Z6FE';
+      document.head.appendChild(s);
+    });
+  </script>
 </head>
 
 <body>
@@ -128,6 +133,8 @@ content="Corrosion-resistant Chemical Tankers for safe transportation of acids a
 
 </header>
 
+    <main id="main">
+
 <!--================ PAGE BANNER ================-->
 
 <section class="page-banner">
@@ -157,7 +164,7 @@ Superior Corrosion Resistance.
 
             <div class="product-image">
 
-                <img width="1393" height="752" src="assets/images/products/chemical.webp"
+                <img width="1393" height="752" src="assets/images/products/chemical.webp" srcset="assets/images/products/chemical-815.webp 815w, assets/images/products/chemical.webp 1393w" sizes="(max-width:768px) 100vw, 400px"
                      alt="Chemical Tanker">
 
             </div>
@@ -450,7 +457,9 @@ Contact Us
 
 <!--================ FOOTER ================-->
 
-<footer>
+</main>
+
+    <footer>
 
         <div class="footer-container">
 
