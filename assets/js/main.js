@@ -9,7 +9,11 @@ if (menuBtn && navLinks) {
 
     menuBtn.addEventListener("click", () => {
 
-        navLinks.classList.toggle("active");
+        const open = navLinks.classList.toggle("active");
+
+        menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+
+        menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
 
     });
 

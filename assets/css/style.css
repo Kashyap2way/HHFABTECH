@@ -1,3 +1,12 @@
+/* Self-hosted Poppins (SIL OFL) - replaces Google Fonts to remove render-blocking requests */
+@font-face{font-family:'Poppins';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/poppins-latin-400-normal.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Poppins';font-style:normal;font-weight:500;font-display:swap;src:url('../fonts/poppins-latin-500-normal.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Poppins';font-style:normal;font-weight:600;font-display:swap;src:url('../fonts/poppins-latin-600-normal.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Poppins';font-style:normal;font-weight:700;font-display:swap;src:url('../fonts/poppins-latin-700-normal.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Poppins';font-style:normal;font-weight:800;font-display:swap;src:url('../fonts/poppins-latin-800-normal.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+/* Metric-matched fallback so text doesn't jump when Poppins loads (prevents layout shift) */
+@font-face{font-family:'Poppins Fallback';src:local('Arial');ascent-override:105%;descent-override:35%;line-gap-override:10%;size-adjust:112%;}
+
 /* ==========================================
    HH FABTECH
    Main Stylesheet
@@ -15,7 +24,7 @@ html{
 
 body{
 
-    font-family:'Poppins',sans-serif;
+    font-family:'Poppins','Poppins Fallback',sans-serif;
     color:#333;
     background:#ffffff;
     line-height:1.6;
@@ -23,6 +32,7 @@ body{
 
 img{
     max-width:100%;
+    height:auto;
     display:block;
 }
 
@@ -67,6 +77,7 @@ header{
 .logo img{
 
     height:75px;
+    width:auto;
     left: 250px;
 
     padding-left: 20px;
@@ -89,7 +100,7 @@ header{
 .nav-links a:hover,
 .nav-links .active{
 
-    color:#f4b400;
+    color:#946b00;
 }
 
 .menu-btn{
@@ -97,6 +108,12 @@ header{
     display:none;
     font-size:32px;
     cursor:pointer;
+    background:none;
+    border:0;
+    padding:0 4px;
+    color:inherit;
+    font-family:inherit;
+    line-height:1;
 }
 
 /*================ HERO =================*/
@@ -127,6 +144,7 @@ header{
 .slide:nth-child(1){
 
     animation-delay:0s;
+    animation-name:fadeFirst;
 }
 
 .slide:nth-child(2){
@@ -170,7 +188,11 @@ header{
     width:90%;
 }
 
-.hero-content h3{
+.hero-content h3,
+.hero-content .hero-eyebrow{
+
+    font-size:1.17em;
+    font-weight:700;
 
     letter-spacing:4px;
     color:#f4b400;
@@ -224,7 +246,7 @@ header{
 
 .section-title span{
 
-    color:#f4b400;
+    color:#946b00;
     font-weight:600;
     text-transform:uppercase;
     letter-spacing:2px;
@@ -457,6 +479,7 @@ footer{
 .footer-about img{
 
     height:90px;
+    width:auto;
     margin-bottom:25px;
 }
 
@@ -528,6 +551,14 @@ footer{
         opacity:0;
     }
 
+}
+
+@keyframes fadeFirst{
+    0%{opacity:1;}
+    25%{opacity:1;}
+    30%{opacity:0;}
+    95%{opacity:0;}
+    100%{opacity:1;}
 }
 
 /*================ SCROLLBAR =================*/
@@ -619,7 +650,7 @@ border:1px solid #ddd;
 
 border-radius:8px;
 
-font-family:Poppins;
+font-family:'Poppins','Poppins Fallback',sans-serif;
 
 font-size:15px;
 
@@ -670,7 +701,7 @@ margin-bottom:20px;
 margin-top:90px;
 
 background:linear-gradient(rgba(67,35,111,.8),rgba(67,35,111,.8)),
-url("../images/hero/hero2.png");
+url("../images/hero/hero2.webp");
 
 background-size:cover;
 
@@ -897,16 +928,13 @@ PREMIUM WHATSAPP BUTTON
 
 }
 
-.whatsapp-float i{
+.whatsapp-float svg{
 
+    width:32px;
+    height:32px;
+    margin:0 16px;
+    flex-shrink:0;
     color:#25D366;
-
-    font-size:32px;
-
-    min-width:64px;
-
-    text-align:center;
-
     transition:.3s;
 
 }
@@ -943,7 +971,7 @@ PREMIUM WHATSAPP BUTTON
 
 }
 
-.whatsapp-float:hover i{
+.whatsapp-float:hover svg{
 
     transform:rotate(-12deg);
 
