@@ -223,7 +223,7 @@
 
             <!-- ================= CONTACT FORM ================= -->
 
-            <div class="contact-form" id="inquiry">
+            <div class="contact-form">
 
                 <form
 
@@ -561,14 +561,7 @@
 
     </footer>
 
-    <script>
-/* Prefill from calculator (?cap=&spec=). Untrusted input: length-capped, control chars stripped, set as .value only. */
-(function(){var q=new URLSearchParams(location.search),clean=function(v,n){return (v||'').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').slice(0,n)};
-var cap=clean(q.get('cap'),60),sp=clean(q.get('spec'),1500),f=document.querySelector('form[name="contact"]');if(!f)return;
-if(cap&&f.capacity&&!f.capacity.value)f.capacity.value=cap;if(sp&&f.specification&&!f.specification.value)f.specification.value=sp;
-if((cap||sp)&&location.hash==='#inquiry'){var e=document.getElementById('inquiry');if(e)e.scrollIntoView();}})();
-</script>
-<script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js"></script>
 
 </body>
 
