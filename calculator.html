@@ -32,6 +32,7 @@
     <link rel="preload" href="assets/fonts/poppins-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/css/calculator-extra.css">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
@@ -1008,7 +1009,7 @@ body.calculator-page {
                     <p class="tc-adv-lead">Edit the central rectangle. The four circular arcs are derived from the overall and rectangle dimensions.</p>
                     <div class="tc-two"><div class="tc-field "><label for="rwidth"><span>Rwidth</span><span class="tc-field-label-meta">R<sub>w</sub></span></label><div class="tc-input-group"><input id="rwidth" type="number" min="0" step="any" value="1930" placeholder="0" inputmode="decimal"><select id="rwidthUnit" aria-label="Rwidth unit"><option value="mm" selected>mm</option><option value="m">m</option><option value="in">inch</option><option value="ft">ft</option></select></div></div><div class="tc-field "><label for="rheight"><span>Rheight</span><span class="tc-field-label-meta">R<sub>h</sub></span></label><div class="tc-input-group"><input id="rheight" type="number" min="0" step="any" value="1475" placeholder="0" inputmode="decimal"><select id="rheightUnit" aria-label="Rheight unit"><option value="mm" selected>mm</option><option value="m">m</option><option value="in">inch</option><option value="ft">ft</option></select></div></div></div>
                     <p class="tc-note">These scale automatically with your overall width and height until you type your own values. The 140 mm corner fillet deduction is fixed. R<sub>w</sub> must not exceed the overall width and R<sub>h</sub> must not exceed the overall height.</p>
-                    <div class="tc-metrics"><div class="tc-metric"><span>Capacity difference vs default R values</span><strong id="rCapacityDiff">—</strong></div><div class="tc-metric"><span>Current profile capacity</span><strong id="rCurrentCapacity">—</strong></div></div>
+                    <div class="tc-field"><label class="tc-check-row" style="margin-bottom:10px"><input id="filCustom" type="checkbox"><span class="tc-check-box"></span><span><strong>Customize bend radius</strong><small>Corner fillet of the Spell profile. Default 140 mm. It changes the Spell cross-section area; it has no effect on Circle or Oval.</small></span></label><div class="tc-input-group"><input id="filInput" type="text" inputmode="decimal" value="140" disabled aria-label="Bend radius in millimetres"><span class="tc-unit" style="padding:0 12px;align-self:center">mm</span></div><p class="tc-note" id="filNote">Active: 140 mm (default).</p></div><div class="tc-metrics"><div class="tc-metric"><span>Capacity difference vs default R values</span><strong id="rCapacityDiff">—</strong></div><div class="tc-metric"><span>Current profile capacity</span><strong id="rCurrentCapacity">—</strong></div></div>
                 </div>
 
                 <div class="tc-adv-card">
@@ -1172,7 +1173,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 const $ = id => document.getElementById(id);
 const unitToMm = {mm:1,m:1000,in:25.4,ft:304.8};
 const unitToM = {mm:.001,m:1,in:.0254,ft:.3048};
-let shape='spell', fillMode='depth', previousAutoBaffle=false;
+let FIL=140,shape='spell', fillMode='depth', previousAutoBaffle=false;
 const fmt=(v,d=1)=>Number.isFinite(v)?new Intl.NumberFormat('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v):'—';
 function evalExpr(raw){
  const str=String(raw??'').replace(/,/g,'').replace(/[xX×]/g,'*').replace(/\s+/g,'');
@@ -1196,7 +1197,7 @@ function segmentArea(chord,h){if(chord<=0||h<=0)return 0;const r=(chord*chord+4*
 function spellArea(W,H,Rw,Rh){
  const h1=(H-Rh)/2,h2=(W-Rw)/2;
  if(W<=0||H<=0||Rw<=0||Rh<=0||Rw>W||Rh>H||h1<0||h2<0)return {area:NaN,raw:NaN,h1,h2,valid:false};
- const rect=Rw*Rh,top=2*segmentArea(Rw,h1),side=2*segmentArea(Rh,h2),fillet=(4-Math.PI)*140*140;
+ const rect=Rw*Rh,top=2*segmentArea(Rw,h1),side=2*segmentArea(Rh,h2),fillet=(4-Math.PI)*FIL*FIL;
  return {area:rect+top+side-fillet,raw:rect+top+side,rect,top,side,fillet,h1,h2,valid:true};
 }
 function areaMm2(W,H,D){
@@ -1309,7 +1310,7 @@ function drawProfile(W,H,D,ratio){
  let d;
  if(isC){const r=w/2;d=`M ${cx} ${cy-r} A ${r} ${r} 0 1 1 ${cx} ${cy+r} A ${r} ${r} 0 1 1 ${cx} ${cy-r} Z`;}
  else if(shape==='oval')d=`M ${left} ${cy} A ${w/2} ${h/2} 0 1 0 ${right} ${cy} A ${w/2} ${h/2} 0 1 0 ${left} ${cy} Z`;
- else{const q=spellArea(rw,rh,Rw,Rh);d=spellPath(Rw*sc,Rh*sc,q.h1*sc,q.h2*sc,cx,cy,140*sc);}
+ else{const q=spellArea(rw,rh,Rw,Rh);d=spellPath(Rw*sc,Rh*sc,q.h1*sc,q.h2*sc,cx,cy,FIL*sc);}
  clip.setAttribute('d',d);
  const rc=ref?' is-ref':'';
  svgEl('path',{d,class:'tank-outline'+rc},g);
@@ -1358,7 +1359,7 @@ function renderSteps(v){
  const sym={
   spell:[['1 · Corner heights',String.raw`h_1=\frac{H-R_h}{2},\qquad h_2=\frac{W-R_w}{2}`],
    ['2 · Circular segments',String.raw`r=\frac{c^{2}+4h^{2}}{8h},\qquad S(c,h)=r^{2}\cos^{-1}\!\left(\frac{r-h}{r}\right)-\frac{c}{2}\,(r-h)`],
-   ['3 · Cross-section area',String.raw`A=R_w R_h+2\,S(R_w,h_1)+2\,S(R_h,h_2)-(4-\pi)\,140^{2}`],
+   ['3 · Cross-section area',String.raw`A=R_w R_h+2\,S(R_w,h_1)+2\,S(R_h,h_2)-(4-\pi)\,${T(FIL,0)}^{2}`],
    ['4 · Perimeter',String.raw`P=2\,\ell(R_w,h_1)+2\,\ell(R_h,h_2)-(8-2\pi)\,140,\qquad \ell(c,h)=2r\cos^{-1}\!\left(\frac{r-h}{r}\right)`]],
   circle:[['1 · Cross-section area',String.raw`A=\frac{\pi D^{2}}{4}`],['2 · Perimeter',String.raw`P=\pi D`]],
   oval:[['1 · Cross-section area',String.raw`A=\frac{\pi W H}{4}`],['2 · Perimeter (Ramanujan)',String.raw`P\approx\pi\left[3(a+b)-\sqrt{(3a+b)(a+3b)}\right],\quad a=\frac W2,\ b=\frac H2`]]
@@ -1370,7 +1371,7 @@ function renderSteps(v){
    num=[String.raw`h_1=\frac{${T(H,0)}-${T(Rh,0)}}{2}=${T(p.h1)}\ \text{mm},\qquad h_2=\frac{${T(W,0)}-${T(Rw,0)}}{2}=${T(p.h2)}\ \text{mm}`,
     String.raw`r_1=${T(r1)},\ S_1=${T(p.top/2)}\ \text{mm}^2;\qquad r_2=${T(r2)},\ S_2=${T(p.side/2)}\ \text{mm}^2`,
     String.raw`A=${T(Rw,0)}\times${T(Rh,0)}+2(${T(p.top/2,0)})+2(${T(p.side/2,0)})-${T(p.fillet,0)}=${T(A,0)}\ \text{mm}^2`,
-    String.raw`P=2(${T(arcLen(Rw,p.h1),1)})+2(${T(arcLen(Rh,p.h2),1)})-${T((8-2*Math.PI)*140,1)}=${T(P,0)}\ \text{mm}`];}
+    String.raw`P=2(${T(arcLen(Rw,p.h1),1)})+2(${T(arcLen(Rh,p.h2),1)})-${T((8-2*Math.PI)*FIL,1)}=${T(P,0)}\ \text{mm}`];}
   else if(shape==='circle')num=[String.raw`A=\frac{\pi\times${T(D,0)}^{2}}{4}=${T(A,0)}\ \text{mm}^2`,String.raw`P=\pi\times${T(D,0)}=${T(P,0)}\ \text{mm}`];
   else num=[String.raw`A=\frac{\pi\times${T(W,0)}\times${T(H,0)}}{4}=${T(A,0)}\ \text{mm}^2`,String.raw`P\approx${T(P,0)}\ \text{mm}`];
   num.push(String.raw`V=${T(A,0)}\times\left(${T(L,0)}+\frac{4\times${T(emb,0)}}{3}\right)=${T(total,0)}\ \text{mm}^3=${T(capL,2)}\ \text{L}`);
@@ -1382,7 +1383,7 @@ function updateCircumference(P,W,H,D,L){
  const t=toMm('circThickness','circThicknessUnit'),allow=toMm('circAllowance','circAllowanceUnit');
  const ok=Number.isFinite(P)&&P>0&&Number.isFinite(t)&&t>=0&&Number.isFinite(allow)&&allow>=0;
  $('circPerimeter').textContent=ok?`${fmt(P,1)} mm`:'—';$('circSheetLength').textContent=ok?`${fmt(P+Math.PI*t+allow,1)} mm`:'—';
- $('circCornerSize').textContent=shape==='spell'?'140 mm':'Not applicable';$('circMarkRef').textContent=shape==='spell'?'25% / 75%':'No corner marks';
+ $('circCornerSize').textContent=shape==='spell'?FIL+' mm':'Not applicable';$('circMarkRef').textContent=shape==='spell'?'25% / 75%':'No corner marks';
  if(!ok){$('cornerMarks').textContent='Enter valid dimensions to calculate sheet length and corner marks.';return;}
  if(shape!=='spell'){$('cornerMarks').textContent='Circle and oval profiles have no four spell-corner marking lines. Use the perimeter and sheet-length estimate above.';return;}
  const sheet=P+Math.PI*t+allow,Rh=toMm('rheight','rheightUnit');
@@ -1449,9 +1450,12 @@ $('advancedToggle').addEventListener('click',()=>{const open=$('advancedPanel').
 $('solveButton').addEventListener('click',inverseCalculate);$('weightButton').addEventListener('click',()=>{calculate();$('totalWeight').scrollIntoView({behavior:'smooth',block:'center'});});
 $('solveVariable').addEventListener('change',()=>{$('solveNote').textContent=`Solving ${$('solveVariable').value} while holding the other entered dimensions fixed.`;});
 tex($('weightTex'),String.raw`W_{shell}=P\,L\,t_s\,\rho,\qquad W_{dish}=A\,t_d\,\rho\ \text{(each end)},\qquad W_{baffle}=n_b\,A\,t_d\,\rho`);
+const filUpdate=()=>{const on=$('filCustom').checked;$('filInput').disabled=!on;let v=on?Number($('filInput').value):140;if(!(Number.isFinite(v)&&v>0&&v<=1000)){$('filNote').textContent='Enter a bend radius between 0 and 1000 mm; using 140 mm until fixed.';v=140;}else $('filNote').textContent='Active: '+v+' mm'+(on?' (custom).':' (default).');FIL=v;calculate();};$('filCustom').addEventListener('change',filUpdate);$('filInput').addEventListener('input',filUpdate);
 drawSpellIcon();selectShape('spell');
 });
 </script>
 
+<script src="assets/js/geometry.js"></script>
+<script src="assets/js/calculator-extra.js"></script>
 </body>
 </html>
