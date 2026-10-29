@@ -125,7 +125,40 @@
     return { ok: true, errors: {}, totalM3, filledM3 };
   }
 
+
+  /** Circular segment of radius r filled to depth h: central angle (rad) and area, 0 <= h <= 2r. */
+  function segment(r, h) {
+    const theta = 2 * Math.acos(Math.max(-1, Math.min(1, (r - h) / r)));
+    return { theta, seg: 0.5 * r * r * (theta - Math.sin(theta)) };
+  }
+
+  /**
+   * Numeric intermediates (SI) behind a result, so the UI can show the working with the user's own numbers.
+   * Every figure here is tested to add up to calculate() (see tests). Returns null for unknown shapes.
+   */
+  function workings(shapeId, d, depth) {
+    const s = SHAPES[shapeId]; if (!s) return null;
+    const f = Math.max(0, Math.min(depth, s.maxDepth(d)));
+    const w = { f, total: s.total(d), filled: calculatePartialFillVolume(shapeId, d, f) };
+    switch (shapeId) {
+      case 'horizontalCylinder': w.r = d.D / 2; Object.assign(w, segment(w.r, f)); break;
+      case 'verticalCylinder': w.r = d.D / 2; w.base = PI * w.r * w.r; break;
+      case 'rectangular': w.base = d.L * d.W; break;
+      case 'sphere': w.r = d.D / 2; w.cap = PI * f * f * (3 * w.r - f) / 3; break;
+      case 'ellipse': {
+        w.a = d.W / 2; w.b = d.H / 2; w.t = Math.max(-1, Math.min(1, (w.b - f) / w.b));
+        w.area = w.a * w.b * (Math.acos(w.t) - w.t * Math.sqrt(1 - w.t * w.t)); break; }
+      case 'stadium':
+        w.r = d.H / 2; w.a = d.W - d.H; Object.assign(w, segment(w.r, f)); w.rect = w.a * Math.min(f, d.H); w.area = w.seg + w.rect; break;
+      case 'capsuleHorizontal':
+        w.r = d.D / 2; w.a = d.Lc; Object.assign(w, segment(w.r, f)); w.cyl = w.seg * w.a; w.cap = PI * f * f * (3 * w.r - f) / 3; break;
+      case 'ellipsoidalHeadsHorizontal':
+        w.r = d.D / 2; w.a = d.Ls; Object.assign(w, segment(w.r, f)); w.cyl = w.seg * w.a; w.cap = PI * f * f * (3 * w.r - f) / 3; w.heads = w.cap / 2; break;
+    }
+    return w;
+  }
+
   return { LENGTH_TO_M, M3_TO, SHAPES, convertLength, convertVolume, circleSegmentArea, ellipseSegmentArea,
     sphereCapVolume, spellArea, normalizeDimensions, validateDimensions, calculateTotalVolume,
-    calculatePartialFillVolume, calculate };
+    calculatePartialFillVolume, calculate, workings };
 });
