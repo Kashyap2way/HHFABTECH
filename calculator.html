@@ -962,7 +962,7 @@ body.calculator-page {
       "name": "Does the calculator include dished or embossed ends?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. For the Spell, circle, oval and conical-bottom shapes you can tick the embossed dish end option and enter the emboss depth (150 mm by default). Each end is modelled as a half-ellipsoid, adding about two-thirds of the cross-section area times the depth, and the liquid in the dish is counted at partial fill levels as well as when the tank is full."
+        "text": "Yes. For the Spell, circle, oval and conical-bottom shapes you can tick the embossed dish end option and enter the emboss depth (150 mm by default). Each end is modelled as a 2:1 ellipsoidal head, adding two-thirds of the cross-section area times the depth, and the liquid in the dish is counted at partial fill levels as well as when the tank is full. Shallower torispherical ends hold less, so treat the dish volume as an upper estimate."
       }
     },
     {
@@ -1099,7 +1099,7 @@ body.calculator-page {
                 <h2 class="tc-input-title" id="inputTitle">Spell Cylinder</h2>
                 <p class="tc-input-description" id="inputDescription">Enter the overall width, height and straight shell length.</p>
 
-                <div class="tc-field "><label for="length"><span>Straight shell length</span><span class="tc-field-label-meta">L</span></label><div class="tc-input-group"><input id="length" type="text" value="0" placeholder="Enter length" inputmode="decimal"><select id="lengthUnit" aria-label="Straight shell length unit"><option value="mm" selected>mm</option><option value="m">m</option><option value="in">inch</option><option value="ft">ft</option></select></div></div>
+                <div class="tc-field "><label for="length"><span>Straight shell length</span><span class="tc-field-label-meta">L</span></label><div class="tc-input-group"><input id="length" type="text" value="0" placeholder="Enter length" inputmode="decimal"><select id="lengthUnit" aria-label="Straight shell length unit"><option value="mm" selected>mm</option><option value="m">m</option><option value="in">inch</option><option value="ft">ft</option></select></div><p class="tc-note">Tangent-to-tangent length of the straight shell, excluding the dish ends. With dish ends on, overall tank length = L + 2E.</p></div>
                 <div class="tc-field " id="widthField"><label for="width"><span>Overall width</span><span class="tc-field-label-meta">W</span></label><div class="tc-input-group"><input id="width" type="text" value="0" placeholder="Enter width" inputmode="decimal"><select id="widthUnit" aria-label="Overall width unit"><option value="mm" selected>mm</option><option value="m">m</option><option value="in">inch</option><option value="ft">ft</option></select></div></div>
                 <div class="tc-field " id="heightField"><label for="height"><span>Overall height</span><span class="tc-field-label-meta">H</span></label><div class="tc-input-group"><input id="height" type="text" value="0" placeholder="Enter height" inputmode="decimal"><select id="heightUnit" aria-label="Overall height unit"><option value="mm" selected>mm</option><option value="m">m</option><option value="in">inch</option><option value="ft">ft</option></select></div></div>
                 <div class="tc-field tc-hidden" id="diameterField"><label for="diameter"><span>Diameter</span><span class="tc-field-label-meta">D</span></label><div class="tc-input-group"><input id="diameter" type="text" value="0" placeholder="Enter diameter" inputmode="decimal"><select id="diameterUnit" aria-label="Diameter unit"><option value="mm" selected>mm</option><option value="m">m</option><option value="in">inch</option><option value="ft">ft</option></select></div></div>
@@ -1117,7 +1117,7 @@ body.calculator-page {
 
                     <label class="tc-check-row"><input id="embossOn" type="checkbox" checked><span class="tc-check-box"><svg viewBox="0 0 448 512" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg></span><span><strong>Consider embossed dish ends</strong><small>Includes the estimated internal volume of both front and rear dish ends.</small></span></label>
                     <div class="tc-gate" id="embossGate" style="margin-top:14px">
-                        <div class="tc-field "><label for="emboss"><span>Emboss depth per end</span><span class="tc-field-label-meta">E</span></label><div class="tc-input-group"><input id="emboss" type="number" min="0" step="any" value="150" placeholder="150" inputmode="decimal"><select id="embossUnit" aria-label="Emboss depth per end unit"><option value="mm" selected>mm</option><option value="m">m</option><option value="in">inch</option><option value="ft">ft</option></select></div><p class="tc-note">Dish-end volume is an engineering estimate: V = 2 × ⅔ × A × E. Actual volume depends on crown and knuckle radii.</p></div>
+                        <div class="tc-field "><label for="emboss"><span>Emboss depth per end</span><span class="tc-field-label-meta">E</span></label><div class="tc-input-group"><input id="emboss" type="number" min="0" step="any" value="150" placeholder="150" inputmode="decimal"><select id="embossUnit" aria-label="Emboss depth per end unit"><option value="mm" selected>mm</option><option value="m">m</option><option value="in">inch</option><option value="ft">ft</option></select></div><p class="tc-note">Dish-end volume uses the 2:1 ellipsoidal-head estimate: V = 2 × ⅔ × A × E (⅔ × A × E per end). Shallower torispherical (flanged-and-dished) ends hold less, so treat this as an upper estimate and confirm the exact figure with the head type.</p></div>
                     </div>
                 </div>
 
@@ -1244,7 +1244,7 @@ body.calculator-page {
             <article><h3>Rectangular tank</h3><p>Volume = length × width × height. With roll-bent edges, subtract (4 − π) × R² from the cross-section area.</p></article>
             <article><h3>Sphere and hemisphere</h3><p>Sphere = 4/3 × π × r³. A liquid cap of depth h holds π × h² × (3r − h) ÷ 3.</p></article>
             <article><h3>Conical-bottom tank</h3><p>Cone = 1/3 × π × r² × cone height, plus the straight shell π × r² × shell height, plus an optional embossed top of 2/3 × π × r² × E.</p></article>
-            <article><h3>Dished and embossed ends</h3><p>Each dished end adds about 2/3 × cross-section area × dish depth. Capsule ends add one full sphere between them.</p></article>
+            <article><h3>Dished and embossed ends</h3><p>Each dished end is modelled as a 2:1 ellipsoidal head and adds 2/3 × cross-section area × dish depth (an upper estimate; shallow torispherical ends hold less). Capsule ends add one full sphere between them.</p></article>
         </div>
         <p class="xs-seo-lead">Need a tank built to your size? HH FABTECH manufactures <a href="petroleum-tanker.html">petroleum tankers</a>, <a href="chemical-tanker.html">chemical tankers</a>, <a href="ss-tanker.html">stainless steel tankers</a>, <a href="water-tanker.html">water tankers</a>, <a href="fuel-bowser.html">fuel bowsers</a> and <a href="storage-tank.html">storage tanks</a> in Ahmedabad, Gujarat. <a href="contact.html">Contact us</a> for a quotation.</p>
         <h2 id="faqH">Tank volume calculator FAQ</h2>
@@ -1495,14 +1495,14 @@ function drawProfile(W,H,D,ratio){
  svgEl('text',{x:cx,y:yD+18,'text-anchor':'middle',class:'dim-text'+gh},dm,ref?(isC?'D':'W'):(isC?`D ${fmt(rw,0)} mm`:`W ${fmt(rw,0)} mm`));
  svgEl('line',{x1:right+7,y1:top,x2:xD-10,y2:top,class:'dim-line'},dm);svgEl('line',{x1:right+7,y1:bottom,x2:xD-10,y2:bottom,class:'dim-line'},dm);svgEl('line',{x1:xD,y1:top,x2:xD,y2:bottom,class:'dim-arrow'},dm);
  svgEl('text',{x:xD+18,y:cy+4,'text-anchor':'middle',class:'dim-text'+gh,transform:`rotate(90 ${xD+18} ${cy+4})`},dm,ref?(isC?'D':'H'):(isC?`D ${fmt(rh,0)} mm`:`H ${fmt(rh,0)} mm`));
- svgEl('text',{x:cx,y:395,'text-anchor':'middle',class:'dim-text'+gh},dm,ref?'L  •  Tank length':`L ${fmt(L,0)} mm  •  Tank length`);
+ svgEl('text',{x:cx,y:395,'text-anchor':'middle',class:'dim-text'+gh},dm,ref?'L  •  Straight shell length':`L ${fmt(L,0)} mm  •  Straight shell length`);
  svgEl('text',{x:cx,y:35,'text-anchor':'middle',class:'dim-text'+gh},dm,ref?'Reference profile — no values entered':`${fmt(ratio*100,1)}% profile fill`);
  if(ref){const cta=svgEl('g',{class:'empty-cta'},dm);svgEl('rect',{x:cx-165,y:cy-20,width:330,height:40,rx:20},cta);svgEl('text',{x:cx,y:cy+5,'text-anchor':'middle'},cta,isC?'Enter length and diameter to begin':'Enter length, width and height to begin');}
  $('diagramHint').textContent=msg||(ref?'Empty reference outline. Enter dimensions to see the live cross-section.':shape==='spell'?'Spell: central rectangle plus four circular-arc blends; 70 mm radius corner bends. Schematic only — not a fabrication drawing.':'Proportional engineering illustration. Not a fabrication drawing.');
 }
 function drawSpellIcon(){
  const s=.046,q=spellArea(REF.W,REF.H,REF.Rw,REF.Rh);
- $('spellIconPath').setAttribute('d',spellPath(REF.Rw*s,REF.Rh*s,q.h1*s,q.h2*s,90,50,140*s));
+ $('spellIconPath').setAttribute('d',spellPath(REF.Rw*s,REF.Rh*s,q.h1*s,q.h2*s,90,50,FIL*s));
  const r=$('spellIconRect');r.setAttribute('x',90-REF.Rw*s/2);r.setAttribute('y',50-REF.Rh*s/2);r.setAttribute('width',REF.Rw*s);r.setAttribute('height',REF.Rh*s);
 }
 function updateBaffles(capL){
@@ -1587,7 +1587,8 @@ function calculate(){
  } else {$('rCapacityDiff').textContent='Spell profile only';$('rCurrentCapacity').textContent=`${fmt(capL,1)} L`;}
  updateCircumference(P,W,H,D,L);
  $('litresResult').textContent=fmt(fillL,0);$('capacityResult').textContent=`${fmt(capL,0)} L`;$('klResult').textContent=fmt(fillL/1000,1);$('ft3Result').textContent=fmt(filled/28316846.592,1);$('galResult').textContent=fmt(fillL*.2641720524,0);$('fillPercentResult').textContent=`${fmt(pct,1)}%`;$('fillDepthResult').textContent=`${fmt(fillDepth,0)} mm`;
- $('status').textContent=`Tank capacity: ${fmt(capL,0)} L (${fmt(capL/1000,1)} KL) • Fill: ${fmt(pct,1)}% • Dish ends: ${$('embossOn').checked?'included':'excluded'}.`;
+ const overallMm=L+2*emb,overallTxt=emb>0?` • Overall length (incl. dish ends): ${fmt(overallMm,0)} mm (L + 2E)`:'';
+ $('status').textContent=`Tank capacity: ${fmt(capL,0)} L (${fmt(capL/1000,1)} KL) • Fill: ${fmt(pct,1)}% • Dish ends: ${$('embossOn').checked?'included':'excluded'}${overallTxt}.`;
  const fc=`${fmt(fillDepth,1)} mm / ${fmt(fillDepth/1000,1)} m / ${fmt(fillDepth/25.4,1)} inch / ${fmt(fillDepth/304.8,1)} ft`;
  $('fillConversion').textContent=$('fillDepthUnit').value==='percent'?`${fmt(val('fillDepth'),1)}% of profile volume ≈ ${fc}.`:`Equivalent fill depth ≈ ${fc}; fill volume is computed from the actual profile shape.`;
  drawProfile(W,H,D,Math.max(0,Math.min(1,fillDepth/profileH)));

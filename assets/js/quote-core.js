@@ -3,7 +3,7 @@
   'use strict';
   const CFG = {
     maxW: 2400, maxH: 1830,                                   // mm, per your brief
-    REF: { W: 2400, H: 1830, Rw: 1930, Rh: 1475 }, fillet: 140, emboss: 150,   // Spell profile reference (calculator.html)
+    REF: { W: 2400, H: 1830, Rw: 1930, Rh: 1475 }, fillet: 70, emboss: 150,   // Spell profile reference (calculator.html); fillet is the corner bend RADIUS in mm (roll-bend machine is 140 mm diameter = 70 mm radius)
     baffle: { sectionL: 5000, overrunPct: 20, usablePct: 95, round4000: false, evenRound: true },
     // PLACEHOLDERS to fill later: tonnes per kilolitre by product (editable by the customer in the UI)
     density: { petroleum: 0.83, chemical: 1.0, fuel: 0.83, ss: 1.0, storage: 1.0, water: 1.0 },
