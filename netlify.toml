@@ -1,0 +1,74 @@
+# Netlify configuration for HH FABTECH
+# Static site: publish the repository root as-is (no build step).
+
+[build]
+  publish = "."
+
+# ----------------------------------------------------------------------------
+# Security + SEO headers
+#
+# Strict-Transport-Security (HSTS) tells browsers to ALWAYS use HTTPS for this
+# domain for the next year, including subdomains. Combined with the dashboard
+# "Force HTTPS" setting, this stops http:// versions being served or indexed.
+#
+# NOTE: HSTS is only honoured by browsers over an HTTPS response. You MUST also
+# enable "Force HTTPS" in the Netlify dashboard (Site settings > Domain
+# management > HTTPS) so the initial http -> https 301 redirect happens at the
+# edge. Config-file redirect rules do not fire for http:// URLs on Netlify.
+# ----------------------------------------------------------------------------
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Long-cache immutable static assets (images, fonts). HTML stays uncached so
+# content updates go live immediately.
+[[headers]]
+  for = "/assets/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Ensure the web app manifest is served with the correct MIME type.
+[[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+
+# ----------------------------------------------------------------------------
+# Canonical host redirects
+#
+# Force a single canonical host so Google does not index duplicate variants.
+# These rules redirect the Netlify subdomain and (optionally) the www host to
+# the bare https://hhfabtech.com. They fire on https:// requests; the http ->
+# https hop is handled by "Force HTTPS" in the dashboard.
+#
+# If you prefer www as canonical, swap the targets and update canonical tags,
+# sitemap.xml and llms.txt accordingly.
+# ----------------------------------------------------------------------------
+
+[[redirects]]
+  from = "https://www.hhfabtech.com/*"
+  to = "https://hhfabtech.com/:splat"
+  status = 301
+  force = true
+
+# 404 fallback
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404

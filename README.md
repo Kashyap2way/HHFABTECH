@@ -105,6 +105,16 @@ SEO is configured across every page. When adding a new page, replicate this setu
 - `robots.txt` — allows all crawlers, disallows `/404.html`, references the sitemap, and explicitly allows major AI crawlers.
 - `llms.txt` — plain-markdown summary for LLMs ([llmstxt.org](https://llmstxt.org) format).
 
+**Social share image (Open Graph)**
+- `assets/images/og-banner.png` — 1200×630 branded banner used as the default `og:image`/`twitter:image` on the home, about, products, contact, calculator and careers pages.
+- Product pages intentionally use their own product image so each shared link previews the relevant product.
+
+**Icons & web app manifest**
+- `favicon.ico` — classic browser-tab favicon (linked on every page).
+- `assets/images/apple-touch-icon.png` — 180×180 icon for iOS "Add to Home Screen".
+- `assets/images/icon-192.png` / `icon-512.png` — PWA icons referenced by the manifest.
+- `site.webmanifest` — web app manifest (name, theme color, icons) for "Add to Home Screen" on Android/Chrome. Linked from every page's `<head>`.
+
 **Conventions**
 - Every `<img>` must have descriptive `alt` text.
 - Below-the-fold images use `loading="lazy"` and `decoding="async"`.
@@ -119,12 +129,24 @@ SEO is configured across every page. When adding a new page, replicate this setu
 4. Add a link to it in `llms.txt` if it's a meaningful content page.
 5. Confirm every image has `alt` text and lazy-load below-the-fold images.
 
-## Deployment
+## Deployment (Netlify)
 
-The contact form uses **Netlify Forms** (`data-netlify="true"`), indicating Netlify hosting. As a static site it deploys by publishing the repository root — no build command required.
+The site is hosted on **Netlify** (the contact form uses Netlify Forms via `data-netlify="true"`). As a static site it deploys by publishing the repository root — no build command required. Configuration lives in `netlify.toml`.
 
-After deploying, verify:
-- `https://hhfabtech.com/robots.txt`, `/sitemap.xml` and `/llms.txt` return HTTP 200
+### Forcing HTTPS (fixing http:// being indexed)
+
+If Google indexes `http://` URLs instead of `https://`, the site is being served on both schemes without a redirect. Fix it in two places:
+
+1. **Netlify dashboard (required):** Site settings → Domain management → HTTPS → enable **Force HTTPS**. This is what actually issues the `http → https` 301 redirect and is the critical step. On Netlify, redirect rules in `netlify.toml` only fire for `https://` requests, so the http→https hop *cannot* be done from the config file alone — the dashboard toggle is mandatory.
+2. **`netlify.toml` (in this repo):** sends an `HSTS` header (`Strict-Transport-Security`) telling browsers to always use HTTPS for a year, plus a canonical-host redirect from `www` to the bare domain. Keeping it in the repo makes the behavior version-controlled.
+
+After forcing HTTPS, in Google Search Console: use the `https://` property, submit the sitemap there, and request re-indexing of key pages. Old `http://` entries drop out once Google re-crawls and sees the 301s.
+
+### Post-deploy verification
+
+- `https://hhfabtech.com/robots.txt`, `/sitemap.xml`, `/llms.txt` and `/assets/images/og-banner.png` return HTTP 200
+- `http://hhfabtech.com/` 301-redirects to `https://hhfabtech.com/` (test with `curl -I http://hhfabtech.com/`)
+- Response includes `strict-transport-security` header (`curl -I https://hhfabtech.com/`)
 - Social previews with the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) and [X Card Validator](https://cards-dev.twitter.com/validator)
 - Structured data with [Google's Rich Results Test](https://search.google.com/test/rich-results)
 - Submit `sitemap.xml` in [Google Search Console](https://search.google.com/search-console)
