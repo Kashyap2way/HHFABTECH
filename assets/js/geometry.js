@@ -48,6 +48,21 @@
     return Rw * Rh + 2 * seg(Rw, h1) + 2 * seg(Rh, h2) - (4 - PI) * f * f;
   }
 
+  /** Area (m²) between a square corner and its rounding arc (radius R), from the corner up to height y. */
+  function cornerLoss(R, y) {
+    if (y <= 0 || R <= 0) return 0;
+    if (y >= R) return (1 - PI / 4) * R * R;
+    const u = R - y;
+    return R * y - (PI * R * R / 4 - (u * Math.sqrt(R * R - u * u) / 2 + R * R / 2 * Math.asin(u / R)));
+  }
+  /** Liquid area of a W×H rectangle with all four corners rounded to radius R, filled to depth h. */
+  function roundedRectFill(W, H, R, h) {
+    if (h <= 0) return 0;
+    if (h >= H) return W * H - (4 - PI) * R * R;
+    const top = h > H - R ? cornerLoss(R, R) - cornerLoss(R, H - h) : 0;
+    return W * h - 2 * cornerLoss(R, Math.min(h, R)) - 2 * top;
+  }
+
   // ---- Shape registry: dims in metres. total(d) and partial(d,h) return m³; depth h from the bottom. ----
   const SHAPES = {
     horizontalCylinder: { dims: ['D', 'L'], maxDepth: d => d.D,
@@ -56,9 +71,11 @@
     verticalCylinder: { dims: ['D', 'H'], maxDepth: d => d.H,
       total: d => PI * (d.D / 2) ** 2 * d.H,
       partial: (d, h) => PI * (d.D / 2) ** 2 * h },
-    rectangular: { dims: ['L', 'W', 'H'], maxDepth: d => d.H,
-      total: d => d.L * d.W * d.H,
-      partial: (d, h) => d.L * d.W * h },
+    // Optional R = corner radius of the cross-section (roll-bent plate). R = 0 / absent is a plain box.
+    rectangular: { dims: ['L', 'W', 'H'], opt: ['R'], maxDepth: d => d.H,
+      check: d => d.R > Math.min(d.W, d.H) / 2 * (1 + 1e-12) ? { k: 'R', e: 'radiusTooLarge' } : null,
+      total: d => d.L * (d.W * d.H - (4 - PI) * (d.R || 0) ** 2),
+      partial: (d, h) => d.L * roundedRectFill(d.W, d.H, d.R || 0, h) },
     sphere: { dims: ['D'], maxDepth: d => d.D,
       total: d => (4 / 3) * PI * (d.D / 2) ** 3,
       partial: (d, h) => sphereCapVolume(d.D / 2, h) },
@@ -67,18 +84,32 @@
       total: d => PI * (d.W / 2) * (d.H / 2) * d.L,
       partial: (d, h) => ellipseSegmentArea(d.W / 2, d.H / 2, h) * d.L },
     // Stadium: flat top/bottom, semicircular left/right ends of diameter H. Requires W >= H.
-    stadium: { dims: ['W', 'H', 'L'], maxDepth: d => d.H, check: d => d.W >= d.H ? null : 'W',
+    stadium: { dims: ['W', 'H', 'L'], maxDepth: d => d.H, check: d => d.W >= d.H ? null : { k: 'W', e: 'widthLessThanHeight' },
       total: d => ((d.W - d.H) * d.H + PI * d.H * d.H / 4) * d.L,
       partial: (d, h) => ((d.W - d.H) * Math.min(h, d.H) + circleSegmentArea(d.H / 2, h)) * d.L },
     // Capsule: Lc is the straight section only; hemispherical ends add exactly one sphere (no double count).
     capsuleHorizontal: { dims: ['D', 'Lc'], maxDepth: d => d.D,
       total: d => PI * (d.D / 2) ** 2 * d.Lc + (4 / 3) * PI * (d.D / 2) ** 3,
       partial: (d, h) => circleSegmentArea(d.D / 2, h) * d.Lc + sphereCapVolume(d.D / 2, h) },
-    // Horizontal shell with 2:1 ellipsoidal heads (head depth = D/4 each). Ls = straight shell, heads excluded.
-    ellipsoidalHeadsHorizontal: { dims: ['D', 'Ls'], maxDepth: d => d.D,
-      total: d => PI * (d.D / 2) ** 2 * d.Ls + (4 / 3) * PI * (d.D / 2) ** 2 * (d.D / 4),
-      // Two heads = oblate spheroid = sphere cap volume scaled along the axis by (D/4)/(D/2) = 1/2.
-      partial: (d, h) => circleSegmentArea(d.D / 2, h) * d.Ls + 0.5 * sphereCapVolume(d.D / 2, h) },
+    // Horizontal shell with ellipsoidal dished ends. L = overall length end to end, E = dish depth per end (D/4 for a true 2:1 head).
+    // Straight shell = L − 2E. Each head is a half-ellipsoid with semi-axes r, r, E.
+    ellipsoidalHeadsHorizontal: { dims: ['D', 'L', 'E'], maxDepth: d => d.D,
+      check: d => d.E > d.D / 2 * (1 + 1e-12) ? { k: 'E', e: 'depthExceedsRadius' } : (d.L > 2 * d.E ? null : { k: 'L', e: 'lengthTooShort' }),
+      total: d => PI * (d.D / 2) ** 2 * (d.L - 2 * d.E) + (4 / 3) * PI * (d.D / 2) ** 2 * d.E,
+      partial: (d, h) => circleSegmentArea(d.D / 2, h) * (d.L - 2 * d.E) + (d.E / (d.D / 2)) * sphereCapVolume(d.D / 2, h) },
+    // Dished bowl, opening upward: a spherical cap with base diameter D and depth E (E = D/2 is a full hemisphere).
+    dishBowl: { dims: ['D', 'E'], maxDepth: d => d.E,
+      check: d => d.E > d.D / 2 * (1 + 1e-12) ? { k: 'E', e: 'depthExceedsRadius' } : null,
+      total: d => PI * d.E * (3 * (d.D / 2) ** 2 + d.E * d.E) / 6,
+      partial: (d, h) => { const R = ((d.D / 2) ** 2 + d.E * d.E) / (2 * d.E); return PI * h * h * (3 * R - h) / 3; } },
+    // Vertical tank with a conical bottom (apex down), cylindrical shell and an optional embossed (half-ellipsoid) top of depth E.
+    coneBottom: { dims: ['D', 'Hc', 'Hs'], opt: ['E'], maxDepth: d => d.Hc + d.Hs + (d.E || 0),
+      check: d => d.E > d.D / 2 * (1 + 1e-12) ? { k: 'E', e: 'depthExceedsRadius' } : null,
+      total: d => PI * (d.D / 2) ** 2 * (d.Hc / 3 + d.Hs + 2 / 3 * (d.E || 0)),
+      partial: (d, h) => { const A = PI * (d.D / 2) ** 2, E = d.E || 0;
+        if (h <= d.Hc) return A * h ** 3 / (3 * d.Hc * d.Hc);
+        if (h <= d.Hc + d.Hs) return A * d.Hc / 3 + A * (h - d.Hc);
+        const z = Math.min(h - d.Hc - d.Hs, E); return A * d.Hc / 3 + A * d.Hs + A * (z - z ** 3 / (3 * E * E)); } },
   };
 
   /** Validate SI dims (metres) and optional fill depth. Returns { field: errorKey }. */
@@ -90,7 +121,8 @@
       if (typeof v !== 'number' || !Number.isFinite(v)) errors[k] = 'notNumber';
       else if (v <= 0) errors[k] = 'mustBePositive';
     });
-    if (!Object.keys(errors).length && s.check) { const bad = s.check(d); if (bad) errors[bad] = 'widthLessThanHeight'; }
+    (s.opt || []).forEach(k => { const v = d[k]; if (v != null && (typeof v !== 'number' || !Number.isFinite(v) || v < 0)) errors[k] = 'notNumber'; });
+    if (!Object.keys(errors).length && s.check) { const bad = s.check(d); if (bad) errors[bad.k] = bad.e; }
     if (depth != null) {
       if (!Number.isFinite(depth) || depth < 0) errors.depth = 'invalidDepth';
       else if (!Object.keys(errors).length && depth > s.maxDepth(d) * (1 + 1e-12)) errors.depth = 'depthExceedsHeight';
@@ -143,7 +175,9 @@
     switch (shapeId) {
       case 'horizontalCylinder': w.r = d.D / 2; Object.assign(w, segment(w.r, f)); break;
       case 'verticalCylinder': w.r = d.D / 2; w.base = PI * w.r * w.r; break;
-      case 'rectangular': w.base = d.L * d.W; break;
+      case 'rectangular': { w.R = d.R || 0; w.base = d.L * d.W;
+        w.loss = cornerLoss(w.R, Math.min(f, w.R)); w.lossTop = f > d.H - w.R ? cornerLoss(w.R, w.R) - cornerLoss(w.R, d.H - f) : 0;
+        w.area = roundedRectFill(d.W, d.H, w.R, f); w.profile = d.W * d.H - (4 - PI) * w.R * w.R; break; }
       case 'sphere': w.r = d.D / 2; w.cap = PI * f * f * (3 * w.r - f) / 3; break;
       case 'ellipse': {
         w.a = d.W / 2; w.b = d.H / 2; w.t = Math.max(-1, Math.min(1, (w.b - f) / w.b));
@@ -153,12 +187,18 @@
       case 'capsuleHorizontal':
         w.r = d.D / 2; w.a = d.Lc; Object.assign(w, segment(w.r, f)); w.cyl = w.seg * w.a; w.cap = PI * f * f * (3 * w.r - f) / 3; break;
       case 'ellipsoidalHeadsHorizontal':
-        w.r = d.D / 2; w.a = d.Ls; Object.assign(w, segment(w.r, f)); w.cyl = w.seg * w.a; w.cap = PI * f * f * (3 * w.r - f) / 3; w.heads = w.cap / 2; break;
+        w.r = d.D / 2; w.a = d.L - 2 * d.E; w.E = d.E; Object.assign(w, segment(w.r, f)); w.cyl = w.seg * w.a; w.cap = PI * f * f * (3 * w.r - f) / 3; w.heads = w.cap * d.E / w.r; break;
+      case 'dishBowl': w.a = d.D / 2; w.R = (w.a * w.a + d.E * d.E) / (2 * d.E); w.cap = PI * f * f * (3 * w.R - f) / 3; break;
+      case 'coneBottom': { w.r = d.D / 2; w.base = PI * w.r * w.r; w.E = d.E || 0; const A = w.base;
+        w.coneFull = A * d.Hc / 3; w.part = f <= d.Hc ? 'cone' : (f <= d.Hc + d.Hs ? 'shell' : 'top');
+        w.cone = f <= d.Hc ? A * f ** 3 / (3 * d.Hc * d.Hc) : w.coneFull;
+        w.shell = f <= d.Hc ? 0 : A * (Math.min(f, d.Hc + d.Hs) - d.Hc);
+        w.z = Math.max(0, f - d.Hc - d.Hs); w.top = w.E > 0 && w.z > 0 ? A * (w.z - w.z ** 3 / (3 * w.E * w.E)) : 0; break; }
     }
     return w;
   }
 
   return { LENGTH_TO_M, M3_TO, SHAPES, convertLength, convertVolume, circleSegmentArea, ellipseSegmentArea,
     sphereCapVolume, spellArea, normalizeDimensions, validateDimensions, calculateTotalVolume,
-    calculatePartialFillVolume, calculate, workings };
+    calculatePartialFillVolume, calculate, workings, roundedRectFill, cornerLoss };
 });

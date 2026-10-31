@@ -20,7 +20,7 @@
 
 ## Tools
 
-- [Tank Volume Calculator](https://hhfabtech.com/calculator.html): Calculate tank volume in cubic metres, litres and US gallons for circle, oval and tanker profiles.
+- [Tank Volume Calculator](https://hhfabtech.com/calculator.html): Free tank volume and partial-fill calculator for horizontal, vertical, oval, Spell, cone, capsule, spherical, dished-end and rectangular tanks, in litres, KL, m³ and gallons, with formulas, baffle planning and steel weight estimate.
 
 ## Company
 

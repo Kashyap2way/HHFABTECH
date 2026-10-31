@@ -78,7 +78,21 @@ const WIRE = (function () {
       [x1, x1 + 20, x1 + 40, x1 + 60, x2].forEach(x => s += el('w-m', ell(x, cy, 6.5, r)));
       [5, 9.5].forEach(o => { const rr = r * Math.sqrt(1 - (o / hd) ** 2); s += el('w-m', ell(x1 - o, cy, 3 * rr / r, rr)) + el('w-m', ell(x2 + o, cy, 3 * rr / r, rr)); });
       [-.66, 0, .66].forEach(u => s += el('w-m', ln(x1, cy + r * u, x2, cy + r * u)));
-      s += `<path class="w-fill" d="${d}"/>` + el('w-f', d); return wrap(s); }
+      s += `<path class="w-fill" d="${d}"/>` + el('w-f', d); return wrap(s); },
+    dishBowl() { const cx = 90, rx = 38, ry = 9, yt = 34; let s = '';
+      const bowl = `M${cx - rx} ${yt}A${rx} 46 0 0 0 ${cx + rx} ${yt}`;
+      s += el('w-b', half(cx, yt, rx, ry, false));
+      [48, 62].forEach(y => { const k = Math.sqrt(1 - ((y - yt) / 46) ** 2), rr = rx * k; s += el('w-b', half(cx, y, rr, ry * k, false)) + el('w-m', half(cx, y, rr, ry * k, true)); });
+      [[-.55, .72], [0, 1], [.55, .72]].forEach(([u, k]) => { const x = cx + rx * u; s += el('w-m', `M${r1(x)} ${r1(yt + ry * Math.sqrt(1 - u * u))}Q${r1(cx + rx * u * .5)} ${r1(yt + 38 * k + 8)} ${cx} ${yt + 46 - 1}`); });
+      s += `<path class="w-fill" d="${bowl}Z"/>` + el('w-f', bowl) + el('w-e', ell(cx, yt, rx, ry)); return wrap(s); },
+    coneBottom() { const cx = 90, rx = 27, ry = 8, ys = 30, yb = 58, ya = 90; let s = '';
+      const dome = `M${cx - rx} ${ys}A${rx} 13 0 0 1 ${cx + rx} ${ys}`;
+      s += el('w-b', half(cx, ys, rx, ry, false)) + el('w-b', half(cx, yb, rx, ry, false));
+      [44].forEach(y => { s += el('w-b', half(cx, y, rx, ry, false)) + el('w-m', half(cx, y, rx, ry, true)); });
+      [70, 80].forEach(y => { const k = (ya - y) / (ya - yb); s += el('w-b', half(cx, y, rx * k, ry * k, false)) + el('w-m', half(cx, y, rx * k, ry * k, true)); });
+      [.28, .5, .72].forEach(u => { const t = Math.PI * u, x = cx + rx * Math.cos(t); s += el('w-m', ln(x, ys + ry * Math.sin(t), x, yb + ry * Math.sin(t))) + el('w-m', ln(x, yb + ry * Math.sin(t), cx, ya)); });
+      s += el('w-m', half(cx, ys, rx, ry, true)) + el('w-e', ln(cx - rx, ys, cx - rx, yb) ) + el('w-e', ln(cx + rx, ys, cx + rx, yb)) + el('w-e', ln(cx - rx, yb, cx, ya)) + el('w-e', ln(cx + rx, yb, cx, ya)) + el('w-e', half(cx, yb, rx, ry, true));
+      s += `<path class="w-fill" d="${dome}Z"/>` + el('w-f', dome); return wrap(s); }
   };
   icons.ellipse = icons.oval;
   return { icons, V };
@@ -112,26 +126,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const F = (k, n) => ({ k, n });
   const D_ = (b, t, h) => ({ b, t, h });
   const S = {
-    horizontalCylinder: { name: 'Horizontal cylinder', tag: 'Round tank lying on its side', f: [F('D', 'Internal diameter'), F('L', 'Internal length')],
-      measure: [D_('D', 'Internal diameter', 'Across the inside of the round end, wall to wall.'), D_('L', 'Internal length', 'Along the inside of the tank, between the two flat ends.')],
-      how: ['The end of the tank is a circle. At your fill depth the liquid covers a slice of that circle, called a circular segment. Multiply the segment’s area by the tank length and you have the volume of liquid.', 'At exactly half depth the tank is exactly half full. Above or below that, the volume changes fastest near the middle and slowest near the top and bottom.'],
-      notes: ['Fill depth is measured up from the lowest point inside the tank.', 'Flat ends are assumed. For domed or dished ends, use Capsule or 2:1 heads.', 'Use internal dimensions: shell thickness is not added.'] },
     verticalCylinder: { name: 'Vertical cylinder', tag: 'Upright round tank', f: [F('D', 'Internal diameter'), F('H', 'Internal height')],
       measure: [D_('D', 'Internal diameter', 'Across the inside of the tank, wall to wall.'), D_('H', 'Internal height', 'From the inside floor to the inside roof.')],
       how: ['A standing tank fills like a stack: the liquid is a shorter cylinder with the same diameter, as tall as your fill depth.', 'Volume of liquid = base area × fill depth, so every extra centimetre of depth adds the same amount.'],
-      notes: ['Fill depth is the liquid height measured from the floor.', 'A flat floor and flat roof are assumed.', 'Use internal dimensions: shell thickness is not added.'] },
-    rectangular: { name: 'Rectangular tank', tag: 'Box-shaped tank', f: [F('L', 'Internal length'), F('W', 'Internal width'), F('H', 'Internal height')],
-      measure: [D_('L', 'Internal length', 'The longer side of the floor, measured inside.'), D_('W', 'Internal width', 'The shorter side of the floor, measured inside.'), D_('H', 'Internal height', 'From the inside floor to the inside roof.')],
-      how: ['A box tank is the simplest case: volume = length × width × height.', 'The liquid is a shallower box with the same floor, so liquid volume = length × width × fill depth.'],
-      notes: ['Fill depth is the liquid height measured from the floor.', 'Square corners are assumed; internal braces and fittings are ignored.'] },
+      notes: ['Fill depth is the liquid height measured from the floor.', 'A flat floor and flat roof are assumed.', 'Use internal dimensions: shell thickness is not added.', 'The Advanced section estimates steel weight with thicker plates toward the bottom.'] },
+    rectangular: { name: 'Rectangular tank', tag: 'Box-shaped tank, optionally with rounded edges', f: [F('L', 'Internal length'), F('W', 'Internal width'), F('H', 'Internal height')],
+      o: [{ k: 'R', n: 'Round the edges', lbl: 'Corner radius', def: '70', on: false, hint: 'For roll-bent plate. The bend machine is 140 mm in diameter, so the default radius is 70 mm.' }],
+      measure: [D_('L', 'Internal length', 'The longer side of the floor, measured inside.'), D_('W', 'Internal width', 'The shorter side of the floor, measured inside.'), D_('H', 'Internal height', 'From the inside floor to the inside roof.'), D_('R', 'Corner radius', 'Only when “Round the edges” is ticked. Default 70 mm.')],
+      how: ['A box tank is the simplest case: volume = length × width × height.', 'With rounded edges, each of the four corners of the cross-section loses a little area, (4 − π) R² in total. The liquid area is worked out the same way, including the extra corner area near the floor and near the roof.'],
+      notes: ['Fill depth is the liquid height measured from the floor.', 'Rounding runs along the full length, as it does when the plate is roll-bent.', 'Internal braces and fittings are ignored.'] },
     sphere: { name: 'Sphere', tag: 'Ball-shaped vessel', f: [F('D', 'Internal diameter')],
       measure: [D_('D', 'Internal diameter', 'Across the widest part of the inside of the ball.')],
       how: ['The liquid in a sphere forms a spherical cap: a dome of liquid whose size depends on the fill depth and the radius.', 'The full sphere holds (4/3)πr³. At half depth it holds exactly half of that.'],
       notes: ['Fill depth is measured up from the lowest point.', 'A perfect sphere is assumed; the result is exact for that ideal shape.'] },
-    ellipse: { name: 'Horizontal ellipse', tag: 'True elliptical cross-section', f: [F('W', 'Cross-section width (full axis)'), F('H', 'Cross-section height (full axis)'), F('L', 'Internal length')],
-      measure: [D_('W', 'Width', 'The full horizontal width of the elliptical end, inside.'), D_('H', 'Height', 'The full vertical height of the elliptical end, inside.'), D_('L', 'Internal length', 'Along the inside of the tank.')],
-      how: ['The end of the tank is a true ellipse, not a rounded rectangle. At your fill depth the liquid covers an elliptical segment; multiply that area by the length.', 'This is the same geometry as the Oval Cylinder option above.'],
-      notes: ['Fill depth is measured up from the lowest point inside the tank.', 'W and H are full widths across the ellipse, not half-axes.'] },
     stadium: { name: 'Stadium oval', tag: 'Flat top and bottom, round sides', f: [F('W', 'Overall width'), F('H', 'Overall height (W ≥ H)'), F('L', 'Internal length')],
       measure: [D_('W', 'Overall width', 'Edge to edge across the end, inside. Must be at least the height.'), D_('H', 'Overall height', 'Floor to roof of the end, inside.'), D_('L', 'Internal length', 'Along the inside of the tank.')],
       how: ['The end looks like a running track: a rectangle in the middle with a half-circle on each side. It is not an ellipse.', 'We treat it as a circle of diameter H split in two, with a rectangle of width W − H between the halves, then multiply by the length.'],
@@ -140,10 +147,21 @@ document.addEventListener('DOMContentLoaded', () => {
       measure: [D_('D', 'Internal diameter', 'Across the inside of the tube and of the round ends.'), D_('Lc', 'Straight section length', 'Only the straight middle part. The two domes are extra.')],
       how: ['We treat the two domed ends together as one sphere, and the middle as a cylinder.', 'Liquid in the cylinder part is a circular segment times the straight length. Liquid in the domes is one spherical cap. Add the two for the total.'],
       notes: ['Overall length = Lc + D, because each dome adds half a diameter.', 'Fill depth is measured up from the lowest point inside.'] },
-    ellipsoidalHeadsHorizontal: { name: '2:1 ellipsoidal heads', tag: 'Cylinder with 2:1 elliptical ends', f: [F('D', 'Internal diameter'), F('Ls', 'Straight shell length')],
-      measure: [D_('D', 'Internal diameter', 'Across the inside of the shell.'), D_('Ls', 'Straight shell length', 'Only the straight shell. The two heads are extra.')],
-      how: ['A standard 2:1 head is half an ellipsoid whose depth is a quarter of the diameter. Both heads together equal half of a sphere of the same diameter.', 'Liquid in the shell is a circular segment times the shell length. Liquid in the heads is half of a spherical cap. Add the two.'],
-      notes: ['Overall length = Ls + D/2, since each head is D/4 deep.', 'Dished (torispherical) heads are not included.'] } };
+    ellipsoidalHeadsHorizontal: { name: '2:1 ellipsoidal heads', tag: 'Cylinder with dished elliptical ends', f: [F('D', 'Internal diameter'), F('L', 'Overall length, end to end'), F('E', 'Dish (emboss) depth per end')],
+      hints: { E: 'A true 2:1 head is D ÷ 4 deep. Use your own depth, for example 150 mm.', L: 'Measured over both dish ends. The straight shell is worked out for you as L − 2 × E.' },
+      measure: [D_('D', 'Internal diameter', 'Across the inside of the shell.'), D_('L', 'Overall length', 'End to end, including both dished ends. You do not need to subtract the dish depth.'), D_('E', 'Dish depth per end', 'How far each end bulges out beyond the straight shell.')],
+      how: ['Each dished end is half an ellipsoid. We subtract the two dish depths from your overall length to find the straight shell automatically.', 'Liquid in the shell is a circular segment times the shell length. Liquid in the ends is a scaled spherical cap. Add the two. The ends start to hold liquid from the very first litre, so there is no jump at the top.'],
+      notes: ['Shell length = L − 2E, shown in the preview.', 'The dish depth cannot be more than half the diameter.', 'Torispherical (knuckle) heads are approximated by this smooth ellipsoid.'] },
+    dishBowl: { name: 'Hemisphere / dish', tag: 'Dished bowl opening upward', f: [F('D', 'Diameter across the opening'), F('E', 'Depth of the dish')],
+      hints: { E: 'Use half the diameter for a full hemisphere. Smaller values give a shallower dish.' },
+      measure: [D_('D', 'Diameter', 'Across the open rim of the dish, inside.'), D_('E', 'Depth', 'From the rim down to the lowest point, inside. At most half the diameter.')],
+      how: ['A dish or hemisphere is a spherical cap. Its sphere radius follows from the diameter and depth: R = (a² + E²) ÷ 2E, where a is the radius of the opening.', 'Liquid at depth f from the lowest point is a smaller cap of the same sphere, so its volume is (π f² ÷ 3)(3R − f).'],
+      notes: ['Fill depth is measured up from the lowest point of the dish.', 'With E = D ÷ 2 the shape is an exact hemisphere.', 'Use internal dimensions: plate thickness is not added.'] },
+    coneBottom: { name: 'Conical-bottom tank', tag: 'Cone below, cylinder above', f: [F('D', 'Internal diameter'), F('Hc', 'Cone length (height)'), F('Hs', 'Shell length')],
+      o: [{ k: 'E', n: 'Embossed top (dish end)', lbl: 'Emboss depth per end', def: '150', on: true, hint: 'Dish depth of the top end. Untick for a flat top.' }],
+      measure: [D_('D', 'Internal diameter', 'Across the shell. The cone opens to this diameter at its top.'), D_('Hc', 'Cone length', 'Vertical height of the cone, from its tip up to where the shell starts.'), D_('Hs', 'Shell length', 'Height of the straight cylinder above the cone.'), D_('E', 'Top dish depth', 'Only when the embossed top is ticked. Default 150 mm.')],
+      how: ['The tank is three parts stacked up: a cone (pointed at the bottom), a straight cylinder, and an optional embossed top.', 'While the liquid is in the cone its volume grows with the cube of the depth. Once it reaches the shell it rises evenly, and above the shell it fills the embossed top.'],
+      notes: ['Fill depth is measured up from the tip of the cone.', 'The cone is taken as a full cone to a point. Add a bottom outlet separately.', 'The embossed top is a half-ellipsoid: it adds (2/3) × area × depth when full.'] } };
   const M = {
     spell: { name: 'Spell cylinder', tag: 'The HH FABTECH truck profile',
       measure: [D_('L', 'Straight shell length', 'Along the tank, not counting the embossed dish ends.'), D_('W', 'Overall width', 'The widest point of the profile.'), D_('H', 'Overall height', 'Floor to roof of the profile.'), D_('Rw', 'Rwidth and Rheight', 'The central rectangle. They scale automatically; edit them in Advanced.')],
@@ -157,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
       measure: [D_('W', 'Overall width', 'The full width across the ellipse.'), D_('H', 'Overall height', 'The full height across the ellipse.'), D_('L', 'Straight shell length', 'Along the tank, not counting the dish ends.')],
       how: ['The profile is a true ellipse, so the area is πWH/4. Multiply by the length for the volume.', 'For a part-filled tank the liquid covers an elliptical segment, and we multiply that area by the length.'],
       notes: ['Each embossed end adds about two-thirds of A × E. Untick the dish-end option to leave it out.', 'Fill percentages are by volume, not by height.'] } };
-  const XS_IDS = Object.keys(S);
+  const XS_IDS = Object.keys(S);   // order = card order
 
   /* ---------- 1. wire icons ---------- */
   let spellD = null, spellBB = null;
@@ -188,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- 2. launcher + glass sheet ---------- */
   const launch = Object.assign(document.createElement('button'), { type: 'button', className: 'xs-launch', id: 'xsToggle' });
   launch.setAttribute('aria-expanded', 'false'); launch.setAttribute('aria-controls', 'xsPanel');
-  launch.innerHTML = `<span class="xs-orb" id="xsOrb">${WIRE.icons.sphere()}</span><span class="xs-launch-text"><strong id="xsLaunchTitle">More tank shapes</strong><small id="xsLaunchSub">Capsule, sphere, stadium oval, 2:1 heads and more</small></span><span class="xs-launch-count">${XS_IDS.length}</span><span class="xs-launch-chev">${CHEV}</span>`;
+  launch.innerHTML = `<span class="xs-orb" id="xsOrb">${WIRE.icons.sphere()}</span><span class="xs-launch-text"><strong id="xsLaunchTitle">More tank shapes</strong><small id="xsLaunchSub">Vertical, capsule, cone, dish, sphere and more</small></span><span class="xs-launch-count">${XS_IDS.length}</span><span class="xs-launch-chev">${CHEV}</span>`;
   const wrap = Object.assign(document.createElement('div'), { id: 'xsPanel', className: 'xs-sheet-wrap' });
   wrap.setAttribute('role', 'region'); wrap.setAttribute('aria-label', 'More tank shapes'); wrap.inert = true;
   wrap.innerHTML = `<div class="xs-sheet-clip"><div class="xs-sheet"><div class="xs-grid">${XS_IDS.map((id, i) =>
@@ -234,35 +252,41 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <p class="tc-status" id="xsStatus">Enter valid dimensions to calculate capacity.</p>
       </div>
-      <div class="tc-info"><strong>Calculation note:</strong> Results are geometric volumes of the ideal internal shape. Shell thickness, fittings, ullage and manufacturing tolerances are not included. Open <strong>How the result is worked out</strong> below for the formulas.</div>
+      <div class="tc-info"><strong>Calculation note:</strong> Results are geometric volumes of the ideal internal shape. Shell thickness, fittings, ullage and manufacturing tolerances are not included. Open <strong>Nerd Stuff</strong> below for the formulas.</div>
     </div>`;
   work.before(wk);
 
   const PROF = (() => {
     const circ = (cx, cy, r) => `M ${cx} ${cy - r} A ${r} ${r} 0 1 1 ${cx} ${cy + r} A ${r} ${r} 0 1 1 ${cx} ${cy - r} Z`;
-    const ell = (cx, cy, rx, ry) => `M ${cx - rx} ${cy} A ${rx} ${ry} 0 1 0 ${cx + rx} ${cy} A ${rx} ${ry} 0 1 0 ${cx - rx} ${cy} Z`;
     const rect = (cx, cy, w, h) => `M ${cx - w / 2} ${cy - h / 2} H ${cx + w / 2} V ${cy + h / 2} H ${cx - w / 2} Z`;
+    const rrect = (cx, cy, w, h, r) => { r = Math.max(0, Math.min(r, w / 2, h / 2)); if (!r) return rect(cx, cy, w, h); const l = cx - w / 2, rt = cx + w / 2, t = cy - h / 2, b = cy + h / 2;
+      return `M ${l + r} ${t} H ${rt - r} A ${r} ${r} 0 0 1 ${rt} ${t + r} V ${b - r} A ${r} ${r} 0 0 1 ${rt - r} ${b} H ${l + r} A ${r} ${r} 0 0 1 ${l} ${b - r} V ${t + r} A ${r} ${r} 0 0 1 ${l + r} ${t} Z`; };
     const pill = (cx, cy, w, h, rx) => { const l = cx - w / 2, r = cx + w / 2, t = cy - h / 2, b = cy + h / 2, ry = h / 2; return `M ${l + rx} ${t} H ${r - rx} A ${rx} ${ry} 0 0 1 ${r - rx} ${b} H ${l + rx} A ${rx} ${ry} 0 0 1 ${l + rx} ${t} Z`; };
     const L = (v, key) => `${key} ${fmt(v, 0)} mm`;
     return {
-      horizontalCylinder: { ref: { D: 1000, L: 2000 }, size: d => [d.D, d.D], path: (s, cx, cy, d) => circ(cx, cy, d.D * s / 2),
-        lab: (d, g) => ({ w: g ? 'D' : L(d.D, 'D'), h: g ? 'D' : L(d.D, 'D'), foot: g ? 'L  •  Tank length' : `${L(d.L, 'L')}  •  Tank length` }) },
       verticalCylinder: { ref: { D: 1000, H: 1800 }, size: d => [d.D, d.H], path: (s, cx, cy, d) => rect(cx, cy, d.D * s, d.H * s),
         lab: (d, g) => ({ w: g ? 'D' : L(d.D, 'D'), h: g ? 'H' : L(d.H, 'H'), foot: 'Vertical tank  •  Side view' }) },
-      rectangular: { ref: { L: 2000, W: 1000, H: 1000 }, size: d => [d.L, d.H], path: (s, cx, cy, d) => rect(cx, cy, d.L * s, d.H * s),
-        lab: (d, g) => ({ w: g ? 'L' : L(d.L, 'L'), h: g ? 'H' : L(d.H, 'H'), foot: g ? 'W  •  Tank width' : `${L(d.W, 'W')}  •  Tank width` }) },
+      rectangular: { end: true, ref: { L: 2000, W: 1000, H: 1000 }, size: d => [d.W, d.H], path: (s, cx, cy, d) => rrect(cx, cy, d.W * s, d.H * s, (d.R || 0) * s),
+        lab: (d, g) => ({ w: g ? 'W' : L(d.W, 'W'), h: g ? 'H' : L(d.H, 'H'), foot: g ? 'L  •  Tank length' : `${L(d.L, 'L')}  •  Tank length${d.R > 0 ? `  •  R ${fmt(d.R, 0)} mm` : ''}` }) },
       sphere: { ref: { D: 1000 }, size: d => [d.D, d.D], path: (s, cx, cy, d) => circ(cx, cy, d.D * s / 2),
         lab: (d, g) => ({ w: g ? 'D' : L(d.D, 'D'), h: g ? 'D' : L(d.D, 'D'), foot: 'Sphere' }) },
-      ellipse: { ref: { W: 2400, H: 1600, L: 3000 }, size: d => [d.W, d.H], path: (s, cx, cy, d) => ell(cx, cy, d.W * s / 2, d.H * s / 2),
-        lab: (d, g) => ({ w: g ? 'W' : L(d.W, 'W'), h: g ? 'H' : L(d.H, 'H'), foot: g ? 'L  •  Tank length' : `${L(d.L, 'L')}  •  Tank length` }) },
-      stadium: { ref: { W: 2400, H: 1600, L: 3000 }, size: d => [d.W, d.H], path: (s, cx, cy, d) => pill(cx, cy, d.W * s, d.H * s, d.H * s / 2),
+      stadium: { end: true, ref: { W: 2400, H: 1600, L: 3000 }, size: d => [d.W, d.H], path: (s, cx, cy, d) => pill(cx, cy, d.W * s, d.H * s, d.H * s / 2),
         lab: (d, g) => ({ w: g ? 'W' : L(d.W, 'W'), h: g ? 'H' : L(d.H, 'H'), foot: g ? 'L  •  Tank length' : `${L(d.L, 'L')}  •  Tank length` }) },
       capsuleHorizontal: { ref: { D: 1000, Lc: 2000 }, size: d => [d.Lc + d.D, d.D], path: (s, cx, cy, d) => pill(cx, cy, (d.Lc + d.D) * s, d.D * s, d.D * s / 2),
-        seams: (s, cx, d) => [cx - d.Lc * s / 2, cx + d.Lc * s / 2],
+        seams: (s, cx, cy, d, top, bottom) => [cx - d.Lc * s / 2, cx + d.Lc * s / 2].map(x => [x, top, x, bottom]),
         lab: (d, g) => ({ w: g ? 'Lc + D  •  Overall length' : `${fmt(d.Lc + d.D, 0)} mm overall`, h: g ? 'D' : L(d.D, 'D'), foot: g ? 'Lc  •  Straight section' : `${L(d.Lc, 'Lc')}  •  Straight section` }) },
-      ellipsoidalHeadsHorizontal: { ref: { D: 1000, Ls: 2000 }, size: d => [d.Ls + d.D / 2, d.D], path: (s, cx, cy, d) => pill(cx, cy, (d.Ls + d.D / 2) * s, d.D * s, d.D * s / 4),
-        seams: (s, cx, d) => [cx - d.Ls * s / 2, cx + d.Ls * s / 2],
-        lab: (d, g) => ({ w: g ? 'Ls + D/2  •  Overall length' : `${fmt(d.Ls + d.D / 2, 0)} mm overall`, h: g ? 'D' : L(d.D, 'D'), foot: g ? 'Ls  •  Straight shell' : `${L(d.Ls, 'Ls')}  •  Straight shell` }) } };
+      ellipsoidalHeadsHorizontal: { ref: { D: 1000, L: 2400, E: 250 }, size: d => [d.L, d.D], path: (s, cx, cy, d) => pill(cx, cy, d.L * s, d.D * s, Math.min(d.E, d.L / 2) * s),
+        seams: (s, cx, cy, d, top, bottom) => [cx - (d.L / 2 - d.E) * s, cx + (d.L / 2 - d.E) * s].map(x => [x, top, x, bottom]),
+        lab: (d, g) => ({ w: g ? 'L  •  Overall length' : `${L(d.L, 'L')}  •  Overall`, h: g ? 'D' : L(d.D, 'D'), foot: g ? 'E  •  Dish depth per end' : `${L(d.E, 'E')} per end  •  Shell ${fmt(d.L - 2 * d.E, 0)} mm` }) },
+      dishBowl: { ref: { D: 1600, E: 700 }, size: d => [d.D, d.E],
+        path: (s, cx, cy, d) => { const a = d.D / 2, R = (a * a + d.E * d.E) / (2 * d.E) * s, w = d.D * s, t = cy - d.E * s / 2; return `M ${cx - w / 2} ${t} A ${R} ${R} 0 0 0 ${cx + w / 2} ${t} Z`; },
+        lab: (d, g) => ({ w: g ? 'D' : L(d.D, 'D'), h: g ? 'E' : L(d.E, 'E  depth'), foot: g ? 'Dish opening upward' : `Dish opening upward  •  ${d.E >= d.D / 2 - 1e-6 ? 'Full hemisphere' : `Sphere radius ${fmt((d.D * d.D / 4 + d.E * d.E) / (2 * d.E), 0)} mm`}` }) },
+      coneBottom: { ref: { D: 1200, Hc: 900, Hs: 1500, E: 150 }, size: d => [d.D, d.Hc + d.Hs + (d.E || 0)],
+        geo: (s, cx, cy, d) => { const E = (d.E || 0) * s, r = d.D * s / 2, top = cy - (d.Hc + d.Hs + (d.E || 0)) * s / 2, ys = top + E, yb = ys + d.Hs * s, apex = yb + d.Hc * s; return { E, r, ys, yb, apex, left: cx - r, right: cx + r }; },
+        path: (s, cx, cy, d) => { const g = PROF.coneBottom.geo(s, cx, cy, d);
+          return `${g.E > 0 ? `M ${g.left} ${g.ys} A ${g.r} ${g.E} 0 0 1 ${g.right} ${g.ys}` : `M ${g.left} ${g.ys} H ${g.right}`} L ${g.right} ${g.yb} L ${cx} ${g.apex} L ${g.left} ${g.yb} Z`; },
+        seams: (s, cx, cy, d) => { const g = PROF.coneBottom.geo(s, cx, cy, d), out = [[g.left, g.yb, g.right, g.yb]]; if (g.E > 0) out.push([g.left, g.ys, g.right, g.ys]); return out; },
+        lab: (d, g) => ({ w: g ? 'D' : L(d.D, 'D'), h: g ? 'Hc + Hs + E' : `${fmt(d.Hc + d.Hs + (d.E || 0), 0)} mm overall`, foot: g ? 'Hc  •  Cone    Hs  •  Shell    E  •  Top dish' : `Cone ${fmt(d.Hc, 0)}  •  Shell ${fmt(d.Hs, 0)}${d.E > 0 ? `  •  Dish ${fmt(d.E, 0)}` : '  •  Flat top'} mm` }) } };
   })();
 
   const svgEl = (tag, attrs, parent, text) => { const e = document.createElementNS(NS, tag); Object.keys(attrs).forEach(k => e.setAttribute(k, attrs[k])); if (text !== undefined) e.textContent = text; if (parent) parent.appendChild(e); return e; };
@@ -273,13 +297,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const path = pr.path(sc, cx, cy, d), rc = ref ? ' is-ref' : '', gh = ref ? ' ghost' : '';
     clip.setAttribute('d', path);
     svgEl('path', { d: path, class: 'tank-outline' + rc }, g);
-    if (!ref && ratio > 0) {
+    if (ref) {
+      const gl = h * .58, gy = bottom - gl;
+      svgEl('rect', { x: left - 20, y: gy, width: w + 40, height: gl + 20, class: 'tank-liquid ghost-fill', 'clip-path': 'url(#xsClip)' }, g);
+      svgEl('path', { d: `M ${left - 10} ${gy} C ${left + w * .17} ${gy - 9}, ${left + w * .33} ${gy + 9}, ${left + w * .5} ${gy} S ${right - w * .17} ${gy - 9}, ${right + 10} ${gy}`, class: 'tank-liquid-wave ghost-fill', 'clip-path': 'url(#xsClip)' }, g);
+    } else if (ratio > 0) {
       const lh = h * Math.min(1, ratio), ly = bottom - lh;
       svgEl('rect', { x: left - 20, y: ly, width: w + 40, height: lh + 20, class: 'tank-liquid', 'clip-path': 'url(#xsClip)' }, g);
       if (ratio > .01 && ratio < .995) svgEl('path', { d: `M ${left - 10} ${ly} C ${left + w * .17} ${ly - 7}, ${left + w * .33} ${ly + 7}, ${left + w * .5} ${ly} S ${right - w * .17} ${ly - 7}, ${right + 10} ${ly}`, class: 'tank-liquid-wave', 'clip-path': 'url(#xsClip)' }, g);
     }
     svgEl('path', { d: path, class: 'tank-inner' + rc, transform: 'scale(.96)', 'transform-origin': `${cx}px ${cy}px` }, g);
-    if (pr.seams) { const sg = svgEl('g', { 'clip-path': 'url(#xsClip)' }, g); pr.seams(sc, cx, d).forEach(x => svgEl('line', { x1: x, y1: top, x2: x, y2: bottom, class: 'xs-seam' }, sg)); }
+    if (pr.seams) { const sg = svgEl('g', { 'clip-path': 'url(#xsClip)' }, g); pr.seams(sc, cx, cy, d, top, bottom).forEach(l => svgEl('line', { x1: l[0], y1: l[1], x2: l[2], y2: l[3], class: 'xs-seam' }, sg)); }
     const lab = pr.lab(d, ref), yD = bottom + 54, xD = right + 58;
     svgEl('line', { x1: left, y1: bottom + 7, x2: left, y2: yD - 10, class: 'dim-line' }, dm); svgEl('line', { x1: right, y1: bottom + 7, x2: right, y2: yD - 10, class: 'dim-line' }, dm); svgEl('line', { x1: left, y1: yD, x2: right, y2: yD, class: 'dim-arrow' }, dm);
     svgEl('text', { x: cx, y: yD + 18, 'text-anchor': 'middle', class: 'dim-text' + gh }, dm, lab.w);
@@ -287,7 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
     svgEl('text', { x: xD + 18, y: cy + 4, 'text-anchor': 'middle', class: 'dim-text' + gh, transform: `rotate(90 ${xD + 18} ${cy + 4})` }, dm, lab.h);
     svgEl('text', { x: cx, y: yD + 40, 'text-anchor': 'middle', class: 'dim-text' + gh }, dm, lab.foot);
     svgEl('text', { x: cx, y: 35, 'text-anchor': 'middle', class: 'dim-text' + gh }, dm, ref ? 'Reference profile — no values entered' : `${fmt(pct, 1)}% full by volume`);
-    $('xsHint').textContent = ref ? 'Empty reference outline. Enter dimensions to see the live cross-section.' : (/Horizontal|ellipse|stadium/i.test(S[cur].name) && !pr.seams ? 'End view of the tank: the liquid level is shown across the cross-section. Proportional illustration, not a fabrication drawing.' : 'Proportional engineering illustration. Not a fabrication drawing.');
+    if (ref) { const cta = svgEl('g', { class: 'empty-cta' }, dm); svgEl('rect', { x: cx - 165, y: cy - 20, width: 330, height: 40, rx: 20 }, cta); svgEl('text', { x: cx, y: cy + 5, 'text-anchor': 'middle' }, cta, 'Enter the dimensions below to begin'); }
+    $('xsHint').textContent = ref ? 'Empty reference outline. Enter dimensions to see the live cross-section.' : (pr.end ? 'End view of the tank: the liquid level is shown across the cross-section. Proportional illustration, not a fabrication drawing.' : 'Proportional engineering illustration. Not a fabrication drawing.');
     $('xsSvg').setAttribute('aria-label', ref ? `${S[cur].name} reference outline` : `${S[cur].name} profile, ${fmt(pct, 1)} percent full by volume`);
   }
 
@@ -305,17 +334,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   let cur = null, fillMode = 'depth', last = null;
   const store = {}, touched = {};
-  const msg = { notNumber: 'Use numbers, or a sum like 2400/2.', mustBePositive: 'Must be greater than zero.', widthLessThanHeight: 'Width must be at least the height.' };
+  const msg = { notNumber: 'Use numbers, or a sum like 2400/2.', mustBePositive: 'Must be greater than zero.', widthLessThanHeight: 'Width must be at least the height.', lengthTooShort: 'Overall length must be more than twice the dish depth.', depthExceedsRadius: 'Depth cannot be more than half the diameter.', radiusTooLarge: 'Radius cannot be more than half the width or height.' };
 
+  const optState = {};
+  const optOn = k => { const st = optState[cur + ':' + k], o = ((S[cur] || {}).o || []).find(x => x.k === k); return st ? st.on : !!(o && o.on); };
+  const gateOpt = (k, on) => { const g = $('xsoGate-' + k); if (!g) return; g.classList.toggle('off', !on); g.setAttribute('aria-disabled', String(!on)); g.querySelectorAll('input,select').forEach(x => x.disabled = !on); };
   function buildFields() {
     const s = S[cur]; $('xsTitle').textContent = s.name; $('xsBadge').textContent = s.name;
     $('xsDesc').textContent = 'Enter the internal dimensions of the tank. Dimensions are measured inside the shell.';
-    $('xsFields').innerHTML = s.f.map(f => `<div class="tc-field" id="xsField-${f.k}"><label for="xs-${f.k}"><span>${esc(f.n)}</span><span class="tc-field-label-meta">${f.k}</span></label><div class="tc-input-group"><input id="xs-${f.k}" type="text" inputmode="decimal" autocomplete="off" value="${esc(store[f.k] ? store[f.k].v : '')}" placeholder="Enter ${f.k}"><select id="xs-${f.k}-u" aria-label="${esc(f.n)} unit">${UNITS.map(u => `<option ${u === ((store[f.k] && store[f.k].u) || 'mm') ? 'selected' : ''}>${u}</option>`).join('')}</select></div><p class="xs-err" id="xsErr-${f.k}" role="alert"></p></div>`).join('');
+    const unitSel = (k, label, u0) => `<select id="xs-${k}-u" aria-label="${esc(label)} unit">${UNITS.map(u => `<option ${u === u0 ? 'selected' : ''}>${u}</option>`).join('')}</select>`;
+    const field = (k, n, val, u0, hint) => `<div class="tc-field" id="xsField-${k}"><label for="xs-${k}"><span>${esc(n)}</span><span class="tc-field-label-meta">${k}</span></label><div class="tc-input-group"><input id="xs-${k}" type="text" inputmode="decimal" autocomplete="off" value="${esc(val)}" placeholder="Enter ${k}">${unitSel(k, n, u0)}</div>${hint ? `<p class="tc-note">${esc(hint)}</p>` : ''}<p class="xs-err" id="xsErr-${k}" role="alert"></p></div>`;
+    const base = s.f.map(f => field(f.k, f.n, store[f.k] ? store[f.k].v : '', (store[f.k] && store[f.k].u) || 'mm', s.hints && s.hints[f.k])).join('');
+    const opts = (s.o || []).map(o => { const st = optState[cur + ':' + o.k] || (optState[cur + ':' + o.k] = { on: o.on, v: o.def, u: 'mm' });
+      return `<div class="xs-opt"><label class="tc-check-row"><input type="checkbox" id="xso-${o.k}" ${st.on ? 'checked' : ''}><span class="tc-check-box">${CHECK}</span><span><strong>${esc(o.n)}</strong><small>${esc(o.hint)}</small></span></label><div class="tc-gate ${st.on ? '' : 'off'}" id="xsoGate-${o.k}" style="margin-top:14px">${field(o.k, o.lbl, st.v, st.u, '')}</div></div>`; }).join('');
+    $('xsFields').innerHTML = base + opts;
+    (s.o || []).forEach(o => gateOpt(o.k, optState[cur + ':' + o.k].on));
+    fillSolveOptions();
   }
   function readDims() {
     const raw = {}, info = {};
-    S[cur].f.forEach(f => { const el = $('xs-' + f.k), u = $('xs-' + f.k + '-u').value, v = evalExpr(el.value);
-      store[f.k] = { v: el.value, u }; info[f.k] = v === null ? 'empty' : (Number.isNaN(v) ? 'invalid' : 'ok'); raw[f.k] = { value: v === null ? NaN : v, unit: u }; });
+    const read = k => { const el = $('xs-' + k), u = $('xs-' + k + '-u').value, v = evalExpr(el.value); info[k] = v === null ? 'empty' : (Number.isNaN(v) ? 'invalid' : 'ok'); raw[k] = { value: v === null ? NaN : v, unit: u }; return { v: el.value, u }; };
+    S[cur].f.forEach(f => { store[f.k] = read(f.k); });
+    (S[cur].o || []).forEach(o => { const st = optState[cur + ':' + o.k] || (optState[cur + ':' + o.k] = { on: o.on, v: o.def, u: 'mm' }); st.on = $('xso-' + o.k).checked; if (st.on) { const r = read(o.k); st.v = r.v; st.u = r.u; } });
     return { raw, info, d: G.normalizeDimensions(raw) };
   }
   const LEN = G.LENGTH_TO_M;
@@ -353,9 +393,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#xsWork .xs-err').forEach(e => e.textContent = ''); document.querySelectorAll('#xsFields .tc-field').forEach(f => f.classList.remove('xs-bad'));
     Object.keys(dimErr).forEach(k => { const e = $('xsErr-' + k); if (!e) return; const bad = info[k] === 'invalid' || (info[k] === 'ok'), show = touched[k] || info[k] !== 'empty';
       if (show && (bad || touched[k])) { e.textContent = info[k] === 'empty' ? 'Enter a measurement.' : (msg[dimErr[k]] || 'Invalid value.'); $('xsField-' + k).classList.add('xs-bad'); } });
-    if (Object.keys(dimErr).length) { last = null; resetResults('Enter valid dimensions to calculate capacity.'); draw(null, 0, true); renderMath(); return; }
+    if (Object.keys(dimErr).length) { last = null; resetResults('Enter valid dimensions to calculate capacity.'); draw(null, 0, true); renderMath(); updateXsAdv(); return; }
     const fd = fillDepth(d);
-    if (fd.error) { $('xsErr-' + fd.where).textContent = fd.error; last = null; resetResults('Check the fill value.'); draw(d, 0, false, 0); renderMath(); return; }
+    if (fd.error) { $('xsErr-' + fd.where).textContent = fd.error; last = null; resetResults('Check the fill value.'); draw(d, 0, false, 0); renderMath(); updateXsAdv(); return; }
     const max = G.SHAPES[cur].maxDepth(d), r = G.calculate(cur, d, fd.depth);
     const L = r.filledM3 * 1000, capL = r.totalM3 * 1000, pct = r.totalM3 ? r.filledM3 / r.totalM3 * 100 : 0;
     $('xsLitres').textContent = fmt(L, 0); $('xsCap').textContent = fmt(capL, 0) + ' L'; $('xsKL').textContent = fmt(r.filledM3, r.filledM3 < 10 ? 3 : 1);
@@ -365,14 +405,14 @@ document.addEventListener('DOMContentLoaded', () => {
     $('xsFillNote').textContent = fillMode === 'depth' ? ($('xsFillUnit').value === '%' ? `${fmt(pct, 1)}% of capacity ≈ ${depthTxt} deep (${fmt(fd.depth / max * 100, 1)}% of the tank height).` : `Equivalent depth ≈ ${depthTxt}; the volume is computed from the actual profile shape.`) : '';
     $('xsVolNote').textContent = fillMode === 'volume' ? `${fmt(pct, 1)}% of capacity ≈ ${depthTxt} deep.` : '';
     last = { d, depth: fd.depth, max, r, pct };
-    draw(d, fd.depth / max, false, pct); renderMath();
+    draw(d, fd.depth / max, false, pct); renderMath(); updateXsAdv();
     const rg = $('xsRange'); if (rg && fillMode === 'depth' && $('xsFillUnit').value === '%' && document.activeElement !== rg) { rg.value = Math.round(Math.min(100, Math.max(0, evalExpr($('xsFill').value) || 0))); rg.style.setProperty('--p', rg.value + '%'); }
   }
 
   /* ---- events for the other-shapes workspace ---- */
   wk.addEventListener('input', e => { const t = e.target; if (t.id === 'xsFillUnit') return;   // unit changes are handled on 'change' so the value can be converted first
     if (t.id && t.id.startsWith('xs-') && !t.id.endsWith('-u')) touched[t.id.slice(3)] = true; if (t.id === 'xsRange') { $('xsFill').value = t.value; t.style.setProperty('--p', t.value + '%'); } update(); });
-  wk.addEventListener('change', e => { if (e.target.id === 'xsFillUnit') convertFillUnit(); update(); });
+  wk.addEventListener('change', e => { const id = e.target.id || ''; if (id === 'xsFillUnit') convertFillUnit(); if (id.startsWith('xso-')) { gateOpt(id.slice(4), e.target.checked); fillSolveOptions(); } update(); });
   wk.addEventListener('focusout', e => { const t = e.target; if (t.tagName !== 'INPUT' || t.type !== 'text') return; const v = evalExpr(t.value); if (v != null && Number.isFinite(v) && /[+*/()xX×-]/.test(t.value.replace(/^-/, ''))) { t.value = String(Math.round(v * 1000) / 1000); update(); } });
   let priorUnit = '%';
   wk.addEventListener('focusin', e => { if (e.target.id === 'xsFillUnit') priorUnit = e.target.value; });
@@ -390,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function syncLauncher() {
     const pick = cur ? S[cur] : null; launch.classList.toggle('has-pick', !!pick);
     $('xsLaunchTitle').textContent = pick ? pick.name : 'More tank shapes';
-    $('xsLaunchSub').textContent = pick ? 'Selected shape · tap to change' : 'Capsule, sphere, stadium oval, 2:1 heads and more';
+    $('xsLaunchSub').textContent = pick ? 'Selected shape · tap to change' : 'Vertical, capsule, cone, dish, sphere and more';
     $('xsOrb').innerHTML = WIRE.icons[cur || 'sphere']();
     wrap.querySelectorAll('.xs-card').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.xs === cur)));
   }
@@ -411,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- 4. understand the result ---------- */
   const learn = document.createElement('section'); learn.className = 'xs-learn'; learn.id = 'xsLearn'; learn.setAttribute('aria-label', 'How the result is worked out');
   learn.innerHTML = `<div class="xs-learn-head"><span class="xs-learn-icon" id="xsLearnIcon"></span><div class="xs-learn-title"><h2 id="xsLearnH">How the result is worked out</h2><p id="xsLearnLead"></p></div>
-    <div class="xs-seg" role="tablist" aria-label="Explanation or formulas" id="xsSeg"><span class="xs-seg-pill" aria-hidden="true"></span><button type="button" role="tab" id="xsTabInfo" aria-selected="true" aria-controls="xsPaneInfo">How it works</button><button type="button" role="tab" id="xsTabMath" aria-selected="false" aria-controls="xsPaneMath" tabindex="-1">Formulas</button></div></div>
+    <div class="xs-seg" role="tablist" aria-label="Explanation or Nerd Stuff" id="xsSeg"><span class="xs-seg-pill" aria-hidden="true"></span><button type="button" role="tab" id="xsTabInfo" aria-selected="true" aria-controls="xsPaneInfo">How it works</button><button type="button" role="tab" id="xsTabMath" aria-selected="false" aria-controls="xsPaneMath" tabindex="-1">Nerd Stuff</button></div></div>
     <div class="xs-pane" id="xsPaneInfo" role="tabpanel" aria-labelledby="xsTabInfo"></div><div class="xs-pane xs-math" id="xsPaneMath" role="tabpanel" aria-labelledby="xsTabMath" hidden></div>`;
   (advT || work.parentElement.lastElementChild).before(learn);
   let tab = 'info';
@@ -424,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainId = () => { const a = grid.querySelector('.tc-shape-card.active[data-shape]'); return a ? a.dataset.shape : 'spell'; };
   function renderLearn() {
     const id = cur || mainId(), c = cur ? S[cur] : M[id]; if (!c) return;
-    $('xsLearnIcon').innerHTML = icon(id); $('xsLearnLead').textContent = c.tag + '. Plain-English explanation, then the formulas filled with your numbers.';
+    $('xsLearnIcon').innerHTML = icon(id); $('xsLearnLead').textContent = c.tag + '. Plain-English explanation, then Nerd Stuff: the formulas filled with your numbers.';
     $('xsPaneInfo').innerHTML = `<div class="xs-info"><div><h3>What to measure</h3>${c.measure.map(m => `<div class="xs-dim"><b>${esc(m.b)}</b><div><strong>${esc(m.t)}</strong><span>${esc(m.h)}</span></div></div>`).join('')}</div>
       <div class="xs-how"><h3>How the volume is found</h3>${c.how.map(p => `<p>${esc(p)}</p>`).join('')}<h3>Good to know</h3><ul class="xs-notes">${c.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul></div></div>`;
     renderMath();
@@ -433,44 +473,53 @@ document.addEventListener('DOMContentLoaded', () => {
   const T = (v, dg = 2) => fmt(v, dg).replace(/,/g, '{,}');
   const eqCard = (host, cap, sym, num) => { const d = document.createElement('div'); d.className = 'tc-eq'; d.innerHTML = '<p class="tc-eq-cap"></p><div class="tc-eq-sym"></div><div class="tc-eq-num"></div>'; d.firstChild.textContent = cap; host.appendChild(d); tex(d.children[1], sym); if (num) tex(d.children[2], num); };
   function steps(id, w, d) {                                  // [caption, symbolic TeX, numeric TeX|null]; w = G.workings (SI) or null
-    const mm = v => v * 1000, mm2 = v => v * 1e6, mm3 = v => v * 1e9, Ls = v => v * 1000, nf = new Intl.NumberFormat('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 6 }),
+    const mm = v => v * 1000, mm2 = v => v * 1e6, mm3 = v => v * 1e9, Ls = v => v * 1000,
       n = (v, k) => Number.isFinite(v) ? new Intl.NumberFormat('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: k }).format(v).replace(/,/g, '{,}') : '—';
     const vol = (sym, v) => `${sym}=${n(mm3(v), 0)}\\ \\text{mm}^3=${n(Ls(v), 2)}\\ \\text{L}`;
-    const seg = r => w ? [String.raw`\theta=2\arccos\!\left(\frac{${n(mm(r), 1)}-${n(mm(w.f), 1)}}{${n(mm(r), 1)}}\right)=${n(w.theta, 4)}\ \text{rad},\quad A=\tfrac12\,(${n(mm(r), 1)})^{2}\,(${n(w.theta, 4)}-\sin ${n(w.theta, 4)})=${n(mm2(w.seg), 0)}\ \text{mm}^2`] : [null];
+    const segNum = r => String.raw`\theta=2\arccos\!\left(\frac{${n(mm(r), 1)}-${n(mm(w.f), 1)}}{${n(mm(r), 1)}}\right)=${n(w.theta, 4)}\ \text{rad},\quad A=\tfrac12\,(${n(mm(r), 1)})^{2}\,(${n(w.theta, 4)}-\sin ${n(w.theta, 4)})=${n(mm2(w.seg), 0)}\ \text{mm}^2`;
     const segSym = String.raw`\theta=2\arccos\!\left(\frac{r-f}{r}\right),\qquad A=\tfrac12\,r^{2}\,(\theta-\sin\theta)`;
-    const R = w && w.r, f = w && mm(w.f);
+    const R = w && w.r, f = w && mm(w.f), fillLine = sym => w && String.raw`V_{\text{fill}}=${sym}\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`;
     switch (id) {
-      case 'horizontalCylinder': return [
-        ['1 · Total volume', String.raw`V=\pi r^{2}L,\qquad r=\frac{D}{2}`, w && String.raw`V=\pi\times(${n(mm(R), 1)})^{2}\times${n(mm(d.L), 1)}\;\Rightarrow\;${vol('V', w.total)}`],
-        ['2 · Liquid segment', segSym, w && seg(R)[0]],
-        ['3 · Filled volume', String.raw`V_{\text{fill}}=A\,L`, w && String.raw`V_{\text{fill}}=${n(mm2(w.seg), 0)}\times${n(mm(d.L), 1)}\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]];
       case 'verticalCylinder': return [
         ['1 · Total volume', String.raw`V=\pi r^{2}H,\qquad r=\frac{D}{2}`, w && String.raw`V=\pi\times(${n(mm(R), 1)})^{2}\times${n(mm(d.H), 1)}\;\Rightarrow\;${vol('V', w.total)}`],
         ['2 · Filled volume', String.raw`V_{\text{fill}}=\pi r^{2}f`, w && String.raw`V_{\text{fill}}=\pi\times(${n(mm(R), 1)})^{2}\times${n(f, 1)}\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]];
-      case 'rectangular': return [
-        ['1 · Total volume', String.raw`V=L\,W\,H`, w && String.raw`V=${n(mm(d.L), 1)}\times${n(mm(d.W), 1)}\times${n(mm(d.H), 1)}\;\Rightarrow\;${vol('V', w.total)}`],
-        ['2 · Filled volume', String.raw`V_{\text{fill}}=L\,W\,f`, w && String.raw`V_{\text{fill}}=${n(mm(d.L), 1)}\times${n(mm(d.W), 1)}\times${n(f, 1)}\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]];
+      case 'rectangular': {
+        if (!optOn('R') || (d && !(d.R > 0))) return [
+          ['1 · Total volume', String.raw`V=L\,W\,H`, w && String.raw`V=${n(mm(d.L), 1)}\times${n(mm(d.W), 1)}\times${n(mm(d.H), 1)}\;\Rightarrow\;${vol('V', w.total)}`],
+          ['2 · Filled volume', String.raw`V_{\text{fill}}=L\,W\,f`, w && String.raw`V_{\text{fill}}=${n(mm(d.L), 1)}\times${n(mm(d.W), 1)}\times${n(f, 1)}\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]];
+        return [
+          ['1 · Total volume (rounded edges)', String.raw`V=\left(W\,H-(4-\pi)\,R^{2}\right)L`, w && String.raw`V=\left(${n(mm(d.W), 1)}\times${n(mm(d.H), 1)}-(4-\pi)\times${n(mm(w.R), 1)}^{2}\right)\times${n(mm(d.L), 1)}\;\Rightarrow\;${vol('V', w.total)}`],
+          ['2 · Corner area c', String.raw`c(y)=\text{area between the corner square and its arc up to height }y,\qquad c_{\max}=\left(1-\tfrac{\pi}{4}\right)R^{2}`, w && String.raw`c_{\max}=${n(mm2((1 - Math.PI / 4) * w.R * w.R), 0)}\ \text{mm}^2`],
+          ['3 · Liquid area at fill depth f', String.raw`A=W\,f-2\,c_{\text{floor}}-2\,c_{\text{roof}}`, w && String.raw`A=${n(mm(d.W), 1)}\times${n(f, 1)}-2\times${n(mm2(w.loss), 0)}-2\times${n(mm2(w.lossTop), 0)}=${n(mm2(w.area), 0)}\ \text{mm}^2`],
+          ['4 · Filled volume', String.raw`V_{\text{fill}}=A\,L`, w && String.raw`V_{\text{fill}}=${n(mm2(w.area), 0)}\times${n(mm(d.L), 1)}\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]]; }
       case 'sphere': return [
         ['1 · Total volume', String.raw`V=\frac{4}{3}\pi r^{3},\qquad r=\frac{D}{2}`, w && String.raw`V=\tfrac43\pi\,(${n(mm(R), 1)})^{3}\;\Rightarrow\;${vol('V', w.total)}`],
         ['2 · Spherical cap of liquid', String.raw`V_{\text{fill}}=\frac{\pi f^{2}}{3}\,(3r-f)`, w && String.raw`V_{\text{fill}}=\frac{\pi\,(${n(f, 1)})^{2}}{3}\,(3\times${n(mm(R), 1)}-${n(f, 1)})\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]];
-      case 'ellipse': return [
-        ['1 · Total volume', String.raw`V=\pi\,a\,b\,L,\qquad a=\frac{W}{2},\ b=\frac{H}{2}`, w && String.raw`V=\pi\times${n(mm(w.a), 1)}\times${n(mm(w.b), 1)}\times${n(mm(d.L), 1)}\;\Rightarrow\;${vol('V', w.total)}`],
-        ['2 · Liquid segment', String.raw`t=\frac{b-f}{b},\qquad A=a\,b\,\left[\arccos t-t\sqrt{1-t^{2}}\right]`, w && String.raw`t=\frac{${n(mm(w.b), 1)}-${n(f, 1)}}{${n(mm(w.b), 1)}}=${n(w.t, 4)},\quad A=${n(mm2(w.area), 0)}\ \text{mm}^2`],
-        ['3 · Filled volume', String.raw`V_{\text{fill}}=A\,L`, w && String.raw`V_{\text{fill}}=${n(mm2(w.area), 0)}\times${n(mm(d.L), 1)}\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]];
       case 'stadium': return [
         ['1 · Total volume', String.raw`r=\frac{H}{2},\qquad a=W-H,\qquad V=(\pi r^{2}+2ra)\,L`, w && String.raw`V=(\pi\times${n(mm(w.r), 1)}^{2}+2\times${n(mm(w.r), 1)}\times${n(mm(w.a), 1)})\times${n(mm(d.L), 1)}\;\Rightarrow\;${vol('V', w.total)}`],
-        ['2 · Round sides (circle segment)', segSym, w && seg(R)[0]],
+        ['2 · Round sides (circle segment)', segSym, w && segNum(R)],
         ['3 · Flat middle and filled volume', String.raw`V_{\text{fill}}=\left(A+a\,f\right)L`, w && String.raw`V_{\text{fill}}=(${n(mm2(w.seg), 0)}+${n(mm(w.a), 1)}\times${n(f, 1)})\times${n(mm(d.L), 1)}\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]];
       case 'capsuleHorizontal': return [
         ['1 · Total volume', String.raw`V=\pi r^{2}\left(\tfrac43\,r+a\right),\qquad r=\frac{D}{2},\ a=L_c`, w && String.raw`V=\pi\,(${n(mm(R), 1)})^{2}\left(\tfrac43\times${n(mm(R), 1)}+${n(mm(w.a), 1)}\right)\;\Rightarrow\;${vol('V', w.total)}`],
-        ['2 · Straight section', segSym + String.raw`,\qquad V_{\text{cyl}}=A\,a`, w && seg(R)[0].replace(/\\quad A=.*$/, '') + String.raw`,\quad A=${n(mm2(w.seg), 0)}\ \text{mm}^2,\quad V_{\text{cyl}}=${n(mm3(w.cyl), 0)}\ \text{mm}^3`],
+        ['2 · Straight section', segSym + String.raw`,\qquad V_{\text{cyl}}=A\,a`, w && segNum(R) + String.raw`,\quad V_{\text{cyl}}=${n(mm3(w.cyl), 0)}\ \text{mm}^3`],
         ['3 · Two domed ends (one spherical cap)', String.raw`V_{\text{caps}}=\frac{\pi f^{2}}{3}\,(3r-f)`, w && String.raw`V_{\text{caps}}=\frac{\pi\,(${n(f, 1)})^{2}}{3}\,(3\times${n(mm(R), 1)}-${n(f, 1)})=${n(mm3(w.cap), 0)}\ \text{mm}^3`],
         ['4 · Filled volume', String.raw`V_{\text{fill}}=V_{\text{cyl}}+V_{\text{caps}}`, w && String.raw`V_{\text{fill}}=${n(mm3(w.cyl), 0)}+${n(mm3(w.cap), 0)}\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]];
       case 'ellipsoidalHeadsHorizontal': return [
-        ['1 · Total volume', String.raw`V=\pi r^{2}\left(L_s+\tfrac23\,r\right),\qquad r=\frac{D}{2}`, w && String.raw`V=\pi\,(${n(mm(R), 1)})^{2}\left(${n(mm(w.a), 1)}+\tfrac23\times${n(mm(R), 1)}\right)\;\Rightarrow\;${vol('V', w.total)}`],
-        ['2 · Straight shell', segSym + String.raw`,\qquad V_{\text{shell}}=A\,L_s`, w && seg(R)[0].replace(/\\quad A=.*$/, '') + String.raw`,\quad A=${n(mm2(w.seg), 0)}\ \text{mm}^2,\quad V_{\text{shell}}=${n(mm3(w.cyl), 0)}\ \text{mm}^3`],
-        ['3 · Two 2:1 heads (half a spherical cap)', String.raw`V_{\text{heads}}=\frac{\pi f^{2}}{6}\,(3r-f)`, w && String.raw`V_{\text{heads}}=\frac{\pi\,(${n(f, 1)})^{2}}{6}\,(3\times${n(mm(R), 1)}-${n(f, 1)})=${n(mm3(w.heads), 0)}\ \text{mm}^3`],
-        ['4 · Filled volume', String.raw`V_{\text{fill}}=V_{\text{shell}}+V_{\text{heads}}`, w && String.raw`V_{\text{fill}}=${n(mm3(w.cyl), 0)}+${n(mm3(w.heads), 0)}\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]];
+        ['1 · Straight shell and total volume', String.raw`L_s=L-2E,\qquad V=\pi r^{2}L_s+\tfrac43\pi r^{2}E,\qquad r=\frac{D}{2}`, w && String.raw`L_s=${n(mm(d.L), 1)}-2\times${n(mm(w.E), 1)}=${n(mm(w.a), 1)},\quad V=\pi\,(${n(mm(R), 1)})^{2}\,(${n(mm(w.a), 1)}+\tfrac43\times${n(mm(w.E), 1)})\;\Rightarrow\;${vol('V', w.total)}`],
+        ['2 · Straight shell', segSym + String.raw`,\qquad V_{\text{shell}}=A\,L_s`, w && segNum(R) + String.raw`,\quad V_{\text{shell}}=${n(mm3(w.cyl), 0)}\ \text{mm}^3`],
+        ['3 · Two dished ends', String.raw`V_{\text{ends}}=\frac{E}{r}\cdot\frac{\pi f^{2}}{3}\,(3r-f)`, w && String.raw`V_{\text{ends}}=\frac{${n(mm(w.E), 1)}}{${n(mm(R), 1)}}\cdot\frac{\pi\,(${n(f, 1)})^{2}}{3}\,(3\times${n(mm(R), 1)}-${n(f, 1)})=${n(mm3(w.heads), 0)}\ \text{mm}^3`],
+        ['4 · Filled volume', String.raw`V_{\text{fill}}=V_{\text{shell}}+V_{\text{ends}}`, w && String.raw`V_{\text{fill}}=${n(mm3(w.cyl), 0)}+${n(mm3(w.heads), 0)}\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]];
+      case 'dishBowl': return [
+        ['1 · Sphere radius and total volume', String.raw`a=\frac{D}{2},\qquad R=\frac{a^{2}+E^{2}}{2E},\qquad V=\frac{\pi E}{6}\,(3a^{2}+E^{2})`, w && String.raw`R=\frac{${n(mm(w.a), 1)}^{2}+${n(mm(d.E), 1)}^{2}}{2\times${n(mm(d.E), 1)}}=${n(mm(w.R), 1)}\ \text{mm},\quad ${vol('V', w.total)}`],
+        ['2 · Spherical cap of liquid', String.raw`V_{\text{fill}}=\frac{\pi f^{2}}{3}\,(3R-f)`, w && String.raw`V_{\text{fill}}=\frac{\pi\,(${n(f, 1)})^{2}}{3}\,(3\times${n(mm(w.R), 1)}-${n(f, 1)})\;\Rightarrow\;${vol('V_{\\text{fill}}', w.filled)}`]];
+      case 'coneBottom': { const topOn = optOn('E');
+        return [
+          ['1 · Total volume', topOn ? String.raw`V=\pi r^{2}\left(\frac{H_c}{3}+H_s+\frac{2}{3}E\right),\qquad r=\frac{D}{2}` : String.raw`V=\pi r^{2}\left(\frac{H_c}{3}+H_s\right),\qquad r=\frac{D}{2}`,
+            w && String.raw`V=\pi\,(${n(mm(R), 1)})^{2}\left(\frac{${n(mm(d.Hc), 1)}}{3}+${n(mm(d.Hs), 1)}${topOn ? String.raw`+\frac{2}{3}\times${n(mm(w.E), 1)}` : ''}\right)\;\Rightarrow\;${vol('V', w.total)}`],
+          ['2 · Liquid in the cone', String.raw`V_{\text{cone}}=\frac{\pi r^{2}}{3H_c^{2}}\,f^{3}\quad(f\le H_c),\qquad\text{otherwise }\frac{\pi r^{2}H_c}{3}`, w && String.raw`V_{\text{cone}}=${n(mm3(w.cone), 0)}\ \text{mm}^3`],
+          ['3 · Liquid in the straight shell', String.raw`V_{\text{shell}}=\pi r^{2}\,\left(\min(f,\,H_c+H_s)-H_c\right)`, w && String.raw`V_{\text{shell}}=${n(mm3(w.shell), 0)}\ \text{mm}^3`],
+          ...(topOn ? [['4 · Liquid in the embossed top', String.raw`z=f-H_c-H_s,\qquad V_{\text{top}}=\pi r^{2}\left(z-\frac{z^{3}}{3E^{2}}\right)`, w && String.raw`z=${n(mm(w.z), 1)},\quad V_{\text{top}}=${n(mm3(w.top), 0)}\ \text{mm}^3`]] : []),
+          [(topOn ? '5' : '4') + ' · Filled volume', topOn ? String.raw`V_{\text{fill}}=V_{\text{cone}}+V_{\text{shell}}+V_{\text{top}}` : String.raw`V_{\text{fill}}=V_{\text{cone}}+V_{\text{shell}}`, w && fillLine(`${n(mm3(w.cone), 0)}+${n(mm3(w.shell), 0)}${topOn ? '+' + n(mm3(w.top), 0) : ''}`)]]; }
     }
     return [];
   }
@@ -488,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- 5. Inquire ---------- */
   const mkInquire = () => { const d = document.createElement('div'); d.className = 'xs-inq';
-    d.innerHTML = `<a class="xs-inq-btn" href="contact.html#inquiry"><span class="xs-inq-icon">${SEND}</span><span class="xs-inq-text"><strong>Inquire about this tank</strong><small>Your dimensions and capacity are added to the enquiry</small></span><span class="xs-inq-go">${GO}</span></a><p class="xs-inq-msg" role="alert"><i aria-hidden="true">!</i><span></span></p>`; return d; };
+    d.innerHTML = `<a class="xs-inq-btn" href="contact.html#inquiry"><span class="xs-inq-icon">${SEND}</span><span class="xs-inq-text"><strong>Inquire about this tank</strong><small>Your dimensions and capacity are added to the enquiry</small></span><span class="xs-inq-go">${GO}</span></a><a class="xs-quote-btn" href="quote.html"><strong>Get quote now!</strong><span aria-hidden="true">→</span></a><p class="xs-inq-msg" role="alert"><i aria-hidden="true">!</i><span></span></p>`; return d; };
   const mainRes = work.querySelector('.tc-results'), inqMain = mkInquire(), inqXs = mkInquire();
   if (mainRes) mainRes.after(inqMain); const xsRes = wk.querySelector('.tc-results'); xsRes.after(inqXs);
   function syncInquire() { [inqMain, inqXs].forEach(i => { i.querySelector('.xs-inq-msg').classList.remove('show'); }); }
@@ -506,7 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault(); box.querySelector('.xs-inq-msg').classList.remove('show');
     let missing = [], q = null;
     if (cur) {
-      S[cur].f.forEach(f => { touched[f.k] = true; if (!filled('xs-' + f.k)) missing.push(f); });
+      S[cur].f.concat((S[cur].o || []).filter(o => optOn(o.k)).map(o => ({ k: o.k, n: o.lbl }))).forEach(f => { touched[f.k] = true; if (!filled('xs-' + f.k)) missing.push(f); });
       if (missing.length) { update(); return showMsg(box, `Enter the ${joinNames(missing.map(f => f.n.replace(/ \(.*\)$/, '').toLowerCase()))} first, so your enquiry includes the tank size.`, missing.map(f => 'xs-' + f.k)); }
       if (!last) { update(); return showMsg(box, 'These dimensions do not give a valid tank yet. Check the highlighted values above.', []); }
       q = specXs();
@@ -516,22 +565,138 @@ document.addEventListener('DOMContentLoaded', () => {
       if (missing.length) return showMsg(box, `Enter the tank ${joinNames(missing.map(n => n[1]))} first, so your enquiry includes the tank size.`, missing.map(n => n[0]));
       q = specMain(id); if (!q) return showMsg(box, 'These dimensions do not give a valid tank yet. Check the values above.', []);
     }
+    if (e.currentTarget.classList.contains('xs-quote-btn')) return toQuote(q);
     location.href = 'contact.html?' + new URLSearchParams({ cap: q.cap, spec: q.spec }).toString() + '#inquiry';
   }
-  [inqMain, inqXs].forEach(box => box.querySelector('.xs-inq-btn').addEventListener('click', e => inquire(box, e)));
+  /* Hand the calculator result to the quote builder (sessionStorage key shared with quote-core.js). Existing product/material choices are kept. */
+  function toQuote(q) {
+    const m = String(q.cap).replace(/,/g, '').match(/([\d.]+)\s*(KL|m³|L)?/i); let kl = m ? parseFloat(m[1]) : 0; if (!(m && /^(kl|m³)$/i.test(m[2] || ''))) kl /= 1000;
+    let st = {}; try { st = JSON.parse(sessionStorage.getItem('hh_quote_v1')) || {}; } catch (x) {}
+    Object.assign(st, { v: 1, unit: 'KL', capacity: String(+kl.toFixed(3)), fromCalculator: String(q.spec).split('\n')[0].replace('Tank shape: ', '') + ', ' + q.cap });
+    try { sessionStorage.setItem('hh_quote_v1', JSON.stringify(st)); } catch (x) {}
+    location.href = 'quote.html?from=calculator';
+  }
+  [inqMain, inqXs].forEach(box => box.querySelectorAll('.xs-inq-btn,.xs-quote-btn').forEach(b => b.addEventListener('click', e => inquire(box, e))));
   function specXs() {
     const s = S[cur], r = last.r, capL = fmt(r.totalM3 * 1000, 0) + ' L';
     const dimsTxt = s.f.map(f => `${f.n.replace(/ \(.*\)$/, '')} (${f.k}): ${$('xs-' + f.k).value.trim()} ${$('xs-' + f.k + '-u').value}`);
+    (s.o || []).forEach(o => { const st = optState[cur + ':' + o.k]; dimsTxt.push(st && st.on ? `${o.n}: yes, ${o.lbl} (${o.k}): ${$('xs-' + o.k).value.trim()} ${$('xs-' + o.k + '-u').value}` : `${o.n}: no`); });
     return { cap: capL, spec: [`Tank shape: ${s.name}`, ...dimsTxt, `Calculated total capacity: ${capL} (${fmt(r.totalM3, 3)} m³)`, `Fill: ${fmt(last.pct, 1)}% of capacity (${fmt(last.depth * 1000, 0)} mm deep)`, 'Source: HH FABTECH tank volume calculator (ideal internal geometry, estimate only)'].join('\n') };
   }
   function specMain(id) {
     const cap = $('capacityResult') ? $('capacityResult').textContent : '0 L'; if (!cap || cap === '0 L') return null;
     const U = (a, b) => `${$(a).value.trim()} ${$(b).value}`, name = $('inputTitle').textContent, lines = [`Tank shape: ${name}`, `Straight shell length (L): ${U('length', 'lengthUnit')}`];
     if (id === 'circle') lines.push(`Diameter (D): ${U('diameter', 'diameterUnit')}`); else lines.push(`Overall width (W): ${U('width', 'widthUnit')}`, `Overall height (H): ${U('height', 'heightUnit')}`);
-    if (id === 'spell') lines.push(`Rwidth: ${U('rwidth', 'rwidthUnit')}`, `Rheight: ${U('rheight', 'rheightUnit')}`, `Corner bend radius: ${$('filInput') ? $('filInput').value : 140} mm`);
+    if (id === 'spell') lines.push(`Rwidth: ${U('rwidth', 'rwidthUnit')}`, `Rheight: ${U('rheight', 'rheightUnit')}`, `Corner bend radius: ${$('filInput') ? $('filInput').value : 70} mm`);
     lines.push(`Embossed dish ends: ${$('embossOn') && $('embossOn').checked ? 'included, ' + U('emboss', 'embossUnit') + ' per end' : 'excluded'}`, `Calculated total capacity: ${cap}`, `Fill: ${$('fillPercentResult').textContent} (${$('fillDepthResult').textContent} deep)`, 'Source: HH FABTECH tank volume calculator (estimate only)');
     return { cap, spec: lines.join('\n') };
   }
+
+  /* ---------- 6. Advanced options for the other shapes ---------- */
+  const advTog = advT ? advT.cloneNode(true) : document.createElement('button');
+  advTog.id = 'xsAdvToggle'; advTog.setAttribute('aria-controls', 'xsAdvPanel'); advTog.setAttribute('aria-expanded', 'false');
+  if (advT) { const st = advTog.querySelector('strong'), sm = advTog.querySelector('small'), ch = advTog.querySelector('.tc-adv-chevron'); if (st) st.textContent = 'Advanced Options'; if (sm) sm.textContent = 'Find a dimension from a volume, plan baffles and estimate steel weight'; if (ch) { ch.id = 'xsChevron'; ch.textContent = '＋'; } }
+  const unitSelect = (id, label, opts, sel) => `<select id="${id}" aria-label="${esc(label)}">${opts.map(([v, t]) => `<option value="${v}" ${v === sel ? 'selected' : ''}>${t}</option>`).join('')}</select>`;
+  const VOLU = [['L', 'Litres'], ['KL', 'KL'], ['m3', 'm³'], ['ft3', 'ft³']];
+  const checkRow = (id, on, title, small) => `<label class="tc-check-row"><input id="${id}" type="checkbox" ${on ? 'checked' : ''}><span class="tc-check-box">${CHECK}</span><span><strong>${title}</strong><small>${small}</small></span></label>`;
+  const advPanel = document.createElement('section'); advPanel.className = 'tc-adv-panel'; advPanel.id = 'xsAdvPanel';
+  advPanel.innerHTML = `<div class="tc-section-head"><p class="tc-section-kicker">04 / Advanced</p><h2>Sizing and fabrication estimate</h2><p>Optional controls. The results above update automatically.</p></div><div class="tc-adv-grid">
+    <div class="tc-adv-card" id="xsSolverCard"><h3>Find a dimension from a known volume</h3><p class="tc-adv-lead">Enter the capacity you need and choose which dimension to solve for. The other dimensions come from the fields above.</p>
+      <div class="tc-two"><div class="tc-field"><label for="xsSolveVol"><span>Target capacity</span><span class="tc-field-label-meta">V</span></label><div class="tc-input-group"><input id="xsSolveVol" type="text" inputmode="decimal" placeholder="e.g. 20000">${unitSelect('xsSolveUnit', 'Target capacity unit', [['L', 'Litres'], ['m3', 'm³'], ['galUS', 'US gal'], ['galImp', 'Imp gal']], 'L')}</div></div>
+      <div class="tc-field"><label for="xsSolveFor"><span>Solve for</span></label><div class="tc-input-group single"><select id="xsSolveFor"></select></div></div></div>
+      <div class="tc-metrics" style="grid-template-columns:repeat(4,1fr)"><div class="tc-metric"><span>Millimetres</span><strong id="xsSolveMm">—</strong></div><div class="tc-metric"><span>Metres</span><strong id="xsSolveM">—</strong></div><div class="tc-metric"><span>Inches</span><strong id="xsSolveIn">—</strong></div><div class="tc-metric"><span>Feet</span><strong id="xsSolveFt">—</strong></div></div>
+      <p class="xs-err" id="xsSolveMsg" role="alert"></p><p class="tc-note">The solved value gives exactly the capacity you entered, with the other dimensions unchanged.</p></div>
+    <div class="tc-adv-card" id="xsBaffleCard"><h3>Baffle plates</h3>
+      ${checkRow('xbOn', false, 'Include baffle plates', '<span id="xbAuto">Enabled automatically when more than one section is needed.</span>')}
+      <div class="tc-gate off" id="xbGate" style="margin-top:14px"><div class="tc-two">
+        <div class="tc-field"><label for="xbS"><span>Section capacity</span><span class="tc-field-label-meta">S</span></label><div class="tc-input-group"><input id="xbS" type="number" min="0" step="any" value="5000" inputmode="decimal">${unitSelect('xbSU', 'Section capacity unit', VOLU, 'L')}</div></div>
+        <div class="tc-field"><label for="xbK"><span>Allowed overrun</span><span class="tc-field-label-meta">k</span></label><div class="tc-input-group single"><input id="xbK" type="number" min="0" step="any" value="20" inputmode="decimal"></div><p class="tc-note">Max section = S × (1 + k) — <b id="xbMax">6,000 L</b></p></div>
+        <div class="tc-field"><label for="xbF"><span>Usable volume</span><span class="tc-field-label-meta">f</span></label><div class="tc-input-group single"><input id="xbF" type="number" min="0" step="any" value="95" inputmode="decimal"></div><p class="tc-note">Percent of capacity used to size sections.</p></div>
+        <div class="tc-field"><label for="xbN"><span>Manual baffle count</span><span class="tc-field-label-meta">optional</span></label><div class="tc-input-group single"><input id="xbN" type="number" min="0" step="any" placeholder="Auto" inputmode="decimal"></div></div></div>
+        ${checkRow('xbEven', true, 'Round sections to nearest even number', 'Odd section counts are rounded up to the next even number.')}</div>
+      <div class="tc-metrics" style="grid-template-columns:repeat(4,1fr)"><div class="tc-metric"><span>Usable volume</span><strong id="xbVu">0 L</strong></div><div class="tc-metric"><span>Sections</span><strong id="xbSec">0</strong></div><div class="tc-metric"><span>Each section</span><strong id="xbEach">—</strong></div><div class="tc-metric"><span>Baffle plates</span><strong id="xbCount">0</strong></div></div>
+      <div class="tc-tex" id="xbTexSym"></div><div class="tc-tex" id="xbTexNum" style="color:#17649b"></div>
+      <p class="tc-note">Actual compartment design, openings and statutory requirements must be confirmed by an engineer.</p></div>
+    <div class="tc-adv-card wide" id="xsWeightCard" hidden><h3>Steel weight estimate (vertical tank)</h3>
+      <p class="tc-adv-lead">Plate thickness steps up toward the bottom as the tank gets taller. Every value below is editable.</p>
+      <div class="tc-two">
+        <div class="tc-field"><label for="xwShell"><span>Shell plate thickness</span><span class="tc-field-label-meta">top courses</span></label><div class="tc-input-group"><input id="xwShell" type="number" min="0" step="any" value="3" inputmode="decimal"><span class="xs-unit">mm</span></div></div>
+        <div class="tc-field"><label for="xwBottom"><span>Bottom plate thickness</span><span class="tc-field-label-meta">base</span></label><div class="tc-input-group"><input id="xwBottom" type="number" min="0" step="any" value="5" inputmode="decimal"><span class="xs-unit">mm</span></div></div>
+        <div class="tc-field"><label for="xwTop"><span>Top (roof) plate thickness</span><span class="tc-field-label-meta">roof</span></label><div class="tc-input-group"><input id="xwTop" type="number" min="0" step="any" value="2" inputmode="decimal"><span class="xs-unit">mm</span></div></div>
+        <div class="tc-field"><label for="xwMat"><span>Material</span><span class="tc-field-label-meta">density</span></label><div class="tc-input-group single"><select id="xwMat"><option value="7850">Mild steel · 7,850 kg/m³</option><option value="7930">Stainless 304 · 7,930 kg/m³</option><option value="8000">Stainless 316 · 8,000 kg/m³</option></select></div></div></div>
+      ${checkRow('xwAuto', true, 'Step plate thickness with tank height', 'Beyond the base height, the lower shell gets 1 mm thicker per step, rounded to the nearest step. The bottom plate gains 1 mm for every base height of extra shell.')}
+      <div class="tc-gate" id="xwGate" style="margin-top:14px"><div class="tc-two">
+        <div class="tc-field"><label for="xwBaseH"><span>Base height</span><span class="tc-field-label-meta">no step up to</span></label><div class="tc-input-group"><input id="xwBaseH" type="number" min="0" step="any" value="3000" inputmode="decimal"><span class="xs-unit">mm</span></div></div>
+        <div class="tc-field"><label for="xwStep"><span>Step height</span><span class="tc-field-label-meta">rounding</span></label><div class="tc-input-group"><input id="xwStep" type="number" min="1" step="any" value="1500" inputmode="decimal"><span class="xs-unit">mm</span></div></div></div></div>
+      <div class="tc-field" style="margin-top:14px"><label for="xwRho"><span>Liquid density</span><span class="tc-field-label-meta">for operating weight</span></label><div class="tc-input-group"><input id="xwRho" type="number" min="0" step="any" value="1" inputmode="decimal"><span class="xs-unit">kg/L</span></div></div>
+      <div id="xwTable" class="xs-wtable"></div>
+      <div class="tc-metrics" style="grid-template-columns:repeat(4,1fr)"><div class="tc-metric"><span>Shell plates</span><strong id="xwShellKg">—</strong></div><div class="tc-metric"><span>Bottom + roof</span><strong id="xwEndsKg">—</strong></div><div class="tc-metric"><span>Steel total</span><strong id="xwSteelKg">—</strong></div><div class="tc-metric"><span>Operating weight</span><strong id="xwOpKg">—</strong></div></div>
+      <p class="tc-note">Estimate from plate area × thickness × density. Welds, nozzles, stiffeners and scrap allowance are not included.</p></div>
+    </div></section>`;
+  (advT || work.parentElement.lastElementChild).before(advTog, advPanel);
+  advTog.addEventListener('click', () => { const open = advPanel.classList.toggle('open'); advTog.setAttribute('aria-expanded', String(open)); const c = $('xsChevron'); if (c) c.textContent = open ? '−' : '＋'; });
+  const hasVal = id => { const e = $(id); return e && e.value !== '' && Number.isFinite(Number(e.value)); };
+  const num = (id, dflt) => hasVal(id) ? Number($(id).value) : dflt;
+  const toL = (v, u) => ({ L: v, KL: v * 1000, m3: v * 1000, ft3: v * 28.3168466 }[u] || v);
+
+  function fillSolveOptions() {
+    const s = S[cur], sel = $('xsSolveFor'), keep = sel.value;
+    const keys = s.f.map(f => [f.k, f.n.replace(/ \(.*\)$/, '')]).concat((s.o || []).filter(o => optOn(o.k)).map(o => [o.k, o.lbl]));
+    sel.innerHTML = keys.map(([k, n]) => `<option value="${k}">${esc(n)} (${k})</option>`).join(''); if (keys.some(k => k[0] === keep)) sel.value = keep;
+  }
+  function solveDim() {
+    const out = ['xsSolveMm', 'xsSolveM', 'xsSolveIn', 'xsSolveFt'], clear = m => { out.forEach(i => $(i).textContent = '—'); $('xsSolveMsg').textContent = m || ''; };
+    const t = evalExpr($('xsSolveVol').value); if (t === null) return clear(); if (Number.isNaN(t) || !(t > 0)) return clear('Enter a capacity greater than zero.');
+    const key = $('xsSolveFor').value, { raw } = readDims(), d0 = G.normalizeDimensions(raw); delete d0[key];
+    const need = Object.keys(d0); if (need.some(k => !(d0[k] > 0))) return clear('Enter the other dimensions above first.');
+    const target = G.convertVolume(t, $('xsSolveUnit').value, 'm3');
+    const cap = x => { const d = Object.assign({}, d0, { [key]: x }); return Object.keys(G.validateDimensions(cur, d)).length ? NaN : G.calculateTotalVolume(cur, d); };
+    let lo = NaN, hi = NaN; for (let x = 1e-3, i = 0; i < 90; i++, x *= 1.2) { const v = cap(x); if (Number.isNaN(v)) continue; if (v < target) lo = x; else { hi = x; break; } }
+    if (!(Number.isFinite(lo) && Number.isFinite(hi))) return clear('No valid size gives that capacity with the other dimensions.');
+    for (let i = 0; i < 80; i++) { const mid = (lo + hi) / 2, v = cap(mid); if (Number.isNaN(v) || v < target) lo = mid; else hi = mid; }
+    const x = (lo + hi) / 2; $('xsSolveMm').textContent = fmt(x * 1000, 1); $('xsSolveM').textContent = fmt(x, 3); $('xsSolveIn').textContent = fmt(x / 0.0254, 2); $('xsSolveFt').textContent = fmt(x / 0.3048, 2); $('xsSolveMsg').textContent = '';
+  }
+  let prevAutoBaffle = false;
+  function updateXsBaffles(capL) {
+    const S_ = Math.max(.001, toL(num('xbS', 5000), $('xbSU').value) || 5000), k = Math.max(0, num('xbK', 20)), maxS = S_ * (1 + k / 100), f = Math.min(100, Math.max(1, hasVal('xbF') ? num('xbF', 95) : 95)) / 100;
+    const Vu = capL * f, nCeil = Vu > 0 ? Math.max(1, Math.ceil(Vu / maxS - 1e-9)) : 0; let n = nCeil; if ($('xbEven').checked && n > 1 && n % 2) n += 1;
+    const auto = n > 1; if (auto && !prevAutoBaffle) $('xbOn').checked = true; prevAutoBaffle = auto;
+    const on = $('xbOn').checked, ov = $('xbN').value.trim() !== ''; let count = ov ? Math.max(0, Math.floor(Number($('xbN').value) || 0)) : Math.max(0, n - 1);
+    const secs = !on ? (capL > 0 ? 1 : 0) : (ov ? count + 1 : n); if (!on) count = 0; const each = secs > 0 ? Vu / secs : 0;
+    const g = $('xbGate'); g.classList.toggle('off', !on); g.querySelectorAll('input,select').forEach(x => x.disabled = !on);
+    $('xbMax').textContent = `${fmt(maxS, 0)} L`; $('xbAuto').textContent = auto ? 'More than one section is needed, so baffles are enabled by default. Untick to turn them off.' : 'One section is enough at this capacity, so baffles default off.';
+    $('xbVu').textContent = `${fmt(Vu, 0)} L`; $('xbSec').textContent = fmt(secs, 0); $('xbEach').textContent = secs ? `${fmt(each, 0)} L` : '—'; $('xbCount').textContent = fmt(count, 0);
+    tex($('xbTexSym'), String.raw`V_u=f\,V,\qquad n=\left\lceil\frac{V_u}{S\,(1+k)}\right\rceil,\qquad \text{baffles}=n-1,\qquad \text{each section}=\frac{V_u}{n}`);
+    tex($('xbTexNum'), capL > 0 ? String.raw`\begin{aligned}V_u&=${T(f * 100, 0)}\%\times${T(capL, 0)}=${T(Vu, 0)}\ \text{L}\\ n&=\left\lceil\frac{${T(Vu, 0)}}{${T(S_, 0)}\times${T(1 + k / 100, 2)}}\right\rceil=\left\lceil${T(Vu / maxS, 2)}\right\rceil=${nCeil}${n !== nCeil ? String.raw`\;\to\;${n}\ (\text{even})` : ''}\\ \text{each}&=\frac{${T(Vu, 0)}}{${n || 1}}=${T(Vu / (n || 1), 0)}\ \text{L}\end{aligned}` : '');
+  }
+  /* Plate courses for a vertical tank: the top base-height of shell is the base thickness; below it every base-height band is 1 mm thicker,
+     the thick part being the extra height rounded to the nearest step. Bottom plate gains 1 mm per base-height of extra shell. */
+  function plateCourses(H, t0, baseH, step) {
+    const extra = H - baseH, k = step > 0 ? Math.round(extra / step) : 0;
+    if (!(extra > 0) || k <= 0) return { list: [{ h: H, t: t0 }], extra: 0 };
+    const thick = Math.min(k * step, H), list = [{ h: H - thick, t: t0 }]; let rem = thick, t = t0 + 1;
+    while (rem > 1e-9) { const h = Math.min(rem, baseH); list.push({ h, t }); rem -= h; t += 1; }
+    return { list: list.filter(c => c.h > 1e-9), extra: thick };
+  }
+  function updateXsWeight() {
+    const card = $('xsWeightCard'); card.hidden = cur !== 'verticalCylinder'; if (card.hidden) return;
+    $('xwGate').classList.toggle('off', !$('xwAuto').checked); $('xwGate').querySelectorAll('input').forEach(x => x.disabled = !$('xwAuto').checked);
+    const ids = ['xwShellKg', 'xwEndsKg', 'xwSteelKg', 'xwOpKg'];
+    if (!last) { ids.forEach(i => $(i).textContent = '—'); $('xwTable').innerHTML = '<p class="tc-note">Enter valid dimensions above to see the plate breakdown.</p>'; return; }
+    const D = last.d.D * 1000, H = last.d.H * 1000, rho = num('xwMat', 7850), t0 = Math.max(0, num('xwShell', 3)), tb0 = Math.max(0, num('xwBottom', 5)), tt = Math.max(0, num('xwTop', 2));
+    const baseH = Math.max(1, num('xwBaseH', 3000)), step = Math.max(1, num('xwStep', 1500)), auto = $('xwAuto').checked;
+    const pc = auto ? plateCourses(H, t0, baseH, step) : { list: [{ h: H, t: t0 }], extra: 0 }, tbot = tb0 + (auto ? Math.floor(pc.extra / baseH + 1e-9) : 0);
+    const kg = (areaMm2, t) => areaMm2 * t * rho * 1e-9, rows = []; let shell = 0;
+    pc.list.forEach((c, i) => { const w = kg(Math.PI * (D + c.t) * c.h, c.t); shell += w; rows.push([i === 0 ? 'Top shell' : `Shell, lower band ${i}`, `${fmt(c.h, 0)} mm`, `${fmt(c.t, 0)} mm`, w]); });
+    const tLow = pc.list[pc.list.length - 1].t, bottom = kg(Math.PI / 4 * (D + 2 * tLow) ** 2, tbot), roof = kg(Math.PI / 4 * (D + 2 * t0) ** 2, tt);
+    rows.push(['Bottom plate', `Ø ${fmt(D + 2 * tLow, 0)} mm`, `${fmt(tbot, 0)} mm`, bottom], ['Roof plate', `Ø ${fmt(D + 2 * t0, 0)} mm`, `${fmt(tt, 0)} mm`, roof]);
+    $('xwTable').innerHTML = `<div class="xs-wrow head"><span>Part</span><span>Size</span><span>Thickness</span><span>Weight</span></div>` + rows.map(r => `<div class="xs-wrow"><span>${esc(r[0])}</span><span>${esc(r[1])}</span><span>${esc(r[2])}</span><strong>${fmt(r[3], 0)} kg</strong></div>`).join('');
+    const steel = shell + bottom + roof, liquid = last.r.filledM3 * 1000 * num('xwRho', 1);
+    $('xwShellKg').textContent = `${fmt(shell, 0)} kg`; $('xwEndsKg').textContent = `${fmt(bottom + roof, 0)} kg`; $('xwSteelKg').textContent = `${fmt(steel, 0)} kg`; $('xwOpKg').textContent = `${fmt(steel + liquid, 0)} kg`;
+  }
+  function updateXsAdv() { if (!cur) return; updateXsBaffles(last ? last.r.totalM3 * 1000 : 0); updateXsWeight(); solveDim(); }
+  advPanel.addEventListener('input', e => { if (e.target.id === 'xsSolveVol' || e.target.id === 'xsSolveFor' || e.target.id === 'xsSolveUnit') solveDim(); else updateXsAdv(); });
+  advPanel.addEventListener('change', updateXsAdv);
 
   /* ---------- go ---------- */
   setMode(null); setTab('info');
