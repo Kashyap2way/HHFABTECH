@@ -133,24 +133,6 @@ SEO is configured across every page. When adding a new page, replicate this setu
 
 The site is hosted on **Netlify** (the contact form uses Netlify Forms via `data-netlify="true"`). As a static site it deploys by publishing the repository root — no build command required. Configuration lives in `netlify.toml`.
 
-### Forcing HTTPS (fixing http:// being indexed)
-
-If Google indexes `http://` URLs instead of `https://`, the site is being served on both schemes without a redirect. Fix it in two places:
-
-1. **Netlify dashboard (required):** Site settings → Domain management → HTTPS → enable **Force HTTPS**. This is what actually issues the `http → https` 301 redirect and is the critical step. On Netlify, redirect rules in `netlify.toml` only fire for `https://` requests, so the http→https hop *cannot* be done from the config file alone — the dashboard toggle is mandatory.
-2. **`netlify.toml` (in this repo):** sends an `HSTS` header (`Strict-Transport-Security`) telling browsers to always use HTTPS for a year, plus a canonical-host redirect from `www` to the bare domain. Keeping it in the repo makes the behavior version-controlled.
-
-After forcing HTTPS, in Google Search Console: use the `https://` property, submit the sitemap there, and request re-indexing of key pages. Old `http://` entries drop out once Google re-crawls and sees the 301s.
-
-### Post-deploy verification
-
-- `https://hhfabtech.com/robots.txt`, `/sitemap.xml`, `/llms.txt` and `/assets/images/og-banner.png` return HTTP 200
-- `http://hhfabtech.com/` 301-redirects to `https://hhfabtech.com/` (test with `curl -I http://hhfabtech.com/`)
-- Response includes `strict-transport-security` header (`curl -I https://hhfabtech.com/`)
-- Social previews with the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) and [X Card Validator](https://cards-dev.twitter.com/validator)
-- Structured data with [Google's Rich Results Test](https://search.google.com/test/rich-results)
-- Submit `sitemap.xml` in [Google Search Console](https://search.google.com/search-console)
-
 ## License
 
 © HH FABTECH. All rights reserved.
