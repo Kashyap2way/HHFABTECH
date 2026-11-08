@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
       how: ['A standing tank fills like a stack: the liquid is a shorter cylinder with the same diameter, as tall as your fill depth.', 'Volume of liquid = base area × fill depth, so every extra centimetre of depth adds the same amount.'],
       notes: ['Fill depth is the liquid height measured from the floor.', 'A flat floor and flat roof are assumed.', 'Use internal dimensions: shell thickness is not added.', 'The Advanced section estimates steel weight with thicker plates toward the bottom.'] },
     rectangular: { name: 'Rectangular tank', tag: 'Box-shaped tank, optionally with rounded edges', f: [F('L', 'Internal length'), F('W', 'Internal width'), F('H', 'Internal height')],
-      o: [{ k: 'R', n: 'Round the edges', lbl: 'Corner radius', def: '70', on: false, hint: 'For roll-bent plate. The bend machine is 140 mm in diameter, so the default radius is 70 mm.' }],
+      o: [{ k: 'R', n: 'Round the edges', lbl: 'Corner radius', def: '70', on: false, hint: 'For roll-bent plate. Default radius 70 mm (half of the 140 mm roll-bend machine diameter). Edit it if your machine differs.' }],
       measure: [D_('L', 'Internal length', 'The longer side of the floor, measured inside.'), D_('W', 'Internal width', 'The shorter side of the floor, measured inside.'), D_('H', 'Internal height', 'From the inside floor to the inside roof.'), D_('R', 'Corner radius', 'Only when “Round the edges” is ticked. Default 70 mm.')],
       how: ['A box tank is the simplest case: volume = length × width × height.', 'With rounded edges, each of the four corners of the cross-section loses a little area, (4 − π) R² in total. The liquid area is worked out the same way, including the extra corner area near the floor and near the roof.'],
       notes: ['Fill depth is the liquid height measured from the floor.', 'Rounding runs along the full length, as it does when the plate is roll-bent.', 'Internal braces and fittings are ignored.'] },
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const M = {
     spell: { name: 'Spell cylinder', tag: 'The HH FABTECH truck profile',
       measure: [D_('L', 'Straight shell length', 'Along the tank, not counting the embossed dish ends.'), D_('W', 'Overall width', 'The widest point of the profile.'), D_('H', 'Overall height', 'Floor to roof of the profile.'), D_('Rw', 'Rwidth and Rheight', 'The central rectangle. They scale automatically; edit them in Advanced.')],
-      how: ['The Spell profile is a truck-optimised cross-section: a central rectangle blended into the overall width and height by four circular arcs, then rounded at the corners (140 mm by default).', 'We find the area of that profile, multiply by the straight length, and add an allowance for the embossed dish ends.'],
+      how: ['The Spell profile is a truck-optimised cross-section: a central rectangle blended into the overall width and height by four circular arcs, then rounded at the corners with a 70 mm radius by default. You can change the radius in Advanced Options.', 'We find the area of that profile, multiply by the straight length, and add an allowance for the embossed dish ends.'],
       notes: ['Each embossed end adds about two-thirds of A × E. Untick the dish-end option to leave it out.', 'Fill percentages are by volume, so 95% means 95% of the tank’s capacity, not 95% of its height.', 'Estimate only: shell thickness, fittings and tolerances are not included.'] },
     circle: { name: 'Circle cylinder', tag: 'Standard round tank',
       measure: [D_('D', 'Diameter', 'Across the circle, measured inside.'), D_('L', 'Straight shell length', 'Along the tank, not counting the dish ends.')],
@@ -300,11 +300,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (ref) {
       const gl = h * .58, gy = bottom - gl;
       svgEl('rect', { x: left - 20, y: gy, width: w + 40, height: gl + 20, class: 'tank-liquid ghost-fill', 'clip-path': 'url(#xsClip)' }, g);
-      svgEl('path', { d: `M ${left - 10} ${gy} C ${left + w * .17} ${gy - 9}, ${left + w * .33} ${gy + 9}, ${left + w * .5} ${gy} S ${right - w * .17} ${gy - 9}, ${right + 10} ${gy}`, class: 'tank-liquid-wave ghost-fill', 'clip-path': 'url(#xsClip)' }, g);
+      window.hhWaveLayer(g, 'xsClip', left, right, gy, 7, Math.max(70, w / 2.5), 'tank-liquid-wave ghost-fill');
     } else if (ratio > 0) {
       const lh = h * Math.min(1, ratio), ly = bottom - lh;
       svgEl('rect', { x: left - 20, y: ly, width: w + 40, height: lh + 20, class: 'tank-liquid', 'clip-path': 'url(#xsClip)' }, g);
-      if (ratio > .01 && ratio < .995) svgEl('path', { d: `M ${left - 10} ${ly} C ${left + w * .17} ${ly - 7}, ${left + w * .33} ${ly + 7}, ${left + w * .5} ${ly} S ${right - w * .17} ${ly - 7}, ${right + 10} ${ly}`, class: 'tank-liquid-wave', 'clip-path': 'url(#xsClip)' }, g);
+      if (ratio > .01 && ratio < .995) window.hhWaveLayer(g, 'xsClip', left, right, ly, 5, Math.max(70, w / 2.5), 'tank-liquid-wave');
     }
     svgEl('path', { d: path, class: 'tank-inner' + rc, transform: 'scale(.96)', 'transform-origin': `${cx}px ${cy}px` }, g);
     if (pr.seams) { const sg = svgEl('g', { 'clip-path': 'url(#xsClip)' }, g); pr.seams(sc, cx, cy, d, top, bottom).forEach(l => svgEl('line', { x1: l[0], y1: l[1], x2: l[2], y2: l[3], class: 'xs-seam' }, sg)); }
@@ -537,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- 5. Inquire ---------- */
   const mkInquire = () => { const d = document.createElement('div'); d.className = 'xs-inq';
-    d.innerHTML = `<a class="xs-inq-btn" href="contact.html#inquiry"><span class="xs-inq-icon">${SEND}</span><span class="xs-inq-text"><strong>Inquire about this tank</strong><small>Your dimensions and capacity are added to the enquiry</small></span><span class="xs-inq-go">${GO}</span></a><a class="xs-quote-btn" href="quote.html"><strong>Get quote now!</strong><span aria-hidden="true">→</span></a><p class="xs-inq-msg" role="alert"><i aria-hidden="true">!</i><span></span></p>`; return d; };
+    d.innerHTML = `<a class="xs-inq-btn" href="contact.html#inquiry"><span class="xs-inq-icon">${SEND}</span><span class="xs-inq-text"><strong>Inquire about this tank</strong><small>Your dimensions and capacity are added to the enquiry</small></span><span class="xs-inq-go">${GO}</span></a><p class="xs-inq-msg" role="alert"><i aria-hidden="true">!</i><span></span></p>`; return d; };
   const mainRes = work.querySelector('.tc-results'), inqMain = mkInquire(), inqXs = mkInquire();
   if (mainRes) mainRes.after(inqMain); const xsRes = wk.querySelector('.tc-results'); xsRes.after(inqXs);
   function syncInquire() { [inqMain, inqXs].forEach(i => { i.querySelector('.xs-inq-msg').classList.remove('show'); }); }
@@ -565,18 +565,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (missing.length) return showMsg(box, `Enter the tank ${joinNames(missing.map(n => n[1]))} first, so your enquiry includes the tank size.`, missing.map(n => n[0]));
       q = specMain(id); if (!q) return showMsg(box, 'These dimensions do not give a valid tank yet. Check the values above.', []);
     }
-    if (e.currentTarget.classList.contains('xs-quote-btn')) return toQuote(q);
     location.href = 'contact.html?' + new URLSearchParams({ cap: q.cap, spec: q.spec }).toString() + '#inquiry';
   }
-  /* Hand the calculator result to the quote builder (sessionStorage key shared with quote-core.js). Existing product/material choices are kept. */
-  function toQuote(q) {
-    const m = String(q.cap).replace(/,/g, '').match(/([\d.]+)\s*(KL|m³|L)?/i); let kl = m ? parseFloat(m[1]) : 0; if (!(m && /^(kl|m³)$/i.test(m[2] || ''))) kl /= 1000;
-    let st = {}; try { st = JSON.parse(sessionStorage.getItem('hh_quote_v1')) || {}; } catch (x) {}
-    Object.assign(st, { v: 1, unit: 'KL', capacity: String(+kl.toFixed(3)), fromCalculator: String(q.spec).split('\n')[0].replace('Tank shape: ', '') + ', ' + q.cap });
-    try { sessionStorage.setItem('hh_quote_v1', JSON.stringify(st)); } catch (x) {}
-    location.href = 'quote.html?from=calculator';
-  }
-  [inqMain, inqXs].forEach(box => box.querySelectorAll('.xs-inq-btn,.xs-quote-btn').forEach(b => b.addEventListener('click', e => inquire(box, e))));
+  [inqMain, inqXs].forEach(box => box.querySelector('.xs-inq-btn').addEventListener('click', e => inquire(box, e)));
   function specXs() {
     const s = S[cur], r = last.r, capL = fmt(r.totalM3 * 1000, 0) + ' L';
     const dimsTxt = s.f.map(f => `${f.n.replace(/ \(.*\)$/, '')} (${f.k}): ${$('xs-' + f.k).value.trim()} ${$('xs-' + f.k + '-u').value}`);

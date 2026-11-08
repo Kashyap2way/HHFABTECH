@@ -526,15 +526,17 @@
 
 /* ---------- Empty-state preview: a living blueprint instead of a blank outline ---------- */
 .tank-liquid.ghost-fill, .tank-liquid-wave.ghost-fill { opacity: .3; }
-.tank-liquid-wave.ghost-fill { animation: xs-wave 5s ease-in-out infinite alternate; }
-@keyframes xs-wave { from { transform: translateX(-14px); } to { transform: translateX(14px); } }
+.wave-slide { animation: xs-wave-slide 6s linear infinite; will-change: transform; }
+@keyframes xs-wave-slide { from { transform: translateX(0); } to { transform: translateX(calc(var(--wl, 80px) * -1)); } }
+.wave-slide .tank-liquid-wave { fill: rgba(255, 255, 255, .34); }
+.wave-slide .tank-liquid-wave.ghost-fill { opacity: .6; }
 .tank-outline.is-ref { animation: xs-dash 24s linear infinite; }
 @keyframes xs-dash { to { stroke-dashoffset: -160; } }
 .empty-cta rect { fill: rgba(21, 15, 38, .88); stroke: rgba(215, 182, 93, .75); stroke-width: 1.2; filter: drop-shadow(0 8px 14px rgba(43, 24, 80, .28)); }
 .empty-cta text { fill: #f6e7b4; font: 600 13.5px Poppins, sans-serif; letter-spacing: .01em; }
 .empty-cta { animation: xs-pulse 2.8s ease-in-out infinite; }
 @keyframes xs-pulse { 0%, 100% { opacity: .94; } 50% { opacity: .72; } }
-@media (prefers-reduced-motion: reduce) { .tank-liquid-wave.ghost-fill, .tank-outline.is-ref, .empty-cta { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .wave-slide, .tank-outline.is-ref, .empty-cta { animation: none !important; } }
 
 /* ---------- Option rows, advanced options for the other shapes ---------- */
 .tc-shell:not([data-mode="xs"]) #xsAdvToggle,

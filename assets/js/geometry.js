@@ -35,9 +35,9 @@
   /**
    * Existing HH "Spell" profile area (m² if inputs in m), ported from calculator.html.
    * Rectangle Rw×Rh + four circular-arc blends inside overall W×H, minus corner fillet term.
-   * The fillet term (4−π)f² is the legacy approximation; f defaults to 140 mm.
+   * The fillet term (4−π)f² is the legacy approximation; f is the corner bend radius, default 70 mm.
    */
-  function spellArea(W, H, Rw, Rh, f = 0.14) {
+  function spellArea(W, H, Rw, Rh, f = 0.07) {
     const h1 = (H - Rh) / 2, h2 = (W - Rw) / 2;
     if (!(W > 0 && H > 0 && Rw > 0 && Rh > 0) || Rw > W || Rh > H) return NaN;
     const seg = (c, h) => {
