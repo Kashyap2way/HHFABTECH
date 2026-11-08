@@ -1048,9 +1048,9 @@ bottom:20px;
 /* "New" badge on the Calculator nav link */
 .nav-links .nav-new{margin-left:7px;padding:2px 8px;border-radius:99px;background:linear-gradient(135deg,#f6c53a,#f4b400);color:#2b1850;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;vertical-align:2px;}
 
-/* HHF-LOGO-PATCH */
-/* Header: transparent logo with a soft glow so it reads on the translucent navbar */
-.logo img{background:none;filter:drop-shadow(0 1px 1px rgba(255,255,255,.85)) drop-shadow(0 6px 14px rgba(61,29,107,.18));transition:transform .3s ease,filter .3s ease}
-.logo a:hover img{transform:translateY(-1px) scale(1.02)}
-/* Footer: same image box, but the gold artwork is painted instead of the purple one */
-.footer-about img{background:url('../images/logo-footer.webp') center / contain no-repeat;object-fit:none;object-position:9999px 0;filter:drop-shadow(0 4px 18px rgba(233,199,101,.28))}
+
+
+/* HH FABTECH logo fix */
+.logo img{display:block;height:75px;width:auto;max-width:100%;padding-left:20px;object-fit:contain;object-position:center;background:transparent;filter:none;mix-blend-mode:normal;}
+.footer-about img{display:block;width:162px;height:90px;max-width:100%;object-fit:contain;object-position:center;background:transparent;margin-bottom:25px;filter:drop-shadow(0 3px 10px rgba(233,199,101,.18));}
+@media(max-width:768px){.logo img{height:62px;padding-left:0;}.footer-about img{margin-left:auto;margin-right:auto;}}
