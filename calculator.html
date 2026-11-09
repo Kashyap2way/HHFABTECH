@@ -1025,7 +1025,7 @@ body.calculator-page {
     <nav class="navbar">
         <div class="logo">
             <a href="index.html">
-                <img width="324" height="180" src="assets/images/logo.webp" alt="HH FABTECH">
+                <img width="432" height="240" src="assets/images/logo-transparent.webp" alt="HH FABTECH">
             </a>
         </div>
 
@@ -1258,7 +1258,7 @@ body.calculator-page {
 
             <div class="footer-about">
 
-                <img width="324" height="180" src="assets/images/logo-footer.webp" alt="HH FABTECH">
+                <img width="432" height="240" src="assets/images/logo-light.webp" alt="HH FABTECH">
 
                 <p>
 
@@ -1465,13 +1465,6 @@ function spellPath(Rw,Rh,h1,h2,cx,cy,rr){
  return d+' Z';
 }
 function svgEl(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);Object.keys(attrs).forEach(k=>e.setAttribute(k,attrs[k]));if(text!==undefined)e.textContent=text;if(parent)parent.appendChild(e);return e;}
-function waveLayer(parent,clipId,left,right,y,amp,lam,cls){
- /* Seamless wave: static clip wrapper, inner group slides exactly one wavelength (CSS), so the loop never shows an edge. */
- const wrap=svgEl('g',{'clip-path':`url(#${clipId})`},parent),slide=svgEl('g',{class:'wave-slide',style:`--wl:${lam}px`},wrap);
- const x0=left-2*lam,n=Math.ceil((right-left)/(lam/2))+10;let d=`M ${x0} ${y} Q ${x0+lam/4} ${y-amp*2} ${x0+lam/2} ${y}`;
- for(let i=1;i<n;i++)d+=` T ${x0+lam/2*(i+1)} ${y}`;
- d+=` L ${x0+lam/2*n} ${y+14} L ${x0} ${y+14} Z`;svgEl('path',{d,class:cls},slide);}
-window.hhWaveLayer=waveLayer;
 function drawProfile(W,H,D,ratio){
  const g=$('tankGraphic'),dm=$('dimensions'),clip=$('tankClipPath');g.innerHTML='';dm.innerHTML='';
  const isC=shape==='circle',{L}=dims();
@@ -1489,10 +1482,10 @@ function drawProfile(W,H,D,ratio){
  svgEl('path',{d,class:'tank-outline'+rc},g);
  if(ref){const gl=h*.58,gy=bottom-gl;
    svgEl('rect',{x:left-20,y:gy,width:w+40,height:gl+20,class:'tank-liquid ghost-fill','clip-path':'url(#tankClip)'},g);
-   waveLayer(g,'tankClip',left,right,gy,7,Math.max(70,w/2.5),'tank-liquid-wave ghost-fill');}
+   svgEl('path',{d:`M ${left-10} ${gy} C ${left+80} ${gy-9}, ${left+150} ${gy+9}, ${left+235} ${gy} S ${right-80} ${gy-9}, ${right+10} ${gy}`,class:'tank-liquid-wave ghost-fill','clip-path':'url(#tankClip)'},g);}
  if(!ref&&ratio>0){const lh=h*Math.min(1,ratio),ly=bottom-lh;
   svgEl('rect',{x:left-20,y:ly,width:w+40,height:lh+20,class:'tank-liquid','clip-path':'url(#tankClip)'},g);
-  if(ratio>.01&&ratio<.995)waveLayer(g,'tankClip',left,right,ly,5,Math.max(70,w/2.5),'tank-liquid-wave');}
+  if(ratio>.01)svgEl('path',{d:`M ${left-10} ${ly} C ${left+80} ${ly-7}, ${left+150} ${ly+7}, ${left+235} ${ly} S ${right-80} ${ly-7}, ${right+10} ${ly}`,class:'tank-liquid-wave','clip-path':'url(#tankClip)'},g);}
  svgEl('path',{d,class:'tank-inner'+rc,transform:'scale(.96)','transform-origin':`${cx}px ${cy}px`},g);
  const yD=bottom+54,xD=right+58,gh=ref?' ghost':'';
  svgEl('line',{x1:left,y1:bottom+7,x2:left,y2:yD-10,class:'dim-line'},dm);svgEl('line',{x1:right,y1:bottom+7,x2:right,y2:yD-10,class:'dim-line'},dm);svgEl('line',{x1:left,y1:yD,x2:right,y2:yD,class:'dim-arrow'},dm);
