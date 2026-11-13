@@ -1,0 +1,38 @@
+# HH FABTECH
+
+> HH FABTECH is a manufacturer of petroleum, diesel, chemical, stainless steel and water tankers, fuel bowsers and industrial storage tanks, based in Ahmedabad, Gujarat, India. The company builds custom-engineered, quality-tested tankers for industries across India, with fabrication expertise dating back to 1967.
+
+## Core pages
+
+- [Home](https://hhfabtech.com/): Company overview, product range and why to choose HH FABTECH.
+- [About Us](https://hhfabtech.com/about): Company history since 1967, manufacturing capability and values.
+- [Products](https://hhfabtech.com/products): Full product range index with links to each product.
+- [Contact Us](https://hhfabtech.com/contact): Factory address in Ahmedabad, phone, email and inquiry form.
+
+## Products
+
+- [Petroleum / Diesel Tanker](https://hhfabtech.com/petroleum-tanker): Fuel tankers for IOCL, HPCL, Jio-bp, Nayara and Essar, 12 KL to 40 KL, top and bottom loading, custom compartments.
+- [Chemical Tanker](https://hhfabtech.com/chemical-tanker): Corrosion-resistant tankers for acids (HCL, H2SO4, HNO3) and hazardous liquids, 10 to 20 ton.
+- [SS Tanker](https://hhfabtech.com/ss-tanker): Food-grade SS304 and SS316 stainless steel tankers for milk, edible oil, pharma and chemicals.
+- [Fuel Bowser](https://hhfabtech.com/fuel-bowser): Mobile diesel dispensing units, 500 L to 5000 L, with pump, meter and nozzle options.
+- [Storage Tank](https://hhfabtech.com/storage-tank): Vertical and capsule storage tanks, 5 KL to 40 KL, for petroleum, water, chemicals and industrial liquids.
+- [Water Tanker](https://hhfabtech.com/water-tanker): Water tankers for municipal, construction, industrial and agriculture use, 5 KL to 20 KL, MS and SS.
+
+## Tools
+
+- [Tank Volume Calculator](https://hhfabtech.com/calculator): Free tank volume and partial-fill calculator for horizontal, vertical, oval, Spell, cone, capsule, spherical, dished-end and rectangular tanks, in litres, KL, m³ and gallons, with a live 2D and 3D model, formulas, baffle planning and steel weight estimate.
+
+## Blog
+
+- [Blog](https://hhfabtech.com/blog): Guides on choosing, specifying, certifying and maintaining tankers and storage tanks. Articles are under /blog/, with an RSS feed at https://hhfabtech.com/blog/rss.xml.
+
+## Company
+
+- [Careers](https://hhfabtech.com/career): Current openings at the Sanathal, Ahmedabad factory in fabrication, production and quality, with online applications. Each opening has its own page under /career/.
+
+## Contact
+
+- Address: Final Plot No. 18/2 TP No. 403/A, Survey No.329B/1 Paiky 2-2387, Near Sanathal Circle Road, Fatewadi Canal, Sanathal, Sanand, Ahmedabad, Gujarat 382210, India
+- Email: hhfabtech@gmail.com
+- Phone: +91 98791 11233 (Devarsh Patel), +91 99986 90388 (Kashyap Mistry)
+- Hours: Monday to Saturday, 9:00 AM to 7:00 PM IST
