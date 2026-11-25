@@ -6,6 +6,10 @@
   command = "echo static site, no build step"
   publish = "."
 
+[build.environment]
+  # Stops Netlify auto-installing the Next.js runtime plugin (which forces publish=".next").
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
 # ----------------------------------------------------------------------------
 # Security + SEO headers
 #
