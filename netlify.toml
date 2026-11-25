@@ -2,6 +2,8 @@
 # Static site: publish the repository root as-is (no build step).
 
 [build]
+  # Overrides any leftover build command set in the Netlify dashboard (e.g. "pnpm run build" from the Next.js attempt).
+  command = "echo static site, no build step"
   publish = "."
 
 # ----------------------------------------------------------------------------
