@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <link rel="stylesheet" href="assets/css/quote.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
 
 
     
@@ -65,41 +66,37 @@
 
 <!-- ================= NAVBAR ================= -->
 
+<div class="topbar"><div class="topbar-in">
+<ul><li><a href="tel:+919879111233"><span class="sr-only" style="position:absolute;left:-9999px">Devarsh Patel: </span>+91 98791 11233</a></li><li><a href="tel:+919998690388"><span class="sr-only" style="position:absolute;left:-9999px">Kashyap Mistry: </span>+91 99986 90388</a></li><li><a href="mailto:hhfabtech@gmail.com">hhfabtech@gmail.com</a></li></ul>
+<p>Monday - Saturday, 9:00 AM - 7:00 PM</p>
+</div></div>
 <header>
-
-<nav class="navbar">
-
-<div class="logo">
-
-<a href="index.html">
-
-<img width="324" height="180" src="assets/images/logo.webp" alt="HH FABTECH">
-
-</a>
-
-</div>
-
+<nav class="navbar" aria-label="Primary">
+<div class="logo"><a href="index.html" aria-label="HH FABTECH, go to home page"><img width="432" height="240" src="assets/images/logo-transparent.webp" alt="HH FABTECH"></a></div>
 <ul class="nav-links" id="nav-links">
-
 <li><a href="index.html">Home</a></li>
-
 <li><a href="about.html">About Us</a></li>
-
-<li><a class="active" href="products.html">Products</a></li>
-
+<li><a href="products.html">Products</a></li>
+<li><a href="calculator.html">Calculator<span class="nav-new">New</span></a></li>
 <li><a href="contact.html">Contact Us</a></li>
-
+<li><a class="nav-cta" href="quote.html">Get a quote</a></li>
 </ul>
-
 <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">☰</button>
-
 </nav>
-
 </header>
 
     <main id="main"><div class="qb">
 <h1>Get your tanker quote</h1><p class="lead">Choose capacity, material and accessories. Your selections are saved as you go, so you can jump to the calculator and come back.</p>
-<ol class="qb-steps"><li>1 Product</li><li>2 Capacity</li><li>3 Material</li><li>4 Accessories</li><li>5 Delivery</li></ol>
+<ol class="qb-steps"><li>1 Product</li><li>2 Capacity</li><li>3 Material</li><li>4 Accessories</li><li>5 Size and delivery</li></ol>
+<section class="qb-3d" aria-labelledby="q3dH">
+<div class="qb-3d-stage">
+<canvas id="q3d" role="img" aria-label="Interactive 3D preview of your tanker. Drag to rotate, scroll to zoom."></canvas>
+<p class="qb-3d-empty" id="q3dEmpty">Enter a capacity below to see your tanker here.</p>
+<p class="qb-3d-dims" id="q3dDims" aria-live="polite"></p>
+<p class="qb-3d-hint">Drag to rotate · scroll to zoom · right-drag to pan</p>
+</div>
+<div class="qb-card qb-3d-acc"><h2 id="q3dH"><b>4</b>Accessories</h2><p class="lead">Tick an accessory and it appears on the tanker.</p><div class="qb-acc" id="qAcc"></div></div>
+</section>
 <div class="qb-grid"><div>
 <section class="qb-card"><h2><b>1</b>Product</h2><label class="f" for="qProduct">Tanker type</label><select id="qProduct"></select></section>
 <section class="qb-card"><h2><b>2</b>Capacity</h2>
@@ -109,7 +106,7 @@
 <a class="qb-link" id="qCalc" href="calculator.html?from=quote">I don't know the capacity. Calculate now! →</a>
 <div class="qb-note" id="qImported" hidden></div><p class="hh-cta-msg" id="qErr" role="alert" style="text-align:left"></p></section>
 <section class="qb-card"><h2><b>3</b>Material</h2><div class="qb-chips" id="qMaterial" role="radiogroup" aria-label="Material"></div></section>
-<section class="qb-card"><h2><b>4</b>Accessories</h2><div class="qb-acc" id="qAcc"></div></section>
+
 <section class="qb-card"><h2><b>5</b>Size and construction (auto-calculated)</h2><div class="qb-dims">
 <div><small>Width (max 2400)</small><strong id="dW">—</strong></div><div><small>Height (max 1830)</small><strong id="dH">—</strong></div><div><small>Length</small><strong id="dL">—</strong></div>
 <div><small>Dish ends</small><strong id="dDish">—</strong></div><div><small>Baffles</small><strong id="dBaf">—</strong></div><div><small>Per section</small><strong id="dSec">—</strong></div></div>
@@ -124,87 +121,52 @@
 </main>
 
     <footer>
-
-        <div class="footer-container">
-
-            <div class="footer-about">
-
-                <img width="324" height="180" src="assets/images/logo-footer.webp" alt="HH FABTECH">
-
-                <p>
-
-                    HH FABTECH is a trusted manufacturer of Petroleum,
-                    Chemical, SS and Water Tankers committed to quality,
-                    innovation and customer satisfaction.
-
-                </p>
-
-            </div>
-
-            <div class="footer-links">
-
-                <h3>Quick Links</h3>
-
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="products.html">Products</a></li>
-
-                    <li class="calculator-nav-item">
-                        <a class="calculator-nav-link" href="calculator.html">
-                            Calculator
-                        </a>
-
-                        <span class="calculator-nav-tooltip">
-                            Try our new tank volume calculator
-                        </span>
-                    </li>
-
-                    <li><a href="career.html">Careers</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                </ul>
-
-            </div>
-
-            <div class="footer-contact">
-
-                <h3>Contact</h3>
-
-                <p>
-                    <a href="https://maps.app.goo.gl/byFU6Hq3dxLh6ciT8"
-                    target="_blank"
-                    class="footer-location">
-
-                        FINAL PLOT NO. 18/2 TP NO. 403/A,<br>
-                        SURVEY NO.329B/1 PAIKY 2-2387<br>
-                        NEAR SANATHAL CIRCLE ROAD, FATEWADI CANAL,<br>
-                        SANATHAL, SANAND, AHMEDABAD, GUJARAT - 382210
-
-                    </a>
-                </p>
-
-                <p>hhfabtech@gmail.com</p>
-
-                <p>Devarsh Patel: +91 98791 11233</p>
-                    <p>Kashyap Mistry: +91 99986 90388</p>
-
-            </div>
-
-        </div>
-
-        <div class="copyright">
-
-            © 2026 HH FABTECH. All Rights Reserved.
-
-        </div>
-
-    </footer>
+<div class="footer-container">
+<div class="footer-about">
+<img width="432" height="240" src="assets/images/logo-light.webp" alt="HH FABTECH" loading="lazy">
+<p>HH FABTECH is a trusted manufacturer of petroleum, chemical, SS and water tankers, fuel bowsers and storage tanks, building to order from Ahmedabad since 1967.</p>
+</div>
+<div class="footer-links">
+<h3>Company</h3>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About Us</a></li>
+<li><a href="products.html">Products</a></li>
+<li><a href="calculator.html">Tank Volume Calculator</a></li>
+<li><a href="quote.html">Get a quote</a></li>
+<li><a href="career.html">Careers</a></li>
+<li><a href="contact.html">Contact Us</a></li>
+</ul>
+</div>
+<div class="footer-links">
+<h3>Products</h3>
+<ul>
+<li><a href="petroleum-tanker.html">Petroleum / Diesel Tanker</a></li>
+<li><a href="chemical-tanker.html">Chemical Tanker</a></li>
+<li><a href="ss-tanker.html">SS Tanker</a></li>
+<li><a href="fuel-bowser.html">Fuel Bowser</a></li>
+<li><a href="storage-tank.html">Storage Tank</a></li>
+<li><a href="water-tanker.html">Water Tanker</a></li>
+</ul>
+</div>
+<div class="footer-contact">
+<h3>Contact</h3>
+<p><a href="https://maps.app.goo.gl/byFU6Hq3dxLh6ciT8" target="_blank" rel="noopener" class="footer-location">Final Plot No. 18/2 TP No. 403/A,<br>Survey No. 329B/1 Paiky 2-2387,<br>Near Sanathal Circle Road, Fatewadi Canal,<br>Sanathal, Sanand, Ahmedabad, Gujarat - 382210</a></p>
+<p><a href="mailto:hhfabtech@gmail.com">hhfabtech@gmail.com</a></p>
+<p>Devarsh Patel: <a href="tel:+919879111233">+91 98791 11233</a></p>
+<p>Kashyap Mistry: <a href="tel:+919998690388">+91 99986 90388</a></p>
+<p>Monday - Saturday, 9:00 AM - 7:00 PM</p>
+</div>
+</div>
+<div class="copyright">© 2026 HH FABTECH. All Rights Reserved.</div>
+</footer>
 
 <script src="assets/js/main.js"></script>
 
 <script src="assets/js/geometry.js"></script>
 <script src="assets/js/quote-core.js"></script>
 <script src="assets/js/quote.js"></script>
+<script type="module" src="assets/js/quote-3d.js"></script>
 
 </body>
 
