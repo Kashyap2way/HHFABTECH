@@ -62,25 +62,23 @@ if (slides.length > 0) {
 
 }
 // ===============================
-// Sticky Navbar Shadow
+// Header shadow on scroll + close mobile menu on link tap
 // ===============================
 
 const header = document.querySelector("header");
 
 if (header) {
+    const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 30);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+}
 
-    window.addEventListener("scroll", () => {
-
-        if (window.scrollY > 30) {
-
-            header.style.boxShadow = "0 10px 25px rgba(0,0,0,.12)";
-
-        } else {
-
-            header.style.boxShadow = "0 5px 15px rgba(0,0,0,.08)";
-
+if (menuBtn && navLinks) {
+    navLinks.addEventListener("click", (e) => {
+        if (e.target.closest("a")) {
+            navLinks.classList.remove("active");
+            menuBtn.setAttribute("aria-expanded", "false");
+            menuBtn.setAttribute("aria-label", "Open menu");
         }
-
     });
-
 }

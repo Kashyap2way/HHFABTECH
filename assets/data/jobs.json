@@ -1,61 +1,31 @@
 [
-  {
-    "designation": "Senior Production Engineer/ Supervisor",
-    "department": "Production",
-    "salary": "₹45,000-50,000",
-    "experience": "8 - 10 Years",
-    "qualification": "Diploma Mechanical/ 10 Pass/ 12th Pass",
-    "location": "Sanathal, Ahmedabad, Gujarat",
-    "type": "Full Time",
-    "workMode": "On-site",
-    "vacancies": "1",
-    "posted": "11 Nov 2026",
-    "lastDate": "11 Jan 2027",
-    "status": "Open",
-    "jobRole": [
-      "Plan, manage and maintain production quality throughout tanker manufacturing.",
-      "Operate and supervise CNC cutting, NC bending, roll bending, drilling, welding and other fabrication machinery and power tools.",
-      "Coordinate effectively with labourers, contractors and fitters to ensure smooth production operations.",
-      "Identify production faults, bottlenecks and inefficiencies, and implement short-term and long-term solutions.",
-      "Ensure proper fabrication, assembly, finishing and quality standards.",
-      "Coordinate production activities and ensure timely completion of manufacturing targets."
-    ],
-    "requiredSkills": [
-      "Strong practical knowledge and hands-on experience in tanker manufacturing.",
-      "Ability to operate and manage fabrication machinery and equipment.",
-      "Effective workforce management and communication skills.",
-      "Problem-solving and production planning abilities.",
-      "Basic understanding of electrical systems.",
-      "Moderate knowledge of painting, surface preparation and finishing, including identifying defects such as dents, weld imperfections and splatter, and determining appropriate corrective methods using body filler or coating."
-    ]
-  },
-  {
-    "designation": "Senior Sales Executive",
-    "department": "Sales",
-    "salary": "₹60,000-80,000",
-    "experience": "8 - 10 Years",
-    "qualification": "BBA/ BCOM/ 12th Pass",
-    "location": "Sanathal, Ahmedabad, Gujarat",
-    "type": "Full Time",
-    "workMode": "Hybrid (Office + Field Visits)",
-    "vacancies": "1",
-    "posted": "11 Nov 2026",
-    "lastDate": "11 Jan 2027",
-    "status": "Open",
-    "jobRole": [
-      "Visit existing and prospective customers to generate business and maintain long-term relationships.",
-      "Identify new sales opportunities and understand market trends and customer requirements.",
-      "Develop technical knowledge of tanker manufacturing, products, specifications and applications.",
-      "Promote HH FABTECH products and manage sales enquiries, leads and customer follow-ups.",
-      "Coordinate with production and engineering teams to address customer requirements.",
-      "Prepare weekly sales reports covering customer visits, enquiries, follow-ups and business opportunities."
-    ],
-    "requiredSkills": [
-      "Strong communication, negotiation and interpersonal skills.",
-      "Passion for sales, marketing and business development.",
-      "Willingness to travel for customer visits.",
-      "Ability to understand technical products and manufacturing processes.",
-      "Self-motivated, organized and target-oriented."
-    ]
-  }
+
+    {
+        "designation": "Production Supervisor",
+        "department": "Production",
+        "salary": "₹20,000-25,000",
+        "experience": "2 - 5 Years",
+        "qualification": "Diploma Mechanical/ 10 Pass/ 12th Pass",
+        "location": "Sanathal, Ahmedabad, Gujarat",
+        "type": "Full Time",
+        "vacancies": "1",
+        "posted": "01 Aug 2026",
+        "lastDate": "01 Dec 2026",
+        "status": "Open"
+    },
+
+    {
+        "designation": "Quality Inspector",
+        "department": "Quality Control",
+        "salary": "₹15,000-20,000",
+        "experience": "1 - 2 Years",
+        "qualification": "ITI / Diploma Mechanical/ 12th Pass",
+        "location": "Sanathal, Ahmedabad, Gujarat",
+        "type": "Full Time",
+        "vacancies": "1",
+        "posted": "01 Aug 2026",
+        "lastDate": "01 Dec 2026",
+        "status": "Open"
+    }
+
 ]

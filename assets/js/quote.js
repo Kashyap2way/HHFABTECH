@@ -22,7 +22,7 @@
     summary();
   }
   function summary() {
-    const kl = capKL(), L = kl * 1000, size = Q.sizeTank(L), bf = Q.baffles(L), name = a => Q.PRODUCTS.find(x => x[0] === a)[1];
+    const kl = capKL(), L = kl * 1000, size = Q.sizeTank(L), bf = Q.baffles(L), name = a => Q.PRODUCTS.find(x => x[0] === a)[1]; const detail = { size, sections: bf.sections, accessories: s.accessories.slice(), material: s.material, product: s.product, kl }; window.__hhQuoteState = detail; document.dispatchEvent(new CustomEvent('hhquote:update', { detail }));
     $('dW').textContent = size ? size.W + ' mm' : '—'; $('dH').textContent = size ? size.H + ' mm' : '—'; $('dL').textContent = size ? fmt.format(Math.round(size.L)) + ' mm' : '—';
     $('dDish').textContent = size ? `${size.dishEnds} × ${size.emboss} mm emboss` : '—'; $('dBaf').textContent = L ? `${bf.plates} plates · ${bf.sections} sections` : '—'; $('dSec').textContent = L ? `${fmt.format(Math.round(bf.eachL))} L each` : '—';
     $('qErr').textContent = kl > 0 && !size ? 'This capacity is too small for the standard cross-section. Use the calculator for a custom size.' : '';
