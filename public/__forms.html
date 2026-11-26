@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Forms</title>
+</head>
+<body>
+  <!--
+    Netlify Forms detection only. Never shown to visitors.
+    Every field the React forms submit must be listed here.
+    See src/lib/forms/netlify.ts
+  -->
+  <form name="contact" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+    <input type="hidden" name="form-name" value="contact">
+    <input name="bot-field">
+    <input name="subject">
+    <input name="name">
+    <input name="company">
+    <input name="phone">
+    <input name="email">
+    <input name="city">
+    <select name="product"><option>x</option></select>
+    <input name="vehicle">
+    <input name="capacity">
+    <input name="compartments">
+    <select name="material"><option>x</option></select>
+    <textarea name="requirement"></textarea>
+    <textarea name="specification"></textarea>
+    <textarea name="customization"></textarea>
+    <input type="file" name="attachment">
+    <input name="source_page">
+    <input name="utm_source">
+    <input name="utm_medium">
+    <input name="utm_campaign">
+    <input name="utm_term">
+    <input name="utm_content">
+    <input name="gclid">
+    <input name="fbclid">
+    <input name="li_fat_id">
+    <input name="landing_page">
+    <input name="referrer">
+  </form>
+
+  <!-- Job applications (src/components/careers/ApplicationForm.tsx). Also stored in Sanity. -->
+  <form name="career" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+    <input type="hidden" name="form-name" value="career">
+    <input name="bot-field">
+    <input name="subject">
+    <input name="job_position">
+    <input name="job_id">
+    <input name="name">
+    <input name="email">
+    <input name="phone">
+    <input name="city">
+    <input name="qualification">
+    <input name="experience">
+    <input name="current_company">
+    <input name="expected_salary">
+    <input name="notice_period">
+    <textarea name="message"></textarea>
+    <input type="file" name="resume">
+    <input name="consent">
+    <input name="source_page">
+    <input name="utm_source">
+    <input name="utm_medium">
+    <input name="utm_campaign">
+    <input name="utm_term">
+    <input name="utm_content">
+    <input name="gclid">
+    <input name="fbclid">
+    <input name="li_fat_id">
+    <input name="landing_page">
+    <input name="referrer">
+  </form>
+</body>
+</html>
