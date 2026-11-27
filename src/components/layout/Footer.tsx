@@ -47,21 +47,37 @@ export function Footer() {
         <nav aria-label="Footer navigation">
           <FooterHeading>Quick Links</FooterHeading>
           <ul>
-            {footerCompanyLinks.map((link) => (
-              <li key={link.href}>
-                <TrackedLink
-                  href={link.href}
-                  event={{
-                    name: "cta_click",
-                    label: link.label,
-                    location: "footer_nav",
-                  }}
-                  className={linkClass}
-                >
-                  {link.label}
-                </TrackedLink>
-              </li>
-            ))}
+            {footerCompanyLinks.map((link) =>
+              link.href.startsWith("/sitemap") ? (
+                <li key={link.href}>
+                  <TrackedAnchor
+                    href={link.href}
+                    event={{
+                      name: "cta_click",
+                      label: link.label,
+                      location: "footer_nav",
+                    }}
+                    className={linkClass}
+                  >
+                    {link.label}
+                  </TrackedAnchor>
+                </li>
+              ) : (
+                <li key={link.href}>
+                  <TrackedLink
+                    href={link.href}
+                    event={{
+                      name: "cta_click",
+                      label: link.label,
+                      location: "footer_nav",
+                    }}
+                    className={linkClass}
+                  >
+                    {link.label}
+                  </TrackedLink>
+                </li>
+              ),
+            )}
           </ul>
         </nav>
 

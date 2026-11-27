@@ -82,6 +82,7 @@ export const footerCompanyLinks: readonly NavItem[] = [
   { href: "/blog", label: "Blog" },
   { href: "/career", label: "Careers" },
   { href: "/contact", label: "Contact Us" },
+  { href: "/sitemap.xml", label: "Sitemap" },
 ];
 
 export function isActivePath(pathname: string, item: NavItem): boolean {
