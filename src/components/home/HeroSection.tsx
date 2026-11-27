@@ -116,7 +116,7 @@ export function HeroSection() {
 
           <div className="mt-9 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
             <TrackedLink
-              href="/contact#inquiry"
+              href="/quote"
               event={{
                 name: "cta_click",
                 label: "Request a Quote",

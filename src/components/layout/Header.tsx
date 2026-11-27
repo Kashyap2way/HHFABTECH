@@ -150,7 +150,7 @@ export function Header() {
           <div className="flex items-center gap-2">
             {/* Desktop: primary conversion button */}
             <TrackedLink
-              href="/contact#inquiry"
+              href="/quote"
               event={{
                 name: "cta_click",
                 label: "Request a Quote",
@@ -227,7 +227,7 @@ export function Header() {
 
                 <div className="grid gap-2 border-t p-4">
                   <TrackedLink
-                    href="/contact#inquiry"
+                    href="/quote"
                     onClick={close}
                     event={{
                       name: "cta_click",

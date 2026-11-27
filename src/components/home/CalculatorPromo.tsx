@@ -1,7 +1,6 @@
 import { ArrowRightIcon } from "lucide-react";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { Container } from "@/components/sections/Container";
-import { CalculatorTank3D } from "@/components/three/CalculatorTank3D";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -129,8 +128,8 @@ export function CalculatorPromo() {
             </TrackedLink>
           </div>
           <div className="mx-auto w-full max-w-md lg:max-w-none">
-            {/* 3D loads only when this section nears the viewport; the SVG is the instant fallback */}
-            <CalculatorTank3D fallback={<TankArt />} />
+            {/* Lightweight 2D art with a looping CSS wave: no 3D code on the homepage */}
+            <TankArt />
           </div>
         </div>
       </Container>
